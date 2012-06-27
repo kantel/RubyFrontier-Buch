@@ -1,0 +1,113 @@
+#title "MAMP"
+
+# Exkurs: RubyFrontier und MAMP
+
+<%= imageref("mamp01", {:border => "0", :width => "480", :height => "417", :alt => "MAMP-Kontrollcenter und MAMP-Startseite"}) %>
+
+## Was ist MAMP?
+
+Die Abkürzung »MAMP« steht für Macintosh, Apache, Mysql und PHP. Es ist eine Umgebung, die Ihnen mit wenigen Mausklicks eine Serverumgebung für Testzwecke zur Verfügung stellt. Das kann für die Arbeit mit RubyFrontier recht nützlich sein. Denn *statische Seiten* hin oder her, manchmal benötigen Sie doch dynamische Elemente oder Datenbankzugriffe für Teile Ihrer Website -- und sei es nur für ein Kontaktformular.
+
+Aber auch als Entwicklungs- und Testumgebung für AJAX-Anwendungen ist die Kombination RubyFrontier/MAMP ein sehr nützliches und komfortables Paket. Beachten Sie jedoch eines: MAMP wurde als Entwicklungsumgebung für den Desktop konzipert, es sollte aus Sicherheitsgründen *niemals* als Produktionsumgebung eingesetzt werden.
+
+MAMP installiert sich per Default im Programme-Ordner Ihres Macs und alles, was MAMP benötigt, liegt innerhalb dieses Ordners. Es fummelt also nicht im »normalen« Betriebssystem herum. Und wenn Sie MAMP nicht mehr benötigen oder sich total verkonfiguriert haben -- schieben Sie einfach den kompletten MAMP-Ordner in den Papierkorb und schon haben Sie wieder einen sauberen Mac. Und dann laden Sie einfach eine neue MAMP-Umgebung von der Website des Herstellers herunter und mit wenigen Klicks besitzen Sie eine neue Umgebung.
+
+Der Vorteil kann unschätzbar sein. Ich habe zum Beispiel einmal den (eingebauten) Webserver des *OPML Editors* auf einer meiner Maschinen so verkonfiguriert, daß sich der zum MacOS X gehörende interne Apache nicht mehr starten ließ. Ich hatte Stunden gebraucht, um dies wieder zu beheben. Das kann Ihnen mit MAMP nicht passieren.
+
+Und während *Frontier* (und zumindest zeitweise auch der *OPML Editor*) ein Webserver auf dem Desktop ist, der *auch* statische Seiten herausschreiben kann, ist die Kombination RubyFrontier/MAMP ein Tool, das statische Seiten herausschreibt, aber auch als *Webserver auf dem Desktop* funktioniert. Damit kann man im Prinzip all das anstellen, was Winer und andere mit dem OPML Editor anstellen. Man muß sich allerdings an die Skriptsprache PHP gewöhnen. Aber die ist eigentlich recht einfach zu erlernen und da die Anwendung ja nur auf dem Desktop läuft, müssen Sie sich auch nicht mit Sicherheitsanforderungen, die die Programmierung von PHP-Anwednugen oft verkompliziert, herumschlagen.
+
+MAMP ist Open Source und steht unter der GPL, das heißt, Sie können die Software kostenlos herunterladen und nutzen. Und lassen Sie sich nicht beirren. Auf der Website wird versucht, Sie ständig auf das kostenpflichtige MAMP PRO zu locken. Zumindest für das, was Sie hier in diesem Tutorial anstellen -- und vieles, vieles mehr --, brauchen Sie MAMP PRO nicht. Das kostenlose MAMP genügt völlig.
+
+*(Professionelle Webentwickler -- vielleicht gibt es ja auch unter den Lesern dieses Tutorials einige -- dürfen aber ruhig einmal einen Blick auf MAMP PRO werfen. Der wichtigste Unterschied ist, daß die Server über Dienste wie z.B. DynDNS auch nach außen sichtbar gemacht werden können. Auch MAMP PRO sollte nicht für Produktionszwecke eingesetzt werden, aber um einen entfernt sitzenden Kunden die neuesten Entwicklungen eines Projektes zu zeigen oder um Tests mit den Anwendern beim Kunden durchzuführen, kann sich die Anschaffung von MAMP PRO durchaus lohnen. Denn die Alternativen wären die Installation eines Testsystems entwender beim Kunden oder bei einem externen Provider.)*
+
+## Installation und Konfiguration
+
+Die Installation von MAMP ist wirklich einfach. Sie gehen auf die [Webseite des Herstellers](http://www.mamp.info/) und laden Sie MAMP (nicht MAMP PRO) herunter. Und erschrecken Sie sich nicht. Aktuell ist das Paket 116 MB schwer und bringt auch eine Testversion von MAMP PRO mit. Ein Doppelklick auf die heruntergeladene Datei *MAMP.pkg* startet die Installation. Wenn Sie nicht genau wissen, was Sie vorhaben, belassen Sie es bei den Voreinstellungen, die der Installer Ihnen vorschlägt. Sie haben sich bei mir bewährt. Nach der Installation haben Sie einen Ordner MAMP und einen Ordner MAMP PRO in dem anwenderübergreifenden Programme-Ordner Ihres Macs. Innerhalb des Ordners MAMP finden Sie das Programm MAMP. Es empfiehlt sich, um schnelleren Zugriff zu haben, dieses im Dock abzulegen.
+
+Nach dem ersten Start öffnet sich eine Webseite und ein kleines Dialogfenster, das *MAMP-Kontrollcenter* genannt wird. Mit einem Klick auf *Einstellungen* können Sie einige Einstellungen vornehmen:
+
+<%= imageref("mamp02", {:border => "0", :width => "425", :height => "345", :alt => "MAMP-Kontrollcenter"}) %>
+
+Als erstes klicke ich immer *»Suche nach MAMP PRO beim Start von MAMP«* weg. Danach können Sie nämlich den Ordner MAMP PRO bedenkenlos in den Papierkorb schieben, ohne daß es eine Fehlermeldung gibt. In dem Reiter *Start/Stop* lohnt es sich, Ihr gerade aktuelles Projekt einzutragen. Dies erspart Ihnen sehr viel Zeit. Ich komme später darauf zurück.
+
+<%= imageref("mamp03", {:border => "0", :width => "424", :height => "347", :alt => "MAMP-Kontrollcenter: Ports"}) %>
+
+Die übrigen Einstellungen können Sie erst einmal so belassen, sie sind sowieso eher etwas für Spezialisten. Überprüfen Sie lediglich die *Ports*, wenn Sie andere Anwendungen auf Ihrem Rechner betreiben, die bereits Ports belegen. Per Default lauscht MAMPs Apache auf Port 8888 und das dazugehörende MySQL auf Port 8889.
+
+## RubyFrontier mit MAMP testen
+
+Um RubyFrontier mit MAMP zu testen, müssen Sie als erstes festlegen, daß RubyFrontier die Dateien dahin schreibt, wo MAMP sie auch lesen kann. Wenn Sie sich die Ordnerstruktur innerhalb des MAMP-Ordners angeschaut haben, werden Sie dort den Ordner `htdocs` gesehen haben. Dies ist der Ordner, in dem der Apache des MAMP seine Dateien erwartet und sie ausliest. Und Sie erinnern sich sicher, daß wir bisher die Dateien auf den Schreibtisch Ihres Macs herausgeschrieben haben. Um das zu ändern, öffnen Sie die Datei `ftpSite.yaml` und ändern den Eintrag *:folder* wie folgt:
+
+	:folder: /Applications/MAMP/htdocs/tutorial
+
+Falls Sie Ihre MAMP-Installation irgendwo anders abgelegt haben, müssen Sie diese Zeile natürlich anpassen.
+
+Jetzt rendern Sie am Besten alle Ihre Tutorial-Seiten noch einmal heraus. Danach sollten Sie im Ordner `htdocs` ein Unterordner `tutorial` finden. Wenn Sie jetzt Ihren Browser nach *http://localhost:8888/tutorial/* schicken, sollten Sie die Startseite des Hundesportvereins sehen können. (Den Ordner `tutorial` auf Ihrem Desktop können Sie nun in den Papierkorb schieben, er wird nicht mehr gebraucht.)
+
+Etwas unangenehm ist natürlich, daß RubyFrontier Ihren Standard-Browser ebenfalls anweist, die Seite zu öffnen und zwar unter:
+
+	file:///Applications/MAMP/htdocs/tutorial/index.html
+
+Daher ist noch etwas zu tun. Denn Matt Neuburg hat diesen Fall natürlich vorausgesehen und Abhilfe geschaffen. Öffnen Sie die Datei *#ftpSite.yaml* und fügen Sie folgende zwei Zeilen darin ein:
+
+	:apacheSite: /Applications/MAMP/htdocs/tutorial
+	:apacheURL: http://localhost:8888/tutorial/
+	
+Wenn dieser Eintrag vorhanden ist, öffnet RubyFrontier alle HTML-Seiten via `HTTP` unter der angegeben URL.
+
+Jetzt wollen Sie natürlich endlich eine Testseite schreiben. Legen Sie also eine neue Seite an, die sie `phptest.txt` nennen und schreiben Sie folgendes hinein:
+
+	#title "PHP-Test"
+	#fileextension ".php"
+
+	<h1>Hallo PHP!</h1>
+
+	<?php
+		print "<p>Hallo PHP-Welt. Dieser Text wird von PHP herausgeschrieben.</p>
+		<p>Das ist doch einfach, oder?</p><br /><br />"
+	?>
+
+*fileextension* ist eine Direktive, die die Dateiendung festlegt. Der Default ist natürlich *.html*, aber da der Apache nur erkennt, wann er eine Datei zum PHP-Interpreter weiterleiten soll, wenn diese die Dateiendung *.php* besitzt, müssen Sie dieses natürlich RubyFrontier mitteilen. (Wenn Sie sich mit der Konfiguration des Apache auskennen, wissen Sie natürlich, daß man dieses auch ändern kann, aber ich möchte doch beim Standardverhalten bleiben.)
+
+Ein PHP-Skript steht (fast) immer zwischen
+
+	<?php
+		*Ihr eigener Code hier*
+	?>
+
+Es gibt zwar Alternativen, aber auch dies hat sich als Standard etabliert und Sie sollten nur davon abweichen, wenn Sie genau wissen, was Sie tun. Rendern Sie die Seite heraus. Als erstes werden Sie feststellen, daß dieses mal RubyFrontier kein Browserfenster automatisch öffnet, da die Software schlau genug ist, um zu wissen, daß bei einer Änderung des Dateiendes nicht unbedingt eine HTML-Datei herausgeschrieben wird, die man sich im Browser anschauen möchte. Also schicken Sie Ihren Browser zu *http://localhost:8888/tutorial/phptest.php* und *voila* ...
+
+<%= imageref("phptest01", {:border => "0", :width => "480", :height => "319", :alt => "Ihre erste PHP-Seite"}) %>
+
+Gratuliere, Sie haben erfolgreich Ihr erstes PHP-Skript geschrieben.
+
+Zum Schluß können Sie sich die Sache noch ein wenig komfortabler gestalten. Wenn Sie in den MAMP-Einstellungen den Ordner Ihres aktuellen Projektes eintragen, also -- wenn Sie alles so angelegt haben, wie hier beschrieben --
+
+<%= imageref("mamp04", {:border => "0", :width => "423", :height => "345", :alt => "Die MAMP-Startseite ändern"}) %>
+
+den Ordner */tutorial/*, dann öffnet MAMP beim Start die Index-Seite dieses Projekts. Für den Fall, daß Sie die werksseitigen Startseiten wieder benötigen (z.B. um an den PHP- oder Datenbankeinstellungen zu schrauben), sollten Sie sich jedoch merken, daß diese im Verzeichnis */MAMP/* liegen und dieses bei Bedarf auch wieder eintragen.
+
+Doch MAMP ist nicht nur nützlich, um PHP-Skripte zu erstellen. Um der Wahrheit die Ehre zu geben: Ich selber skripte sehr, sehr selten in PHP. Aber auch einige JavaScripte erwarten, daß sie hinter einem Apache oder ähnlichem Webserver laufen, speziell die Skripte, die *»nach Hause telephonieren«*. Schauen Sie zum Beispiel mal auf dieses Stück JavaScript (der Zeilenumbruch dient nur der besseren Lesbarkeit):
+
+	<script type="text/javascript"><!-- 
+	amazon_ad_tag = "derschockwell-21"; amazon_ad_width = "468";
+	amazon_ad_height = "60"; amazon_ad_logo = "hide";
+	amazon_ad_discount = "remove";//--></script>
+	<script type="text/javascript" src="http://www.assoc-amazon.de/s/ads.js">
+	</script>
+
+Es ist ein Script, daß Amazons JavaScript API nutzt, um für den Inhalt der Seite passende Werbung herauszusuchen. Dafür muß es natürlich den Text der Seite nach Amazon schicken. Wenn Sie testweise dieses Skript in eine Seite einbauen und diese dann via *file:///* aufrufen, sehen Sie nichts. Läuft die Seite aber hinter einem MAMP und wird via *HTTP* aufgerufen, erscheint die Anzeige in ihrer ganzen Schönheit:
+
+<script type="text/javascript"><!--
+amazon_ad_tag = "derschockwell-21"; amazon_ad_width = "468"; amazon_ad_height = "60"; amazon_ad_logo = "hide"; amazon_ad_discount = "remove";//--></script>
+<script type="text/javascript" src="http://www.assoc-amazon.de/s/ads.js"></script>
+
+Auch wenn Sie keine Werbung für Amazon auf Ihren Webseiten machen wollen, es gibt etliche andere JavaScript APIs, die sich ähnlich verhalten, so einige der APIs von Google, unter anderem für Google Maps. Und gerade für Webmapping-Anwendungen wird auch die Kombination JavaScript auf der Client-Seite und PHP auf dem Server wieder interessant.
+
+Sie sehen also, es kann durchaus wichtige Gründe geben, sich MAMP zusammen mit RubyFrontier zu installieren.
+
+## RubyFrontier, MAMP und die Tropfenschachtel
+
+Es gibt keine Vorschrift, daß MAMP -- wie alle anderen Macintosh-Programme auch -- im Ordner »Programme« abgelegt sein muß. Es hindert Sie nichts daran, MAMP im Dropbox-Ordner zu installieren. Allerdings sollten dann alle ihre damit verbundenen Rechner über einen sehr schnellen Internet-Anschluß verfügen, da je nachdem wie intensiv sie mit MAMP arbeiten, schon sehr viele Daten hin- und hergeschaufelt werden können.
+
+Außer bei sehr großen Projekten sehe ich auch keinen Vorteil darin. Daher habe ich stattdessen MAMP auf allen angeschlossenen Rechner installiert und synchroniere lediglich die Quelldateien (im Projekt-Ordner) über die Dropbox. Das hängt aber auch damit zusammen, daß ich etliche andere, zum Teil sehr große Projekte zumindest im Entwicklungsstadium mit MAMP bearbeite und ich mir so die Tropfenschachtel ziemlich »vollmüllen« wurde. Probieren Sie daher selber aus, ob dieses Vorgehen für Sie geeignet ist.

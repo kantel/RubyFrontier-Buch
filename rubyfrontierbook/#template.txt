@@ -1,0 +1,51 @@
+<%= pageheader() %>
+<div class="wrapper">
+	<div class="header">
+		<div class="mylogo">
+			<a href="index.html"><%= imageref("rubyFrontierLogo", {:border => "0", :alt => "RubyFrontier Logo", :width => "59", :height => "64"}) %></a>
+		</div>
+		<div class="mytitle">
+			<h1><%= sitetitle %></h1>
+		</div>
+		<br clear="all" />
+	</div>
+	<div class="content">
+		<div class="maincontent">
+			<!-- begin content -->
+			<p id="bodytext"></p>
+			<!-- end content -->
+		</div>
+		<div class="navbar">
+			<h4>Navigation</h4>
+			<%= navbar() %>
+		</div>
+	</div>
+	<%= nextprevlinks() %>
+	<div class="footer">
+		<p>(<a href="http://creativecommons.org/licenses/by-nc-sa/3.0/de/">cc</a>) 2011-<%= yearnow() %> -- Some Rights Reserverd -- Letze Änderung: <%= clocknow() %></p>
+		<p>
+			<!-- Flattr -->
+			<a class="FlattrButton" style="display:none;" rev="flattr;button:compact;" href="http://rubyfrontier.kantel-chaos-team.de/"></a>
+			<noscript><a href="http://flattr.com/thing/517791/Das-RubyFrontier-Buch" target="_blank">
+			<img src="http://api.flattr.com/button/flattr-badge-large.png" alt="Flattr this" title="Flattr this" border="0" /></a></noscript>
+			<!-- Ende Flattr -->
+			<!-- RubyFrontier -->
+			<a href="http://www.apeth.com/RubyFrontierDocs/default.html"><%= imageref("rubyfrontierbadge", {:width => "80", :height => "15", :alt => "RubyFrontier Badge", :title => "Made with RubyFrontier", :border => "0"}) %></a>
+			<!-- Ende RubyFrontier -->
+			&nbsp;
+			<!-- CC-Button -->
+			<a href="http://creativecommons.org/licenses/by-nc-sa/3.0/de/"><%= imageref("cc80x15", {:width => "80", :height => "15", :alt => "CC Logo", :title => "CC BY NC SA", :border => "0"}) %></a>
+			<!-- Ende CC-Button -->
+			&nbsp;
+			<!-- Site Meter -->
+			<script type="text/javascript" src="http://s16.sitemeter.com/js/counter.js?site=s16rubyfrontier">
+			</script>
+			<noscript>
+			<a href="http://s16.sitemeter.com/stats.asp?site=s16rubyfrontier" target="_top">
+			<img src="http://s16.sitemeter.com/meter.asp?site=s16rubyfrontier" alt="Site Meter" border="0"/></a>
+			</noscript>
+			<!-- Copyright (c)2009 Site Meter -->
+		</p>
+	</div>
+</div>
+<%= pagefooter() %>

@@ -1,0 +1,142 @@
+#title "Gassirunden"
+
+# Ein »großes« Projekt: Gassirunden
+
+Als letztes Beispiel möchte ich Ihnen noch einmal ein konkretes Projekt vorstellen. Sie haben in den Kapiteln davor Projekte kennengelernt, die eigentlich eine einfache, für alle Seiten geltende Template-Struktur auswiesen. Nun möchte ich mit Ihnen einen Schritt weitergehen und eine Website entwickeln, die unterschiedliche Templates benötigt und vieles implementiert, das eine Website über ein gedrucktes Erzeugnis hinaushebt: Multimedia, Querverweise, Interaktivität, Karten etc. Und es ist ein echtes »Projekt«, das Ihnen auch nur als Anregung dienen soll und daher von Grund auf neu entwickelt wird und nicht auf eines der bisher erstellten Templates aufsetzt.
+
+## Die Idee
+
+Mit meinen Hunden war und bin ich viel in Berlin und dem Umland unterwegs. Dabei lasse ich vielerorts den Hund den Weg bestimmen. Und so entdecke ich viel Neues, auf das ich sonst nie gestoßen wäre. Das wird dann auch mit meiner Kamera, einer kleinen Digiknipse dokumentiert. Wenn wir dann zu Hause angekommen sind, recherchiere ich nach, was wir entdeckt hatten und hattet das bisher in meinem (alten) Wiki dokumentiert (u.a. [hier](http://www.cognitiones.de/doku.php/berliner_bezirke) und [hier](http://www.cognitiones.de/doku.php/ziellos_mit_zebu)). Ursprünglich hatte ich diese Spaziergänge unter dem Titel *Ziellos mit Zebu* (nach dem Namen meines ersten Hundes) gesammelt, nach dem Tod Zebus viel mir keine weitere Aliteration mehr ein und so nannte ich das Projekt dann *Gassirunden*. Und so soll auch die Website heißen, die ich mit Ihnen gemeinsam entwickeln möchte.
+
+## Lassen Sie sich helfen
+
+Solch ein Projekt dieser Größenordnung komplett neu aufzusetzen, kann zu einer Herkules-Aufgabe ausarten. Daher lassen Sie sich helfen. In der letzten Zeit sind etliche *HTML/CSS-Frameworks* erschienen, die das Erstellen einer neuen Seite vereinfachen. Sie sind so etwas wie *Templates* oder Blaupausen für CSS, HTML5 und JavaScript einer neuen Website. Ich habe für dieses Projekt das Framework [Bootstrap](http://cognitiones.kantel-chaos-team.de/webworking/frameworks/bootstrap.html) ausgesucht, das bei Twitter entwickelt wurde und freundlicherweise der Aöögemeinheit unter einer freien Lizenz (MIT-Lizenz) zur Verfügung gestellt wurde.
+
+## Die Grundstruktur
+
+Die *Startseite* soll ein Aufmacher sein und in die Site hineinlocken. Sie beginnt mit einem großen Photo und zeigt eine Reihe von Aufreißern und Photos zu  einzelnen, aktuellen Touren, Photostrecken und Videos.
+
+Die Seite, auf der *alle Touren* aufgelistet sind, beginnt mit einer interaktiven Karte von Berlin und dem Umland, von der aus man die einzelnen Touren erreichen kann. Außerdem sind alle Touren darunter auch noch einmal mit einem Photo und einem kurzen Anreißer aufgelistet sind.
+
+Die einzelnen *Touren* werden je auf einer Seite vorgestellt. Sie entsprechen noch am ehesten den einzelnen Kapiteln eines Buches.
+
+Unter *Topoi* (von altgr. *τόπος*: Ort) sind einzelne Stationen, Denkmäler, Personen etc. mit weiteren Hintergrundinformationen, Links, Literaturhinweisen, Bildern und Videos untergebracht, auf die von den einzelnen Touren verlinkt wird. Diese Seiten entsprechen einzelnen Wikiseiten.
+
+Unter *Photos* möchte ich Photostrecken sei es zu den Touren oder zu den Topoi unterbringen, die von diesen Seiten verlinkt werden können. Ähnliches gilt für *Videos*.
+
+Im *Shop* möchte ich Ihnen zeigen, wie Sie Podukte von Amazon (und anderen) einbinden können und so vielleicht sogar noch ein wenig Geld mit Ihren Webseiten verdienen können.
+
+Sie sehen, dies ist ein anspruchsvolles Projekt. Doch Sie werden ganz einfach beginnen.
+
+Als erstes legen Sie wieder mit RubyFrontier eine neue Site an. Da keines der bisher entwickelten Templates zum Zuge kommt, erhalten Sie eine jungfräuliche Site mit den drei Seiten, die Matt Neuburg als Einstieg in RubyFrontier vorgesehen hat.
+
+Falls Sie diese Seiten nicht auf dem Desktop abspeichern wollen, sondern meiner Anregung gefolgt sind, und mit [MAMP](MAMP) arbeiten, dann sollten Sie danach die *#ftpSite.yaml* wie folgt abändern:
+
+	--- 
+	:folder: /Applications/MAMP/htdocs/gassirunden
+	:method: file
+	:isLocal: true
+	:apacheSite: /Applications/MAMP/htdocs/gassirunden
+	:apacheURL: http://localhost:8888/gassirunden/
+
+Eventuell müssen Sie die Pfade noch Ihrer MAMP-Installation anpassen.
+
+*Bootstrap* ist ein HTML5-Framework, daher brauchen Sie auf jeden Fall einen eigenen *Pageheader* (in der von Ihnen anzulegenden Datei *#pageheader.txt*).
+
+	<!DOCTYPE html>
+	<html lang="de">
+	<head>
+		<%%= metatags() %>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<%%= linkstylesheets() %>
+		<%%= linkjavascripts() %>
+		<title><%%= sitetitle %>: <%%= title %></title>
+		<!-- Le styles -->
+		<style>
+			body {
+			padding-top: 60px;
+			}
+		</style>
+		<!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+		<!--[if lt IE 9]>
+			<script src="http://html5shim.googlecode.com/svn/trunk/html5.js">
+			</script>
+	 	<![endif]-->
+	</head>
+	<%%= bodytag() %>
+
+Die Zeile unter dem `metatags`-Makro erlaubt es *Bootstrap*, Ihre Seite diversen Devices wie Smartphones oder Tablet-Computern anzupassen, dann gibt es noch ein wenig CSS- und JavaScript-Bastelei für widerspenstige Browser wie z.B.den Internet-Explorer. Ich verlasse mich hier ganz auf die netten Menschen von Twitter und hoffe, daß sie wissen, was sie hier getan haben.
+
+Und auch die Datei *#prefs.yaml* benötigt eine Änderung und zusätzliche Einträge. Sie sollte so aussehen:
+
+	--- 
+	:bgcolor: ffffff
+	:sitetitle: 'Gassirunden'
+	:byline: 'Mit dem Hund durch Berlin und drumherum'
+	:linkstylesheets: [bootstrap]
+	:markdown: true
+
+Natürlich müsen Sie nun auch die Datei *bootstrap.css* in den Stylesheets-Ordner packen, damit RubyFrontier sie findet.
+
+<%= imageref("bootstrap-folder") %>
+
+Wenn Sie *Bootstrap* von der [offiziellen Downloadseite](http://twitter.github.com/bootstrap/index.html) auf GitHub heruntergeladen haben, erhalten Sie einen Ordner `bootstrap` mit den drei Unterordnern `css`, `img` und `javascript`. Von dort kopieren Sie dann einfach die Datei `bootstrap.css` in den Stylesheet-Ordner Ihres Projekts (um die Bilder und das JavaScript werden Sie sich später kümmern).
+
+Jeden ändern Sie bitte das Template (*#template.txt*) wie folgt:
+
+	<%%= pageheader() %>
+	<div class="navbar navbar-fixed-top">
+		<div class="navbar-inner">
+			<div class="container">
+				<a class="btn btn-navbar" data-toggle="collapse"
+				 data-target=".nav-collapse">
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</a>
+				<a href="My First Web Page" class="brand">Gassirunden</a>
+				<div class="nav-collapse">
+					<ul class="nav">
+						<li><a href="My First Web Page">Start</a></li>
+						<li><a href="#">Touren</a></li>
+						<li><a href="#">Topoi</a></li>
+						<li><a href="#">Photos</a></li>
+						<li><a href="#">Videos</a></li>
+						<li><a href="#">Shop</a></li>
+						<li><a href="#">Über …</a></li>
+					</ul>
+				</div><!--/.nav-collapse -->
+			</div>
+		</div>
+	</div>
+
+	<div class="container">
+		<p id="bodytext"></p>
+	</div> <!-- /container -->
+	<%%= pagefooter() %>
+
+Das Template folgt im Großen und Ganzen dem [Starter Template](http://twitter.github.com/bootstrap/examples.html) von den Beispielen der Bootstrap-Website (wenn man sich auf die Schultern von Riesen stelken kann, um größer zu wirken, dann sollte man es auch tun). Da das Stylesheet vorgegeben ist, achten Sie bitte darauf, die Klassen so zu benennen, wie es im Stylesheet steht.
+
+Die Top-Navigation werden Sie natürlich später mithilfe eines Makros verwirklichen, aber erst einmal habe ich sie fest verdrahtet, damit Sie schnell zu einem Ergebnis kommen.
+
+## Die Hauptnavigation
+
+Da *Bootstrap* einige Dinge mit den aktiven Links auf die aktuelle Seite anstellt und dafür den `<a>`-Tag benötigt, müssen Sie leider im *finalFilter* einige Anpassungen vornehmen. Zuerst löschen Sie bitte dort die Zeile
+
+	adrPageTable[:renderedtext] = adrPageTable[:renderedtext]
+	.gsub(/<a href="">(.*?)<\/a>/, "\\1")
+
+die dafür verantwortlich ist, daß die Links auf die aktuelle Seite unterdrückt werden. Dafür fügen Sie bitte an dieser Stelle die folgende Zeile ein:
+
+	adrPageTable[:renderedtext] = adrPageTable[:renderedtext]
+	.gsub("<li><a href=\"\">", "<li class=\"active\"><a href=\"\">")
+
+Wie so oft habe ich zwecks besserer Lesbarkeit die Zeile umgebrochen, das müssen Sie im eigentlichen Makro natürlich wieder rückgängig machen.
+
+Nun sind alle Vorarbeiten erledigt, wenn Sie nun die Seite *firstpage.txt* herausschreiben lassen, sollten Sie folgendes Ergebnis erhalten:
+
+<%= imageref("gassirunden01", {:width => "480", :height => "266"}) %>
+
+Das sieht doch schon einmal ganz nett aus, auch wenn der Eingeweihte natürlich sofort erkennt, daß diese Seite mithilfe von *Bootstrap* erstellt wurde. Aber daran kann ich erst einmal nichts Schlimmes finden und außerdem -- wenn Sie mir in diesem Tutorial folgen -- werden Sie die Seiten im Laufe dieses Abschnitts noch gewaltig »aufhübschen«. Lassen Sie uns gemeinsam mit der Startseite anfangen …
+
+

@@ -1,0 +1,82 @@
+#title "Gassirunden: Startseite"
+
+# Let's Start
+
+<%= imageref("hero", {:width => "480", :height => "171"}) %>
+
+Die Startseite oder *Landing Page* ist so etwas wie die Visitenkarte Ihres Webauftritts. An Ihr entscheidet sich, ob der Besucher auf Ihrer Website bleibt oder ob er sie gleich erschreckt wieder wegklickt. Daher verdient sie meist eine besondere Behandlung. Man muß ihr ja nicht gleich diese schrecklichen Flash-Intros antun, aber ein wenig anders als die übrigen Webseiten darf sie schon aussehen.
+
+RubyFrontier erleichtert dies damit, daß Sie mehrere Templates anlegen können und jeder einzelnen Seite explizit ein eigenes Template zuweisen können. So extrem möchte ich es nicht treiben, aber Ihnen zeigen, wie Sie weitere Templates erstellen und wie Sie diese einzelnen Webseiten zuordnen können.
+
+Fangen Sie mit der Startseite an. Legen Sie im Order *#templates* eine neue Seite an, die Sie `starttemplate.txt` nennen. Da große Teile des Templates nicht angefaßt werden, kopieren Sie erst einmal das komplette Template aus dem letzten Abschnitt hier herein. Und dann ändern Sie *nur* das `container`-Div wie folgt:
+
+	<div class="container">
+		<div class="hero-unit">
+		<!-- Der Titel der Site -->
+			<h1><%%= sitetitle %></h1>
+			<p>&nbsp;<%%= byline %></p>
+		</div>
+		<div class="row">
+		<!-- Die erste Spalte, 8 Einheiten breit -->
+			<div class="span8">
+				<p id="bodytext"></p>
+			</div>
+		<!-- Die zweite Spalte, 4 Einheiten breit -->
+			<div class="span4">
+				<h2>Seitenleiste</h2>
+				<p>Dies ist ein Typoblindtext. An ihm kann man sehen,
+				ob alle Buchstaben da sind und wie sie aussehen.</p>
+			</div>
+		</div> <!-- class row -->
+	<hr />
+		<footer>
+			<p>(<a href="http://creativecommons.org/licenses/by-nc-sa/3.0/de/">
+			cc</a>) 2011-<%%= yearnow() %> -- Some Rights Reserverd --
+			Letze Änderung: <%%= clocknow() %></p>
+		</footer>
+	</div> <!-- /container -->
+
+Und nun legen Sie bitte ein Startseite index.txt an, die Sie *Start* nennen, mit einer H2-Überschrift versehen (Markdown!) und mit etwas Blindtext füllen. Außerdem weisen Sie mit der Direktive in der zweiten Zeile
+
+	#template "starttemplate"
+
+RubyFrontier an, das soeben angelegte Template anstelle des Default-Templates zu nutzen. Wenn Sie diese nun herausschreiben lassen, sollte sie mit etwas Glück so aussehen:
+
+<%= imageref("gassirunden02", {:width => "480", :height => "342"}) %>
+
+Noch nicht weltbewegend, aber Sie ahnen sicher schon, wo die Reise hingehen soll. Laden Sie dafür erst einmal das Bild oben am Seitenanfang herunter -- es sollte *hero.jpg* heißen und speichern Sie es im *#images*-Ordner Ihres Projektes ab.
+
+Um das Bild in die Kopfzeile zu bekommen, müßten wir das Stylesheet *bootstrap.css* ändern. Ich warne allerdings immer davor, in fremden Stylesheets irgend etwas zu ändern. Denn eventuell gibt es ein Update (und das ist bei einem Framework wie *Bootstrap*, das ja immerhin schon die Version 2.0 erreicht hat, nicht abwegig gedacht) und selbst wenn Sie glauben Ihre Änderungen alle sauber dokumentiert zu haben, irgendetwas geht immer schief. Glauben Sie mir, ich habe oft genug gegen meine eigenen Warnung verstoßen (meist, weil es schnell gehen sollte) und weiß daher, wovon ich rede.
+
+Die einfachste Lösung ist ein User-Stylesheet, das *nach* dem *Bootstrap*-Stylesheet aufgerufen wird und in dem alle Änderungen eingetragen sind. Denn für Stylesheets gilt, daß die Reiheenfolge relevant ist: Jüngere Styleseets überschreiben das, was in den Stylestheets definiert ist, die vor Ihnen aufgerufen wurden. Daher ändern Sie die entsprechende Zeile in der *#prefs.yaml* zu
+
+	:linkstylesheets: [bootstrap, user]
+
+(die Reihenfolge ist wichtig) und legen anschließend ein eigenes Stylesheet an, das natürlich *user.css* heißen muß.
+
+Da hinein schreiben Sie erst einmal folgendes:
+
+	<%% def writeAndGetRelativeURI(im)
+	       getImageData(im)[:path].relative_uri_from(adrPageTable[:sheetLoc])
+	    end %>
+	
+	.hero-unit {
+		padding: 60px;
+		margin-bottom: 30px;
+		background: #eeeeee url(<%%= writeAndGetRelativeURI("hero") %>) 0 0 no-repeat;
+		color: #eeeeee;
+		-webkit-border-radius: 6px;
+		-moz-border-radius: 6px;
+		border-radius: 6px;
+	}
+	footer {
+		font-size: 11px;
+	}
+
+Den Trick mit dem Makro kennen Sie schon, das sorgt dafür, daß die Bilder-Einbindung auch in Stylesheets funktioniert.
+
+Die *hero-unit* ist in *Bootstrap* für den großen Titel zuständig -- ahnen Sie jetzt, warum ich das Bild *Hero* genannt habe? Der Code entspricht im großen und ganzen dem Originalcode. Lediglich das Hintergrundbild habe ich zugefügt und allen Texten die Schriften die Textfarbe des Hintergrunds der *hero-unit*, einem leichten Grau (`#eeeeee`), zugewiesen.
+
+Der letzte Eintrag ist rein kosmetischer Natur. Ich mag es einfach, wenn die Textgröße des Footers etwas kleiner ist, als der übrige Text und *Bootstrap* ist da per Default anderer Meinung.
+
+<%= imageref("gassirunden03", {:width => "480", :height => "343"}) %>

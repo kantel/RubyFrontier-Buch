@@ -1,0 +1,324 @@
+#title "Bildergalerie"
+
+# Eine Bildergalerie mit RubyFrontier
+
+Natürlich gehört zu jeder guten Vereinswebseite auch eine Photogalerie. Diese werden Sie daher als nächstes anlegen. Dabei lernen Sie dann auch einige neue Features von RubyFrontier kennen, beispielsweise den Vererbungsmechanismus von RubyFrontier oder wie Sie mit alternativen Templates umgehen. Aber auch, wie Sie Bilder nicht nur lokal, sondern auch von Webdiensten wie [[flickr]] oder dem [Picasa Web Album](https://picasaweb.google.com/) von Google in Ihren Seiten einbinden können.
+
+Da die Seiten ja nur ein Beispiel sind und um den Aufwand erträglich zu halten, wird jede Galerie nur aus vier Photos bestehen. Laden Sie daher zu Beginn diese vier Photos meines Hundes <a href="http://www.flickr.com/photos/schockwellenreiter/sets/668079/">Zebu</a> (einem Schäferhund-Husky-Mix) herunter.
+
+<table border="0">
+	<tr>
+		<td><%= imageref("zebu01", {:border => "0", :width => "150", :height => "113", :alt => "Zebu 1"}) %></td>
+		<td><%= imageref("zebu02", {:border => "0", :width => "150", :height => "113", :alt => "Zebu 2"}) %></td>
+		<td><%= imageref("zebu03", {:border => "0", :width => "150", :height => "113", :alt => "Zebu 3"}) %></td>
+		<td><%= imageref("zebu04", {:border => "0", :width => "150", :height => "113", :alt => "Zebu 4"}) %></td>
+	</tr>
+</table>
+
+Es ist der Hund, der auch die Titelleiste der Seiten Ihres (oder unseres) fiktiven Hundesportvereins ziert. Die Sonnenbrille, die er dort trägt, war keine Spinnerei, sondern der Hund litt an einer Überempfindlichkeit gegenüber UV-Licht und trug daher eine Brille, die in der Schweiz zum Schutz der Augen von Lawinenhunden entwickelt worden war.
+
+Zebu starb leider im Dezember 2010 an Krebs. Er wurde nur neun Jahre jung. Mein zweiter Hund war dann ein <a href="http://de.wikipedia.org/wiki/Shetland_Sheepdog">Sheltie</a> mit dem Zwingernamen *<a href="http://www.flickr.com/photos/schockwellenreiter/sets/72157625894184323/">Joey vom Zillegarten</a>*, ein kleiner Hütehund von den <a href="http://de.wikipedia.org/wiki/Shetlandinseln">Shetland-Inseln</a>. Auch von ihm habe ich vier Bilder ausgesucht, die Sie bitte herunterladen.
+
+<table border="0">
+	<tr>
+		<td><%= imageref("joey01", {:border => "0", :width => "150", :height => "113", :alt => "Zebu 1"}) %></td>
+		<td><%= imageref("joey02", {:border => "0", :width => "150", :height => "113", :alt => "Zebu 2"}) %></td>
+		<td><%= imageref("joey03", {:border => "0", :width => "150", :height => "113", :alt => "Zebu 3"}) %></td>
+		<td><%= imageref("joey04", {:border => "0", :width => "150", :height => "113", :alt => "Zebu 4"}) %></td>
+	</tr>
+</table>
+
+Die Bilder haben alle eine Größe von 500 mal 375 Pixeln, damit die Galerie einheitlich aussieht. Aber natürlich steht es Ihnen -- speziell natürlich den Lesern der gedruckten Version -- frei, jedes Bild der Welt, das sie wollen, anstelle der Hundebilder zu nehmen. Oder auch Bilder ihres eigenen Hundes, der Hunde Ihrer Freunde oder auch Ihrer Katzen, Wellensittiche und Meerschweinchen.
+
+Als nächstes navigieren Sie zu Ihrem Tutorial-Projekt-Ordner und legen folgende Dateien und Ordner an:
+
+<%= imageref("galerie01", {:border => "0", :width => "480", :height => "176", :alt => "Ordnerstruktur Galerie"}) %>
+
+Also im Klartext und in einer etwas logischeren als der alphabetischen Reihenfolge, die der Screenshot zeigt, innerhalb des Tutorial-Ordners:
+
+	-- galerie (Ordner)
+		-- galindex.txt (Datei)
+		-- zebu (Ordner)
+			-- #images (Ordner)
+			-- zebu01.txt (Datei)
+		-- Joey (Ordner)
+			-- #images (Ordner)
+			-- joey01.txt (Datei)
+		-- agility (Ordner)
+			-- photoagi01.txt (Datei)
+		-- obedience (Ordner)
+			-- (photoobi01.txt) (Datei)
+
+In die jeweiligen *#images*-Ordner von Zebu und Joey schieben Sie bitte je die vier zu den Hunden gehörenden Photos hinein.
+
+Und sicher ist Ihnen gleich aufgefallen, daß die Ordner zu Agility und Obedience *keine* Bilderordner besitzen. Hier möchte ich Ihnen zeigen, wie Sie Bilder von externen Webservices einbinden. 
+
+Nun nehmen Sie sich die Datei *galindex.txt* vor und schrieben Folgendes hinein:
+
+	#title "Galerie"
+
+	<h1>Photos aus dem Vereinsleben</h1>
+
+	<h2>Unsere Sportarten im Bild</h2>
+
+	<ul>
+		<li><a href="Photos Agility 1">Agility</a></li>
+		<li><a href="Photos Obedience 1">Obedience</a></li>
+	</ul>
+
+	<h2>Unsere Hunde</h2>
+
+	<ul>
+		<li><a href="Photos Zebu 1">Zebu</a></li>
+		<li><a href="Photos Joey 1">Joey vom Zillegarten</a></li>
+	</ul>
+
+Die einzelnen anderen Datei lassen Sie vorläufig leer. Nur die Titeldirektive und ein Minimum an Text sollte, um Fehlermeldungen zu vermeiden, schon einmal hineingeschrieben werden. Die Titel-Direktive heißt so, wie die jeweiligen Links, die Sie oben in die Listen eingegeben haben, also schreiben Sie in *photoagi01.txt*
+
+	#title "Photos Agility 1"
+	
+	<h1><%%= title %></h1>
+
+und in *photoobi01.txt*
+
+	#title "Photos Obedience 1"
+	
+	<h1><%%= title %></h1>
+
+und so weiter ...
+
+Bevor Sie sich  nun das Ergebnis Ihrer Bemühungen anschauen können, müssen Sie dafür sorgen, daß es auch in die Navigation eingebunden ist. Also nehmen Sie sich die Datei *#template.txt* vor und ändern die Navigation, indem Sie einfach den Link zur Galerie noch einfügen:
+
+	<div id="navigation">
+		<p><a href="Startseite">Startseite</a> | 
+		<a href="Nachrichten">Nachrichten</a> | 
+		<a href="Termine">Termine</a> | 
+		<a href="Galerie">Galerie</a> | 
+		<a href="Impressum">Impressum</a></p>
+	</div>
+
+Wie immer dient der Umbruch nur der besseren Lesbarkeit und ist nicht zwingend notwendig.
+
+Wenn Sie jetzt die Seite *galindex.txt* von RubyFrontier herausschreiben lassen, sollte Sie so aussehen:
+
+<%= imageref("galerie02", {:border => "0", :width => "480", :height => "333", :alt => "Screenshot"}) %>
+
+Und wenn Sie nun auch noch *alle* Seiten herausrendern (was Sie sowieso müssen, um die Änderungen in der Navigation für alle Seiten wirksam zu machen), werden Sie feststellen, daß sogar die Links zu den Seiten in den Unterordnern funktionieren, obwohl wir nirgendwo Unterordner oder einen Pfad dorthin angegeben haben.
+
+Genau das erledigt RubyFrontier in der Datei *autoglossary.yaml* automatisch für uns. Die Software sammelt alle unsere Seiten, identifiziert sie an den Titeln und speichert die Pfade zu diesen Seiten ab. Wenn nun ein Link in der Form `<a href="Galerie">Galerie</a>` auftaucht, identifiziert RubyFrontier dies anhand des fehlenden `http` als einen *internen* Link und schaut in seiner Liste nach dem Seitentitel, um herauszufinden, wodurch dieser Link zu ersetzen ist, damit er funktioniert.  Eben dies ist der Grund, warum die Seitentitel eindeutig sein müssen. Die Dateinamen müssen es nicht, theoretisch kann jeder Unterordner seine eigenen *index.txt* besitzen. RubyFrontier findet das jedoch fragwürdig und gibt beim Herausschreiben für jeden doppelten Dateinamen ein Warnung heraus. Es mag Gründe geben, Unterordner mit einer eigenen *index.html* zu versehen und andere Dateinamen doppelt zu führen, ich versuche dies jedoch durch einen eindeutigen Prefix (z.B. *galindex.txt*) zu vermeiden.
+
+Denn RubyFrontier hat einen guten Grund, doppelte Dateinamen fragwürdig zu finden. Der große Vorteil des *Glossary*-Mechanismus ist doch der, daß Sie Unterbäume im Dateibaum ihrer Website beliebig verschieben, teieln oder auch zusammenfassen können, ohne daß Sie sich sich um die internen Links kümmern müssen. Einfach einmal alles erneut herausschreiben und gut ist.
+
+Doch wie Sie vielleicht schon gesehen haben, wenn Sie neugierig die herausgeschriebene Site inspiziert haben, bewahrt RubyFrontier die Baumstruktur ihres Projektes: Unterordner im Projekt sind auch Unterordner (Verzeichnisse) in Ihrer Website. Und wenn Sie jetzt -- und das kommt gar nicht mal so selten vor -- Unterordner zusammenfassen wollen oder müssen und es existieren doppelte Dateinamen, dann geraten Sie in Teufels Küche.
+
+Daher meine Empfehlung: Beachten Sie die Warnung, die RubyFrontier herausgibt und vermeiden Sie doppelte Dateinamen. Sie werden mit einer großen Flexibilität bezüglich der Möglichkeiten, ihre Website umzuorganisieren, belohnt.
+
+Doch jetzt brennen Sie sicher darauf, Ihre erste Bildergalerie anzulegen. Nehmen Sie daher die Datei *zebu01.txt* und schreiben Sie dieses hinein:
+
+	#title "Photos Zebu 1"
+
+	<h1><%%= title %></h1>
+
+	<%%= imageref("zebu01") %>
+
+Wie gewohnt, rendern Sie diese Datei heraus und sie sollte so aussehen:
+
+<%= imageref("galerie03", {:border => "0", :width => "480", :height => "439", :alt => "Screenshot"}) %>
+
+Okay, seien wir ehrlich. Selbst in den Anfangstagen des Web, als beinahe jede Scheußlichkeit durchging, wäre diese Seite vom Vorstand Ihres Sportvereins nicht akzeptiert worden. Zumindest das große Logo im Kopf der Seite stört und lenkt ganz gewaltig vom Bild ab. Und auch das Photo sollte mittig erscheinen und etwas mehr Raum gewinnen. Es ist also an der Zeit für ein alternatives Template!
+
+Also gehen Sie in Ohr Projekt und öffen Sie den Ordner *#templates*. Fall sie darin noch die Dateien *secondtemplate.txt* und *thirdtemplate.txt* finden, können Sie diese löschen. Stattdessen legen Sie bitte eine Datei namens *galerietemplate.txt* an. Da ich schrittweise mit Ihnen das neue Template ausgehend vom Standard-Template der Website entwickeln möchte, kippen Sie, damit es einfacher wird, einfach den Inhalt Ihrer *#template.txt*-Datei per *copy & paste* dort hinein.
+
+Als erstes löschen Sie dann in dem Galerie-Template das komplette Header-Div. An diese Stelle kommt nun eine einfache Überschrift mit dem Titel der Site. Anschließend bauen Sie um den *bodytext*-Tag ebenfalls ein *div*, das Sie mit der id »photogalerie« versehen. Ihr neues Template sieht dann so aus:
+
+	<%%= pageheader() %>
+	<div class="wrapper">
+		<h1><%%= sitetitle %></h1>
+	<div id="navigation">
+		<p><a href="Startseite">Startseite</a> |
+		<a href="Nachrichten">Nachrichten</a> |
+		<a href="Termine">Termine</a> | 
+		<a href="Galerie">Galerie</a> | 
+		<a href="Impressum">Impressum</a></p>
+	</div>
+	<div id="photogalerie">
+		<p id="bodytext"></p>
+	</div>
+	<hr />
+	<p class="small">Diese Seite wurde mit RubyFrontier erstellt. 
+	Letzte Änderung: <%%= clocknow() %></p>
+	</div>
+	<%%= pagefooter() %>
+
+Es ist generell eine gute Idee, den eigentlichen Inhalt der Seite noch einmal in ein *div* zu packen, dem man dann noch einmal einen Stil zuweisen kann.
+
+Jetzt öffnen Sie bitte das Stylesheet und fügen folgende Definition hinzu:
+
+	#photogalerie {
+		margin-top: 30px;
+		margin-bottom: 50px;
+		margin-left: 100px;
+	}
+
+Die Werte habe ich experimentell herausgefunden, Sie können also durchaus damit herumspielen, um ein ästhetisch anspruchsvolleres Design zu bekommen.
+
+Jetzt fügen Sie noch in die zweite Zeile der Datei *zebu01.txt* eine Direktive ein, die RubyFrontier anweist, das alternative Template zu butzen. (Sie werden später diese Direktive an anderer Stelle aufschreiben, denn es wäre sicher nicht sinnvoll, diese Zeile in *jede* Datei einzufügen, die dieses Template verwenden soll.)
+
+	#template "galerietemplate"
+
+Wenn Sie nun die Seite herausrendern, sollte sie so aussehen:
+
+<%= imageref("galerie04", {:border => "0", :width => "480", :height => "322", :alt => "Screenshot"}) %>
+
+Das kann sich doch schon eher sehen lassen, oder? Jetzt müssen Sie nur noch die Unschönheit beseitigen, daß die Direktive mit dem *galerietemplate* in jeder Datei auftauchen muß. Natürlich können Sie sich auch hier von RubyFrontier helfen lassen.
+
+In dem Ordner *galerie* auf gleicher Ebene wie die Datei *galindex.txt* legen Sie bitte eine neue, leere Datei mit dem Namen *#prefs.yaml* (inklusive des Doppelkreuzes) an. Und dort schreiben Sie bitte hinein:
+
+	---
+	:template: galerietemplate
+
+Jetzt können Sie die zuletzt angelegte Direktive in der Datei *zebu01.txt* löschen und nach einem erneuten Herausschreiben sollte die Webseite trotzdem unverändert aussehen.
+
+Was ist passert? Vor jedem Herausschreiben sammelt RubyFrontier alle Direktiven, die es findet ein. Einige -- aber nicht alle -- dieser Direktiven haben eine kaskadierende Eigenschaft, das heißt, der Wert, der am nächsten zur gerade herauszuschreibenden Seite steht, wird auf diese Seite angewendet. Matt Neuburg nennt dies *folded* (ich habe außer »kaskadierend« keine wirklich verständliche deutsche Bezeichnung dafür gefunden). Im Falle des Templates überschreibt der Wert *galerietemplate* den globalen Defaultwert *template*, da die Datei *#prefs.yaml* die Eigenschaft *folded* besitzt.
+
+Nun legen Sie einfach im Ordner *zebu* die noch fehldend Dateien *zebu02.txt*, *zebu03.txt* und *zebu04.txt* an, die genau so aussehen, wie die erste Datei, nur das die Ziffern in Titel und Bildnamen entsprechend ausgetauscht werden, also (für die Datei *zebu02.txt*):
+
+	#title "Photos Zebu 2"
+
+	<h1><%%= title %></h1>
+
+	<%%= imageref("zebu02") %>
+
+Bevor Sie nun die Seiten herausrendern, halten Sie einen Moment inne, da Ihnen sicher aufgefallen ist, daß die einzelnen Seiten der Galerie ja gar nicht miteinander verlinkt sind. Doch vielleicht erinnern Sie sich noch an das Makro `<%%= nextprevlinks() %>`, welches Sie zu Anfang aus dem Standard-Template entfernt hatten. Das fügen Sie nun bitte in das *galerietemplate* ein, und zwar eine Zeile über dem `<hr />`:
+
+	</div>
+	<%%= nextprevlinks() %>
+	<hr />
+
+Rendern Sie nun den Inhalt des Ordners *zebu* heraus und sie erhalten vier Seiten mit einer schönen *next &lt;-&gt; prev*-Navigation unten links:
+
+<%= imageref("galerie05", {:border => "0", :width => "480", :height => "339", :alt => "Screenshot"}) %>
+
+Sogar die erste und die letzte Seite der Galerie werden erkannt. Es gibt dort keinen *prev*- respektive *next*-Link.
+
+Das die Bezeichnungen englisch sind, nehmen Sie für's Erste einfach in Kauf. Ich zeige Ihnen in einem späteren Kapitel, wie Sie diese Navigation anpassen können. Wichtig zu wissen ist noch, daß RubyFrontier die Dateien für die *Next-Prev*-Navigation in alphabetischer Reihenfolge sortiert -- auch dies ist natürlich änderbar und ich zeige Ihnen später auch noch, wie Sie dies ändern können. Doch die Galeriebilder liegen ja in der gewünschten Reihenfolge vor, also können Sie hier einfach das Standard-Marko ohne irgendwelche Änderungen übernehmen.
+
+Das Anlegen der Galerie »Joey« überlasse ich Ihnen als Übungsaufgabe. Die erste Datei muß natürlich so aussehen:
+
+	#title "Photos Joey 1"
+
+	<h1><%%= title %></h1>
+
+	<%%= imageref("joey01") %>
+
+Beachten Sie bitte, daß Sie auch hier zuerst einmal den ganzen Ordner (oder alternativ die ganze Site) herausrendern müssen, damit RubyFrontier die Dateien in seinem *Autoglossary* aufnehmen und die *Next-Prev*-Links herausschreiben kann, andernfalls reagiert die Software ungehalten mit einer Fehlermeldung. Aber dann sollte Sie auch eine schöne Sheltie-Galerie besitzen:
+
+<%= imageref("galerie06", {:border => "0", :width => "480", :height => "338", :alt => "Screenshot"}) %>
+
+Ein Wort noch zu den Bildern und den *#images*-Verzeichnissen. Ob Sie die Bilder alle in einen großen Bilderordner ablegen oder -- wie in diesem Fall -- auf mehrere Ordner verteilen, ist RubyFrontier und dem *imageref*-Makro egal. Es Überträgt die Ordnerstruktur so auf den Server, wie Sie sie angelegt haben. Ich bevorzuge es in diesem Fall, die Bilder in der Nähe der Seiten zu haben, wo sie eingebunden werden. Doch das ist sicher auch Geschmackssache. Nur beachten Sie: Auch das *imageref*-Makro nimmt bei gleichnamigen Bildern, das was der gerade herausgeschriebenen Seite am Nächsten liegt, das heißt, auch der *#images*-Ordner ist **kaskadierend**. Damit lassen sich sogar ganz nette Tricks realisieren, wie zum Beispiel unterschiedliche *header*-Logos je Ordner, wenn jeder Ordner einen *#images*-Unterordner mit zum Beispiel einer eigenen *header.jpg*-Datei enthält.
+
+## Photos von Flickr in eine Galerie einbinden
+
+Der zu Yahoo! gehörende Webservice [[flickr]] ist wohl der bekannteste Service zum Hochladen und und Verteilen von Photographien. Er erlaubt das komfortable Einbetten von Photos in eigene Webseiten und ist daher besonders dann eine Alternative, wenn der Speicherplatz bei Ihrem Provider knapp ist. Ich habe für die Galerie *Agility* vier Photos von meinem [[flickr]]-Account ausgesucht. (Die Bilder stehen unter einer Creative-Commons-Lizenz und dürfen daher (bei Namensnennung der Photographin) für nichtkommerzielle Zwecke eingesetzt werden.)
+
+<table border="0">
+	<tr>
+		<td><a href="http://www.flickr.com/photos/schockwellenreiter/2837118714/" title="A3 Large: Jörg und Zebu by Schockwellenreiter, on Flickr"><img src="http://farm4.staticflickr.com/3098/2837118714_68a6121dd5_m.jpg" width="120" height="80" alt="A3 Large: Jörg und Zebu"></a></td>
+		<td><a href="http://www.flickr.com/photos/schockwellenreiter/2548845584/" title="Agility-Turnier HSV Plänterwald by Schockwellenreiter, on Flickr"><img src="http://farm4.staticflickr.com/3020/2548845584_620e76904f_m.jpg" width="120" height="80" alt="Agility-Turnier HSV Plänterwald"></a></td>
+		<td><a href="http://www.flickr.com/photos/schockwellenreiter/2817109954/" title="A3 large: Jörg und Zebu by Schockwellenreiter, on Flickr"><img src="http://farm4.staticflickr.com/3121/2817109954_1576ce2459_m.jpg" width="120" height="80" alt="A3 large: Jörg und Zebu"></a></td>
+		<td><a href="http://www.flickr.com/photos/schockwellenreiter/2550586758/" title="Jörg Kantel und Zebu by Schockwellenreiter, on Flickr"><img src="http://farm4.staticflickr.com/3163/2550586758_c74460fdc0_m.jpg" width="120" height="80" alt="Jörg Kantel und Zebu"></a></td>
+	</tr>
+</table>
+
+Ein Klick auf die Thumbnails oben öffnet die entsprechende Seite bei [[flickr]]. Dort finden Sie auch den entsprechenden HTML-Code, um das Photo in Ihre Seite einzubinden:
+
+<%= imageref("flickr01", {:border => "0", :width => "480", :height => "447", :alt => "Screenshot"}) %>
+
+Ich habe die mittlere Größe (500x333 Pixel) ausgewählt. Den Code fügen Sie bitte ohne Änderungen in die Datei *photoagi01.txt* im Ordner *agility* ein. Mit ein wenig Text drumherum sieht die Seite dann wie folgt aus:
+
+	#title "Photos Agility 1"
+
+	<h1>A3 large: Jörg und Zebu</h1>
+
+	<a href="http://www.flickr.com/photos/schockwellenreiter/2837118714/" 
+	title="A3 Large: Jörg und Zebu by Schockwellenreiter, on Flickr">
+	<img src="http://farm4.staticflickr.com/3098/2837118714_68a6121dd5.jpg" 
+	width="500" height="333" alt="A3 Large: Jörg und Zebu"></a>
+
+	<p>Agility-Turnier am 31. August 2008 in Markee.
+	<i>(Photo: Carola Böldt)</i></p>
+
+Wichtig ist, daß der Rücklink auf [[flickr]] nicht verändert wird. Die Geschäftsbedingungen von [[flickr]] schreiben dies vor und Yahoo! reagiert sehr ungehalten mit der Sperrung der Bilder, wenn dies nicht eingehalten wird.
+
+Mit den übrigen drei Bildern verfahren Sie analog. Überschrift und Beschreibung können Sie von der [[flickr]]-Seite übernehmen. Wenn Sie nun den gesamten *agility*-Ordner herausschreiben, erhalten Sie wieder eine schöne Galerie:
+
+<%= imageref("galerie07", {:border => "0", :width => "480", :height => "331", :alt => "Screenshot"}) %>
+
+## Picasa Web Albums
+
+Die Picasa Web Alben sind Googles Antwort auf den Erfolg [[flickr]]. Lange Zeit führten Sie nur ein Schattendasein neben dem Platzhirschen. Aber seit der Einführung von Google+ hat der Suchmaschinenriese seine Strategie geändert und Sie können Bilder bis zu einer Größe von 2048 x 2048 Pixeln hochladen, ohne daß dies von dem kostenlosen Speicherkontingent von 1 Gigabyte abgezogen wird. Bilder, deren längste Seite 2048 Pixel groß sind, sind für eine Präsentation im Web allemal ausreichend und so sind die Picasa Web Alben durchaus eine Alternative zu [[flickr]] geworden. Aber beachten Sie bitte: Sie bekommen, wofür Sie bezahlen, wenn also Google (aber auch Yahoo!) seine Strategie ändert, kann es durchaus sein, daß die kostenlosen Accounts auf einmal wieder weg sind.
+
+<table style="width:auto;">
+	<tr>
+		<td><a href="https://picasaweb.google.com/lh/photo/5PLDl-UVT7yN-Hy0ga5m_NMTjNZETYmyPJy0liipFm0?feat=embedwebsite"><img src="https://lh4.googleusercontent.com/-xuKL19S98k0/Tzp48kZrHEI/AAAAAAAACV0/LGXqTOPl8Vo/s144/ob02.jpg" height="95" width="144" /></a></td>
+		<td><a href="https://picasaweb.google.com/lh/photo/rDR02-hezDqbGSAn3gSBMdMTjNZETYmyPJy0liipFm0?feat=embedwebsite"><img src="https://lh6.googleusercontent.com/-zFBDBbF3P2c/Tzp48lnRfoI/AAAAAAAACVs/yXG8EWre8PM/s144/ob01.jpg" height="95" width="144" /></a></td>
+		<td><a href="https://picasaweb.google.com/lh/photo/wdg47Vq08yj_enKBKxZgxtMTjNZETYmyPJy0liipFm0?feat=embedwebsite"><img src="https://lh5.googleusercontent.com/-LoOFrVvVcQg/Tzp49KnmOgI/AAAAAAAACV4/zq3zjHJ8Emw/s144/ob04.jpg" height="95" width="144" /></a></td>
+		<td><a href="https://picasaweb.google.com/lh/photo/2iK49uk4LgVtjC_ns4L_rtMTjNZETYmyPJy0liipFm0?feat=embedwebsite"><img src="https://lh4.googleusercontent.com/-PXfVZEPTabQ/Tzp480oyBBI/AAAAAAAACVw/p5PSvYeN-Rk/s144/ob03.jpg" height="95" width="144" /></a></td>
+	</tr>
+</table>
+
+Aber egal, ich habe ein paar Obedience-Bilder zu Google hochgeladen und Sie sollen diese nun in Dateien im Ordner *obedience* einbinden. Den Einbettlink finden Sie bei Picasa jeweils rechts unten auf der Seite des Bildes:
+
+<%= imageref("picasa01", {:border => "0", :width => "480", :height => "223", :alt => "Screenshot"}) %>
+
+Den HTML-Code unter »Bild einbinden« kopieren Sie jetzt einfach in die Seite *photoobi01.txt*:
+
+	#title "Photos Obedience 1"
+
+	<h1><%%= title %></h1>
+
+	<a href="https://picasaweb.google.com/lh/photo/wdg47Vq08yj_
+	enKBKxZgxtMTjNZETYmyPJy0liipFm0?feat=embedwebsite">
+	<img src="https://lh5.googleusercontent.com/-LoOFrVvVcQg/Tzp49KnmOgI/
+	AAAAAAAACV4/zq3zjHJ8Emw/s800/ob04.jpg" height="297" width="448" /></a>
+
+	<p><i>(Photo: Sandra Dittrich)</i></p>
+
+Ich habe auch hier wegen der besseren Lesbarkeit ein paar Umbrüche vorgenommen, die Sie aber im eigentlichen Code der Seite auf gar keinen Fall vornehmen dürfen, Sie verändern sonst die URL zu den Bildern und zum Rücklink.
+
+Google nimmt es übrigens nicht so streng mit dem Rücklink wie [[flickr]]. Wenn nichts Wichtiges dagegenspricht, ist es aber trotzdem ein Akt der Höflichkeit, den Rücklink zu setzen. Und vergessen Sie bitte nicht, den Namen der Photographin anzugeben. Es ist bei allen vier Bildern *Sandra Dittrich*. Denn auch dies ist ein Akt der Höflichkeit.
+
+Die Seiten *photoobi02.txt* bis *photobi04.txt* füllen Sie bitte genau so aus. Und wenn Sie nun den Ordner herausrendern, haben Sie die letzte Bildergalerie dieses kleinen Tutorials ebenfalls angelegt.
+
+<%= imageref("galerie08", {:border => "0", :width => "480", :height => "311", :alt => "Screenshot"}) %>
+
+## Selber hosten oder Webservices?
+
+Das Einbinden von Photos via Webservices wie [[flickr]] oder den Picasa Webalben erscheint auf den ersten Blick äußerst attraktiv, insbesondere bei quasi kostenlosen Diensten wie Picasa. Es gilt dabei jedoch zu beachten, daß dies auch mit erheblichen Risiken verbunden ist: [[flickr]] zensiert -- speziell in Deutschland. Mein eigener [[flickr]]-Account wurde schon einmal gesperrt, weil dort hochgeladene Bilder (Abbildungen klassischer Gemälde von *Gustave Doré* und *Georgio Vasari* -- das letztere aus dem Jahre 1570 -- den Tugendwächtern von Yahoo! zu nackt waren. Erst nach langwierigem Email-Verkehr und der (Selbst-) Einstufung dieser Bilder als *moderat* wurde mein Account wieder freigeschaltet.
+
+<table border="0">
+	<tr>
+		<td><%= imageref("andromeda01") %></td>
+		<td><%= imageref("andromeda02") %></td>
+	</tr>
+</table>
+
+Und ich vermute einmal, daß Ihnen dieses auch bei Google passieren kann. Oder schlimmer noch: Google hat in den letzten Jahren immer wieder mal Services, die nicht den Erwartungen der Datenkrake entsprachen, wieder vom Netz genommen. Und wer garantiert Ihnen und mir, daß dieses nicht auch mit den Picasa Webalben passiert?
+
+Auch wenn in vielen Fällen die Situation nicht so dramatisch ist: Ein große Vorteil statischer Seiten, wie sie RubyFrontier herausschreibt, ist der, daß alle Daten in Ihrem Besitz sind und bleiben. Sie sind weder von Google noch von Yahoo! abhängig. Sicher, [[flickr]] wird vermutlich nie Photos aus dem Leben eines Sportvereins zensieren, aber schon etwas weniger sicher erscheint mir, ob Google für einen längeren Zeitraum an den Picasa Webalben festhalten wird. Ohne Zweifel machen Webservices Spaß und ich nutze Sie auch gerne und viel. Aber überall dort, wo es Ihnen auf Nachhaltigkeit ankommt, sollten Sie Ihre Daten, Bilder, Videos (!) -- es muß nicht immer YouTube sein -- unter Ihrer Kontrolle behalten.
+
+In dem doch sehr speziellen Fall von Audio- und Video-Dateien werde ich Ihnen in einem späteren Artikel noch zeigen, wie Sie diese sinnvoll mit RubyFrontier selber verwalten und in Ihre Seiten einbinden können.
+
+## Der letzter Schliff
+
+<%= imageref("galerie09", {:border => "0", :width => "480", :height => "324", :alt => "Screenshot"}) %>
+
+Zwei Dinge bleiben meiner Meinung nach noch zu tun, um den Seiten des fiktiven Hundesportvereins den letztenSchliff zu verpassen. Zum einen sieht die Startseite der Galerie (*galindex*) nicht wirklich schön aus, da auch für Sie nun auch das Template greift, das Sie für die Photoseiten gescrieben haben. Doch hier ist leicht Abhilfe zu schaffen. Verschieben Sie einfach die Datei *galindex.txt* eine Ebene höher, also auf die gleiche Ebene wie zum Beispiel die *index.txt*. Und dann rendern Sie die ganze Site noch einmal neu heraus. Und *voila*, alles sieht wieder schick aus. Dank der Hilfe von RubyFroniter müssen Sie sich keine Gedanken über die internen Pfade etc. machen, das erledigt die Software für Sie. Und da Sie ja meiner Empfehlung gefolgt sind und die Seite *galindex.txt* und nicht *index.txt* genannt haben, gab es auch keine Probleme. Verstehen Sie jetzt, warum RubyFrontier eine Warnung herausgibt, wenn Dateinamen gleich lauten?
+
+Die zweite Änderung ist trivial: In den Galerien wechseln Sie ja die Navigationsmetapher von einem Linkmenü, wie Sie es in der Navigationsleiste realisiert hatten, zu den *Next-Prevs-Links*. Um klarzustellen, was die nächsthöhere Navigationsebene ist, sollte der *Galerie*-Link in der Navigationsleiste hervorgehoben werden. Machen Sie ihn doch einfach fett, indem Sie den entsprechenden Eintrag im *Galerie-Template* wie folgt ändern:
+
+	<b><a href="Galerie">Galerie</a></b>
+
+Das heißt, Sie umgeben den Link einfach noch mit dem entsprechend HTML-Tag für **bold**. Das ist generell eine einfache Strategie, um ohne großen Aufwand eine mehrstufige Navigation zu ermöglichen. Große Sites können Sie damit so konzipieren, daß Sie bei einer Änderung der Navigationsstruktur trotzdem nur den entsprechenden (Unter-) Ordner und nicht die ganze Site neu herausschreiben müssen. Auch darauf werde ich in einem späteren Kapitel noch einmal zurückkommen.
+
+Nun sind Sie an einem Punkt angelangt, der es Ihnen ermöglicht, selbstständig mit RubyFrontier zu arbeiten und eigene Sites zu entwerfen und anzulegen. Auf den nächsten Seiten werde ich auf mehr fortgeschrittenere Features eingehen, dafür aber die Grundlagen nicht mehr so ausführlich behandeln. Und dem Hundesportverein *Flughund e.V.* sagen Sie hiermit *Adieu*. Ich hoffe, er ist Ihnen ans Herz gewachsen. Damit Sie sich ihn noch einmal ansehen können, habe ich die Seiten [hier hochgeladen](http://rubyfrontier.kantel-chaos-team.de/tutorial/).

@@ -1,0 +1,13 @@
+#title "Bildersammlung"
+
+# Zwischenspiel: Eine kleine Galerie, die wachsen kann
+
+<%= imageref("pussi-waschen-1920er", {:width => "480", :height => "296"}) %>
+
+Ich gestehe: Ich bin ein manischer Sammler von Bildern. Nicht nur meine eigenen Photos und die Photos von Gabi, sondern vor allem (seltsame) Bilder, die ich im Web finde, landen alle auf meinen Festplatten. Und leider verschimmeln sie dort meistens (natürlich nur virtuell). Und so habe ich mir mit RubyFrontier eine kleine Lösung gebastelt, in der ich zumindest die Copyright-freien Bilder im Web präsentieren kann. Diese Lösung zeigt nichts Neues, sie wendet nur das bisher gezeigte an. Daher ist dieser Abschnitt auch mit »Zwischenspiel« überschrieben. Ich habe diese (hoffentlich) wachsende Galerie *»Lost & Found«* genannt.
+
+## Design-Überlegungen
+
+Da ich mich kenne, weiß ich, daß diese Website ins Unermeßliche wachsen wird. Und hier spielt dann irgendwann RubyFrontier nicht mehr mit. Der *Glossary*-Mechanismus kostet  doch zuviel Ressourcen, um in einer endlichen Zeit mehrere tausend Seiten herauszuschreiben. Daher ist die Site so designed, daß es in der Regel ausreichend ist, bei Änderungen nur Teilbäume herauszuschreiben. Genau aus diesem Grund hat Matt Neuburg in RubyFrontier die Option *Publish Folder* (übrigens auf meine Anregugung hin) implementiert. Ausgehend vom aktuellen Ordner werden dieser und alle darunterliegenden Ordner herausgeschrieben. Und so gibt es -- außer der Startseite, die natürlich auf *alle* Teilbäume verlinkt -- nur *Breadcrumbs* als Navigationselement. Bei einer Änderung muß so nur der betreffende Teilbaum, der mit der Folder-Hierarchie identisch ist, von RubyFrontier angefaßt werden. (Das *preflighting*, mit dem RubyFrontier seine *#autoglossary.yaml* neu auffüllt, geht natürlich nach wie vor über die gesamte Site. Aber selbst bei Sites mit mehreren 10.000 Seiten dauerte dies auf meinen Rechnern maximal 10 bis 20 Minuten, ist also gerade noch erträglich. Und unter Umständen braucht man dies bei einer Änderung auch nicht. Denn es gibt ja schließlich noch die Option *Publish Folder (No Preflight)*, dann geht alles ganz schnell.)
+
+Wirklich zeitfressend ist aber das Nachschlagen in solch einer aufgeblähten *#autoglossary.yaml*, so daß dann das Herausschreiben einzelner Seiten etwa zwei bis drei Sekunden dauern kann. Bei 10.000 Seiten kommen da leicht 30.000 Sekunden zusammen, das sind mehr als 8 Stunden,so daß man in solch einem Fall die gesamte Site wohl nur noch sehr selten und wenn der Rechner die Nacht über durchläuft, herausschreiben wird.

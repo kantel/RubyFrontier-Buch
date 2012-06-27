@@ -1,0 +1,15 @@
+#title "RubyFrontier und S3"
+
+# Exkurs: RubyFrontier und Amazons S3
+
+Zuerst mußte ich bei meinen Versuchen den Dateinamen index.html noch explizit anhängen, aber [diese Seite](http://docs.amazonwebservices.com/AmazonS3/latest/dev/HostingWebsiteOnS3Setup.html) hat mir geholfen, Amazon diese Unart auszutreiben. Der Trick ist folgender:
+
+1. Das Bucket muß genau so heißen wie die Domain also technisch gesprochen, die gleiche CNAME besitzen, in diesem Fall also jweb.kantel-chaos-team.de.
+2. Dann muß man über die AWS Management Console für dieses Bucket festlegen, daß die index.html das Startdokument der Website ist, der Welt den Zugriff darauf explizit erlauben und eine Bucket Policy erstellen.
+3. Die Umleitung der Domain muß auf jweb.kantel-chaos-team.de.s3-website-region.amazonaws.com erfolgen. Die genaue Region kopiert man sich am einfachsten von der Management Console, in meinem Fall war es s3-website-us-east-1.
+
+Und schon hat man eine funktionierende (statische) Website in Amazons Cloud. Ob und wenn ja, was ich damit anfangen werde, weiß ich noch nicht. Ich wollte erst einmal nur wissen, ob und wie es geht …
+
+## Synchronisieren
+
+<%= imageref("cyberducks3", {:border => "0", :width => "480", :height => "329", :alt => "Cyberduck und S3"}) %>

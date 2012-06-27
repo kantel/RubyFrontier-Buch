@@ -1,0 +1,3 @@
+#title "Vorlagen"
+
+# Eigene Templates in RubyFrontier nutzen

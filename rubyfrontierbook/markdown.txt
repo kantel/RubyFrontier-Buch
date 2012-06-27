@@ -1,0 +1,146 @@
+#title "Markdown"
+
+# Markdown und kramdown
+
+[Markdown](markdownwiki) ist eine von *John Gruber* und *Aaron Swartz* entwickelte, einfache Auszeichnungssprache mit dem Ziel, schnell und komfortabel Webseiten zu erstellen, ohne sich mit den Tücken von HTML herumschlagen zu müssen. Dabei sollte der Text für Menschen leicht lesbar bleiben. Die Referenzimplementierung ist in der Skriptpsrache Perl geschrieben und RubyFrontier ruft dieses Perl-Skript auf.
+
+Markdown hatte nie das Ziel, HTML zu ersetzen, an allen Stellen, an denen Markdown nicht ausreicht, kann man HTML einsetzen, das der Markdown-Interpreter einfach unangetastet durchreicht. Markdown ist mittlerweile so etwas wie ein (Quasi-) Standard, es existieren Implementierungen in vielen anderen Skript- und Programmiersprachen und es gibt etliche Erweiterungen, von denen eine -- nämlich *[kramdown](kramdown)* durch RubyFrontier von Hause aus unterstützt wird.
+
+Es ist nicht Ziel des Kapitels, die komplette Syntax von Markdown vorzustellen, dazu gibt es eine [hervorragende deutschsprachige Webseite](http://markdown.de/syntax/), ich möchte nur die wichtigsten Elemente vorstellen, die ich tagtäglich nutze:
+
+
+<%= imageref("markdown01", {:width => "480", :height => "162"}) %>
+
+	# Das ist eine H1-Überschrift und
+	## Das eine H2-Überschrift
+
+das geht natürlich weiter bis *H5*. Textauszeichnungen sind auch möglich:
+
+	**dieser Text wird fett dargestellt** und *dieser Text kursiv*
+	und so sieht ein [Link zur
+	RubyFrontier-Dokumentation](http://www.apeth.com/RubyFrontierDocs/default.html)
+	aus.
+	In RubyFrontier kann man interne Links natürlich auch abkürzen:
+	Hier geht es zur [Startseite](Startseite)
+
+Text, der mit einem Tabulatorschritt eingerückt ist, wird als Quelltext behandelt, also in einem `<code><pre>`-Block eingeschlossen. Um das eventuelle Maskieren von reservierten Zeichen kümmert sich Markdown selber. Das gilt auch für Inline-Code-Elemente, die zwischen zwei *Backticks* (\`) eingeschlossen werden.
+
+Listen gehen auch. Zunächst eine ungeordnete Liste:
+
+	  * Listenpunkt 1
+	  * Listenpunkt 2
+
+wird zu
+
+  * Listenpunkt 1
+  * Listenpunkt 2
+
+Dabei ist zu beachten, daß zwei Leerzeichen vor dem Stern stehen müssen.
+
+Geordnete (durchnumerierte) Listen sehen ähnlich aus. Auch zwei Leerzeichen einrücken und dann
+
+	  1. Listenpunkt 1
+	  2. Listenpunkt 2
+
+schreiben. Das ergibt das gewünschte Ergebnis:
+
+  1. Listenpunkt 1
+  2. Listenpunkt 2
+
+Die Reihenfolge der Ziffern und welche gewählt wird, ist dabei völlig unerheblich. Auch
+
+	  9. Listenpunkt 1
+	  9. Listenpunkt 2
+
+wird zu
+
+  9. Listenpunkt 1
+  9. Listenpunkt 2
+
+Die korrekte Numerierung übernimmt Markdown für uns. Das ist manchmal recht nützlich, wenn man nachträglich in einer großen Liste noch einige Punkte einfügen muß.
+
+Das ist eigentlich alles, was ich benötige und was ich mir gemerkt habe, denn für Bilder nutze ich RubyFrontiers `<%%= imageref() %>`-Makro. Brauche ich doch einmal mehr, schreibe ich dies entweder direkt in HTML (z.B. Tabellen) oder ich schaue doch einmal im Syntax-Manual nach.
+
+Es gibt (mindestens) zwei Probleme, die bei der Nutzung des Markdown-Interpreters auftreten. Links mit Klammern, wie sie zum Beispiel in der Wikipedia häufig vorkommen (`http://de.wikipedia.org/wiki/Pascal_(Programmiersprache)`) werden in Markdown nicht korrekt interpretiert, die schließende Klammer ist nicht mehr Teil des Links, der daher dann in die Leere geht. Als *Workaround* kann man an dieser Stelle direkt mit HTML arbeiten, also zum Beispiel
+
+	<a href="http://de.wikipedia.org/wiki/Pascal_(Programmiersprache)">Pascal</a>
+
+schreiben, schön ist dies natürlich nicht. Andere Markdown-Implementierungen und/oder -Erweiterungen wie *kramdown* haben diesen Fehler nicht. Das gilt auch für das zweite Problem:
+
+Da nicht nur das Sternchen (\*), sondern auch der Unterstrich (\_) genutzt werden kann, um Text _kursiv_ zu setzen, sind Unterstriche in Links und Dateinamen problematisch (auch im `<%%= imageref() %>`-Makro). Das ist ärgerlich, da Unterstriche speziell in Dateinamen für Bilder häufig vorkommen. Aber es gibt nur einen Lösung (wenn man mit Markdown arbeiten will): Alle Unterstriche in Dateinamen zum Beispiel durch Bindestriche ersetzen. Die sind unproblematisch. Auch dieser Fehler tritt in *kramdown* nicht auf.
+
+## Doch was ist mit Fußnoten?
+
+Jetzt haben Sie mich erwischt! Fußnoten kann Markdown *nicht*! Vermutlich haben die Schöpfer von Markdown Fußnoten als etwas dem Web völlig Fremdes angesehen und deshalb darauf verzichtet. Eine Aussage, die ich durchaus unterstreichen kann. In der Besten aller Welten kommen Fußnoten auf Webseiten *nicht* vor. Nur leider leben wir nicht in der Besten aller Welten und auch ich habe einige Projekte, die ohne Fußnoten nicht auskommen. Und so bin ich für diese auf *kramdwon* umgestiegen. In der Theorie war dies auch recht einfach: Sie müssen bloß in der #prefs.yaml
+
+	:markdown: true
+
+durch
+
+	:kramdown: true
+
+ersetzen und schon flutscht alles. Denn RubyFrontier kümmert sich um alles andere und nimmt in diesem Fall den *kramdown*-Interpreter. Doch leider erlebte ich einige unschöne Überraschungen: RubyFrontier ruft in der Default-Implementierung den Markdown-Interpreter im `pageFilter` auf und der arbeitet auf dem `:bodytext`, also ohne das ganze HTML des Templates drumherum. *kramdown* dagegen wird im `postMacroFilter` aufgerufen, da das mächtigere *kramdown* einige unschöne Sachen mit den Makros anstellt (genauer: Es setzt »intelligente« Anführungszeichen statt der doppelten Hochkommata). Abgesehen davon, daß »intelligente« Anführungszeichen außerhalb der anglo-amerikanischen Welt nie eine gute Idee sind, da fast jede Sprache eigene Anführungszeichen besitzt (zum Beispiel in Deutschland „“, in Frankreich »« und in der Schweiz «» -- oder umgekehrt), ist das natürlich katastrophal für Makro-Aufrufe etc. Deshalb der Aufruf nach der Makro-Ersetzung. Doch damit rennt man natürlich in folgende zwei Probleme:
+
+  1. Der `postMacroFilter` arbeitet mit dem `:postMacroText`, und das ist der Text inklusive des vollständigen Templates, da in den Templates ja ebenfalls Makros vorkommen dürfen. Und was passiert, wenn man ordentlich eingerückte Templates geschrieben hat und man *kramdown*, das ja im Prinzip eine Erweiterung von Markdown ist, mit Tabstops eingerückten HTML-Quelltext vorsetzt? Richtig! *kramdown* behandelt dies als Code und legt einen `<code><pre>`-Block drumherum. (Es gibt Tricks, der Software dieses Verhalten abzugewöhnen -- zum Beispiel auf Einrückungen verzichten --, aber schön ist es trotzdem nicht).
+  2. Schlimmer aber ist: *kramdown* schreibt den Text der Fußnoten ganz unten an den Fuß der Seite, also noch unterhalb des *Footers* mit den Copyright-Vermerk und den schönen Buttons, statt sie an das Ende des *Content*-Blocks zu schreiben. Dieses Verhalten ist nicht wirklich der Software anzulasten, denn woher soll sie wissen, wo der *Content* endet und das Template anfängt?
+
+Daher habe ich mich entschlossen, auch *kramdown* im `pageFilter` aufzurufen und deswegen direkt unter dem Kommentar, in dem Matt Neuburg *kramdown* anstelle von Markdown empfiehlt, folgende Ruby-Zeilen eingefügt:
+
+	# however, I now advise using kramdown instead of Markdown
+	# support for writing page as kramdown
+	if adrPageTable[:kramdown]
+	  adrPageTable[:bodytext] = Kramdown::Document.new(
+	    adrPageTable[:bodytext], :auto_ids => false, :entity_output => :numeric
+	  ).to_html.gsub("&quot;", '"')
+	# but kramdown substitutes also &lt;% for <%% and %&gt; for %>,
+	so if we have macros they've just been stripped
+	  adrPageTable[:bodytext] = adrPageTable[:bodytext].gsub("&lt;%", "<%%")
+	  adrPageTable[:bodytext] = adrPageTable[:bodytext].gsub("%&gt;", "%>")
+	# we also need macros for removing the "smart quotes"
+	  adrPageTable[:bodytext] = adrPageTable[:bodytext].gsub("&#8220;", "\"")
+	  adrPageTable[:bodytext] = adrPageTable[:bodytext].gsub("&#8221;", "\"")
+	end
+	# another example:
+
+*(Die erste und die letzte Kommentarzeile sind schon im `pageFilter` vorhanden, zwischen diesen ist der Code einzufügen.)*
+
+Natürlich müssen Sie dann noch im postMacroFilter den *kramdown*-Aufruf löschen (dieser Filter sollte dann, falls Sie ihn nicht schon für etwas anderes genutzt haben, leer sein).
+
+Ich bin mir -- ehrlich gesagt -- nicht hundertprozentig sicher, ob ich mit diesen Zeilen wirklich alle Probleme, die bei Makro-Aufrufen in *kramdown* vorkommen könnten, erschlagen habe. Aber bisher funktioniert diese Lösung für mich.
+
+Zusätzlich habe ich noch die Stylesheets erweitert, da mir die Default-Darstellung der Fußnoten optisch nicht gefiel, und folgende zwei Ergänzungen eingefügt:
+
+	.footnotes {
+		font-size: 90%;
+		border-top: 1px solid;
+	}
+	.footnotes li {
+		margin-left: -20px;
+	}
+
+Fußnoten werden als geordnete Liste herausgeschrieben, die in einem `<div>` der Klasse *footnotes* eingebettet sind.
+
+Nun können Sie Fußnoten nutzen. Die Syntax sieht so aus:
+
+	Dies ist ein Template um Bücher mit *kramdown*[^1] und RubyFrontier zu schreiben.
+
+	[^1]: Der Text enthält eine Fußnote, um zu zeigen, daß dies *kramdown* und
+	nicht Markdown ist.
+
+Die Numerierung ist nur *virtuell* dort kann irgendetwas stehen, es muß nur eindeutig sein, das heißt auch: Mehrere Verweise im Dokument zu *einer* Fußnote sind nicht zulässig, denn sonst könnte der Rücklink nicht funktionieren. Das Ergebnis kann also so aussehen:
+
+<%= imageref("kramdown01", {:width => "480", :height => "303"}) %>
+
+Auch hier können Sie das Ergebnis natürlich mit CSS-Basteleien noch gewaltig verschönern. Für meine Zwecke -- und ich hoffe auch für Ihre -- reicht mir dies jedoch erst einmal aus.
+
+## Markdown oder kramdown?
+
+Jetzt drängt sich Ihnen sicherlich die Frage auf: Was soll ich nutzen, Markdown oder *kramdown*? Wenn *kramdown* doch so viel mehr kann und vermutlich fehlerfrei ist, warum dann eigentlich noch Markdown? Die Antwort ist nicht so einfach, denn Markdown ist so etwas wie ein Quasi-Standard, es gibt viele Werkzeuge und Programme, die Markdown-Dateien interpretieren können. Und alle Erweiterungen, die zum Beispiel *Multimarkdown*, *PHP-Markdown*, aber eben auch *kramdown* bieten, sind in der Regel nicht kompatibel. Sie sind in der Syntax meistens sehr ähnlich, aber eben nur ähnlich.
+
+Und wenn Sie zum Beispiel Ihr Buch nicht nur als Website, sondern auch als gedrucktes Exemplar oder als eBook veröffentlichen wollen, dann müssen Sie vorsichtig mit inkompatiblen Erweiterungen sein. Zwar bietet auch *kramdown* ein Herausschreiben nach PDF (via LaTeX) an, aber wenn Sie ein Tool nutzen wollen oder müssen, das eventuell mehr kann (zum Beispiel [Pandoc](http://johnmacfarlane.net/pandoc/) oder [Easybook](http://easybook-project.org/)), dann müssen Sie erst mühselig alle proprietären Erweiterungen wieder streichen.
+
+Daher meine Empfehlung: Wenn Sie es nicht unbedingt brauchen (Fußnoten!), verzichten Sie auf *kramdown* und bleiben bei Markdown. Wenn Sie dennoch *kramdown* nutzen müssen, nutzen Sie so wenig wie möglich die proprietären Erweiterungen (auch wenn sie -- wie zum Beispiel bei den Tabellen -- noch so bequem sind). So ersparen Sie sich womöglich später in der Weiterbearbeitung viel Ärger.
+
+Wenn Sie allerdings ausschließlich für das Web schreiben und nie ein eBook oder eine Print-Ausgabe planen, dann können Sie natürlich *kramdown* mit all seinen schönen zusätzlichen Features gnadenlos nutzen. Denn was bei beiden Werkzeugen am Ende heraus kommt, ist nahezu fehlerfreies (X)HTML.
+
+Aber eigentlich ist es egal, da *kramdown* ja eine *Erweiterung* von Markdown ist. Ich für mich habe entschieden, das ich zwar *kramdown* auf *true* setze, aber in der Regel nur den Markdown-Kern von *kramdown* nutze -- mit Ausnahme der Fußnoten.

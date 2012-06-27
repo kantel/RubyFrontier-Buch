@@ -1,0 +1,155 @@
+#title "Installation"
+
+# Installation und erste Schritte
+
+## RubyFrontier installieren
+
+### Voraussetzung
+
+Um RubyFrontier auf Ihrem Mac installieren zu können, müssen Sie vorher schon TextMate installiert haben. Der Editor ist kommerziell und kostet als Einzelplatzlizenz 44,85 Euro. Falls Sie mit diesem Tutorial nur einmal ausprobieren wollen, ob RubyFrontier überhaupt das richtige Werkzeug für Sie ist, können Sie sich [auf der Seite des Herstellers](http://macromates.com/ "Macromate.com") eine 30 Tage gültige, voll funktionsfähige Probeversion herunterladen und damit erst einmal experimentieren.
+
+RubyFrontier nutzt momentan Ruby 1.8.7 (das ist die mit dem Schneeleoparden (MacOS X 10.6) und dem Löwen (MacOS X 10.7) mitgelieferte und installierte Ruby-Version). Matt Neuburg erwartet nicht, daß die derzeit aktuelle RubyFrontier-Version unter Ruby 1.9 läuft, aber eine Ruby 1.9 kompatible Version ist für die Zukunft geplant und sollte spätestens dann vorhanden sein, wenn Apple Ruby 1.9 per Default mit seinen Rechnern ausliefert.
+
+### Installation
+
+Um dann RubyFrontier auf Ihrem Mac zu installieren, müssen Sie sich erst einmal das TextMate-Bundle als Zip-Datei von [GitHub holen](https://github.com/mattneub/RubyFrontier "RubyFrontier auf GitHub").
+
+<%= imageref("rubyfrontier-github", {:border => "0", :width => "480", :height => "151", :alt => "RubyFrontier auf GitHub"}) %>
+
+Mit einem einfachen Doppelklick kann die Datei auf dem Rechner entpackt werden. Man erhält dann ein *ReadMe* als *Markdown*-Datei (was Markdown ist, erfahren Sie später) und dann das eigentliche RubyFrontier-Paket als ein TextMate-Bundle (mit der Endung `.tmbundle`).
+
+<%= imageref("rubyfrontier-tmbundle", {:border => "0", :width => "365", :height => "113", :alt => "Die ausgepackte Installation"}) %>
+
+Ein Doppelklick auf das TextMate-Bundle installiert es. Wenn alles gut gegangen ist, öffnet sich TextMate mit dem Bundle-Editor und zeigt Ihnen was alles installiert wurde.
+
+<%= imageref("ruby-frontier-bundle-editor", {:border => "0", :width => "480", :height => "341", :alt => "RubyFrontier im Bundle-Editor"}) %>
+
+Was zu tun ist, wenn die Installation danebengeht, kann ich Ihnen leider nicht sagen. Ich habe RubyFrontier schon dutzendfach auf diversen Rechnern installiert und bisher ist alles glattgegangen. Hoffen wir also einfach, daß es bei Ihnen genau so ist.
+
+RubyFrontier ist nun fertig installiert. Doch bevor Sie zum ersten Mal loslegen, zügeln Sie Ihre Neugier und beenden TextMate erst einmal wieder und öffnen es dann neu.
+
+## Die erste Website
+
+Denn bevor Sie wirklich eine neue Website mit RubyFrontier anlegen können, müssen noch einige Vorarbeiten erledigt werden. Erstellen Sie zuerst einen Ordner, der alle ihre RubyFrontier-Projekte enthalten soll und nennen Sie ihn irgendwie, zum Beispiel `myRubyFrontierSites`.
+
+Tip: Wenn Sie über einen Dropbox-Account verfügen, können Sie diesen Ordner auch in ihrer Dropbox anlegen. Sie können dann mit ihren Dateien auf allen Rechnern arbeiten, die mit Ihrer Dropbox verbunden sind (vorausgesetzt, auf ihnen ist ebenfalls TextMate und RubyFrontier installiert).
+
+Jetzt öffnen Sie TextMate wieder. Falls Sie Ihre Version so konfiguriert haben, daß der Editor beim Öffnen kein Textfenster (weder ein leeres noch das zuletzt benutzte) öffnen soll, öffnen Sie eines, weil sonst die RubyFrontier-Befehle nicht aufgerufen werden können.
+
+Nun gehen sie in das Menü *Bundles* und wählen `RubyFrontier > New Site` aus. Eventuell besteht TextMate darauf, daß Sie vorher Ihr leeres Textfenster sichern müssen. Tun Sie der Software diesen gefallen und sichern Sie es irgendwo ab, wo Sie es leicht wiederfinden und wegwerfen können (das dürfte bei den meisten von Ihnen der Schreibtisch sein). Den folgenden Dialog navigieren Sie *in* den soeben angelegten Ordner `myRubyFrontierSite` (oder wie immer Sie ihn genannt haben) und legen dort einen neuen Ordner an. Ich habe ihn aus naheliegenden Gründen `tutorial` genannt.
+
+<%= imageref("neuer-source-folder", {:border => "0", :width => "480", :height => "356", :alt => "Dialog um eine neue Webseite anzulegen"}) %>
+
+Und *voilà*, schon öffnet sich ein Projekt-Fenster, das Ihnen einen frisch generierten Ordner mit vielen Dateien, also Ihr neues Projekt, zeigt:
+
+<%= imageref("neues-projekt", {:border => "0", :width => "480", :height => "289", :alt => "Frisch angelegtes RubyFrontier-Projekt"}) %>
+
+Bevor Sie weitermachen, sollten Sie noch etwas erledigen, was sonst im Eifer des Gefechts leicht untergeht: Sichern Sie Ihr frisch angelegtes Projekt. Dazu gehen Sie in TextMate in das Menü *File* und dann zu `Save Project`. Legen Sie die Projektdatei oberhalb Ihres frisch angelegten Tutorial-Ordners, aber im Ordner `myRubyFrontierSites` ab.
+
+<%= imageref("projekt-sichern", {:border => "0", :width => "480", :height => "356", :alt => "Das Projekt sichern"}) %>
+
+Nennen Sie es wie Ihr Projekt, also *tutorial*. Das ist nicht zwingend vorgeschrieben, aber es erleichtert bei vielen Projekten die Übersicht ungemein. Ihr frisch angelegter Projektordner sollte also so aussehen:
+
+<%= imageref("projektstruktur", {:border => "0", :width => "480", :height => "175", :alt => "RubyFrontier-Projektstruktur"}) %>
+
+Als Letztes ist eines noch zu erledigen: Öffnen Sie die Datei `#ftpSite.yaml` und ändern Sie sie wie folgt:
+
+    :folder: ~/Desktop/tutorial
+    :method: file
+    :isLocal: true
+
+Unter `:folder:` wählen Sie einfach den Ordner aus, in dem Sie Ihre fertigen Webseiten ablegen möchten. Für's erste reicht der Schreibtisch, später werde ich Ihnen andere Alternativen vorschlagen und Ihnen auch erklären, was der merkwürdige Lattenzaun (#, auch Doppelkreuz genannt) bedeutet, der dieser und anderen Dateien und Ordner vorsteht, bedeutet.
+
+Gratuliere! Sie haben Ihr erstes RubyFrontier-Projekt erfolgreich angelegt. Ab jetzt können Sie Ihr Projekt einfach öffnen, in dem Sie auf die Projektdatei klicken.
+
+### Jetzt aber ...
+
+Nun da Sie die Vorarbeiten erledigt haben, sind Sie endlich in der Lage, Ihre erste Website mit RubyFrontier zu erstellen. Daher öffnen Sie mit einem Doppelklick auf die Projektdatei *tutorial* TextMate erneut und löschen erst einmal die Dateien *firstpage.txt*, *secondpage.txt* und *thirdpage.txt*. Dies sind englischsprachige Beispieldateien, die Sie nicht mehr benötigen. Dafür legen wir eine Datei *index.txt* auf der obersten Ebene im *tutorial*-Ordner an, in die Sie Folgendes hineinschreiben:
+
+    #title "Startseite"
+    
+    <h1>Meine erste Website: <%%= title %></h1>
+
+    <p>
+    Hallo Welt! Grüße von RubyFrontier.</p>
+
+Jetzt achten Sie darauf, daß diese Datei im Hauptfenster zu sehen ist (den Fokus besitzt) und wählen im Menü *Bundle* den Punkt *RubyFrontier > Publish* Page aus. Wenn Sie sich nicht irgendwo vertippt haben, sollte -- nachdem TextMate eine Zeitlang gearbeitet hat -- Ihr Standard-Browser aufgehen und ihnen folgende Seite zeigen:
+
+<%= imageref("index", {:border => "0", :width => "480", :height => "224", :alt => "Ihre erste, mit RubyFrontier erstellte Seite"}) %>
+
+Das Mitteilungsfenster von TextMate wird ihnen übrigens als erstes eine Meldung präsentieren, daß es die Datei *exifr* nicht finden und dies früher oder später Ärger verursachen kann -- oder auch nicht. Diese fehlende Datei ist eine Ruby-Bibliothek, die Informationen aus TIFF-Bildern extrahiert. Aber da TIFF-Bilder im Web eigentlich sowieso nichts zu suchen haben, ignorieren sie diese Meldung einfach. Ich habe mich schon lange daran gewöhnt.
+
+### Doch jetzt wieder die Frage: Was ist eigentlich passiert?
+
+Die erste Zeile mit der merkwürdigen Bezeichnung
+
+    #title "Startseite"
+
+ist eine *Direktive*. Sie weist RubyFrontier an, daß unter dem Namen *title* der Wert *Startseite* abzuspeichern ist. Jede neue Seite *muß* die Direktive *title* enthalten und diese sollte aus Gründen, die ich Ihnen weiter unten erläutere, *eindeutig* sein, d.h. keine Seite darf den gleichen Titel wie eine andere besitzen.
+
+Bevor RubyFrontier mit dem Prozeß des Herausschreibens beginnt, sammelt es diese und andere Direktiven im Hauptspeicher und kann dann darauf zugreifen. Genau das haben Sie mit der Zeichenfolge
+
+    <h1>Meine erste Website: <%%= title %></h1>
+
+getan. An dieser Stelle wird der Inhalt der title-Direktive, in diesem Falle also »Startseite«, eingesetzt. Auch wenn Direktiven weit mächtiger sind, können sich Programmierer diese erst einmal als eine Art Variable vorstellen.
+
+Der Rest ist simples HTML. RubyFrontier kann auch mit anderen Markup-Sprachen (z.B. Markdown) umgehen, wie ich Ihnen in einem späteren Abschnitt zeigen werde.
+
+Der Befehl »Publish Page« hat RunyFrontier angewiesen, den Text als HTML-Datei herauszuschreiben, zu »rendern«, das heißt aus diesem Text eine HTML-Seite für das Web zu erstellen. Die Seite liegt, wenn Sie meinen Empfehlungen gefolgt sind, auf Ihrem Schreibtisch im Ordner *tutorial* und heißt *index.html*. Es ist eine stinknormale HTML-Seite. Sie können Sie mit jedem beliebigen Texteditor öffnen und sich anschauen, Sie könnten sie aber auch mit einem (S)FTP-Client Ihrer Wahl auf einem Server ablegen.
+
+### Templates
+
+Doch wo kommt eigentlich der Rest des HTML her, das RubyFrontier um Ihre Websiete herum gebastelt hat? Um das herauszubekommen, öffnen Sie doch einfach in TextMate die Datei *#template.txt* und Sie werden dieses sehen:
+
+    <%%= pageheader() %>
+    <p id="bodytext"></p>
+    <hr />
+    <%%= nextprevlinks() %>
+    <%%= pagefooter() %>
+
+Die erste Zeile sorgt dafür, daß das HTML *vor* Ihrem Text erzeugt wird, die letzte Zeile bringt das HTML *nach* Ihrem Text. Und der Eintrag
+
+    <p id="bodytext"></p>
+
+sorgt dafür, daß an dieser Stelle Ihr Text erscheint. Danach wird noch eine horizontale Linie erzeugt und ein Makro aufgerufen, das Links zu den vorherigen und nachfolgenden Seiten erzeugt, falls Sie das wünschen. Momentan benötigen Sie diese Zeile noch nicht, daher können Sie sie gefahrlos löschen (es stört aber auch nicht wirklich, wenn Sie sie stehen lassen.
+
+Das heißt also: Jedesmal, wenn Sie eine Seite herausrendern, sucht sich RubyFrontier das »zuständige« Template und bringt dieses mit Ihrem zu rendernden Text zusammen.
+
+Natürlich können Sie auch Templates ändern. Vermerken Sie doch einfach einmal stolz in ihrem Template, womit Sie die Seite herausgeschrieben haben
+
+    <%%= pageheader() %>
+    <p id="bodytext"></p>
+    <hr />
+    <p style="font-size:small;">
+    Diese Seite wurde mit RubyFrontier erstellt.</p>
+    <%%= pagefooter() %>
+
+und rendern dann Ihre Datei *index.txt* erneut heraus. Sie sollte jetzt so aussehen:
+
+<%= imageref("index02", {:border => "0", :width => "480", :height => "238", :alt => "Änderung am Template"}) %>
+
+Die Zeilen
+
+    <%%= pageheader() %>
+    <%%= pagefooter() %>
+
+sind, wie schon erwähnt, Makroaufrufe. Makroaufrufe stehen immer in spitzen Klammern und Prozentzeichen. Und das Gleichheitszeichen bedeutet, daß das Makro einen Wert (in der Regel einen String, also Text) zurückliefert. Makros ohne das Gleichheitszeichen berechnen zwar auch irgendetwas, haben aber nur indirekt Einfluß auf die herausgeschriebenen Seiten.
+
+
+### Ein erstes Makro
+
+Das ist zwar schon etwas, aber eigentlich noch langweilig. Häufig steht im Footer einer Seite, wann das letzte Update passiert ist. Dafür schreiben wir uns ein *Makro*. Makros sind kleine Ruby-Programme, die irgendetwas zurückliefern, was Sie in Ihre Webseite einbauen wollen. Üblicherweise werden Makros im *#tools*-Ordner abgelegt und haben die Dateiendung *.rb*. Also öffnen Sie den Tools-Ordner und legen darin eine Datei mit dem Namen *clocknow.rb* an. Und in diese Datei schreiben Sie folgendes kleine Ruby-Skript:
+
+    def clocknow()
+      t = Time.new
+      t.strftime("%d.%m.%Y, %H:%M Uhr")
+    end
+
+Makro-Dateien haben üblicherweise den gleichen Namen wie die Funktion, die daraus aufgerufen werden soll -- obwohl das nicht zwingend ist. Aber es erleichtert die Übersicht. Den Namen *clocknow* habe ich als Reminiszens an eine gleichnamige Frontier-Funktion gewählt. Ruby-Funktionen liefern im Default-Fall den Wert der letzten Programmzeile (vor dem *end*) zurück, ein explizites *return* ist nicht erforderlich. Die Funktion ist recht einfach: Erst weisen Sie der Variablen *t* die aktuelle Zeit zu und dann formatieren Sie diese, so daß sie den deutschen Gepflogenheiten, also *dd.mm.YYYY, HH:MM* entspricht. Die vorletzte Zeile in Ihrem Template ändern Sie auch noch (der Zeilenumbruch dient nur der besseren Lesbarkeit):
+
+    <p style="font-size:small;">Diese Seite wurde mit RubyFrontier erstellt.
+       Letzte Änderung: <%%= clocknow() %></p>
+
+Und schon steht nach jedem Herausschreiben die aktuelle Uhrzeit auf Ihrer Seite.
+
+<%= imageref("clocknow", {:border => "0", :width => "480", :height => "248", :alt => "Seite mit aktueller Uhrzeit"}) %>

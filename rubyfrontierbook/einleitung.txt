@@ -1,0 +1,77 @@
+#title "Einleitung"
+
+# <%= title %>
+
+## Was ist RubyFrontier?
+
+### Die Kurzfassung
+
+[RubyFrontier](http://www.cognitiones.de/doku.php/rubyfrontier) ist ein Werkzeug, um [statische Webseiten](http://www.cognitiones.de/doku.php/statische_seiten) in einem Texteditor unter MacOS X) zu erstellen (zur Zeit wird leider nur der (kommerzielle) Editor [TextMate](http://www.cognitiones.de/doku.php/textmate) unterstützt). Die Software wurde von [Matt Neuburg](http://www.apeth.net/matt/) in der Programmiersprache [Ruby](http://www.cognitiones.de/doku.php/ruby) geschrieben und kann mit Ruby-Skripten erweitert werden.
+
+### Die Langfassung (und ein wenig Computer- und Netzgeschichte)
+
+Vor langer, langer Zeit, als es das Internet noch gar nicht wirklich gab, gab es für die Macintosh-Computer eine Software, die [Frontier](http://www.cognitiones.de/doku.php/frontier) hieß. Sie war -- bis zur Version 5.0.1 -- frei (im Sinne von Freibier) und so etwas wie eine eierlegende Wollmilchsau. Sie konnte andere Apple-Programme steuern (lange bevor es AppleScript gab), sie konnte Daten in einer integrierten Objekt-Datenbank (*Look ma, no SQL*) speichern, sie war ein Outliner und ab der Version 5 auch ein *Webserver auf dem Desktop*. Vor allem aber besaß sie seit der Version 4.2.3 ein sogenanntes *Website Framework*, mit dem man für die damaligen Verhältnisse einfach und effektiv statische Webseiten herausschrieben konnte. Und sie besaß eine integrierte Skriptsprache, *UserTalk*, mit der man das System an seine Bedürfnisse anpassen und experimentieren konnte. Frontier war 1988 von [Dave Winer](http://de.wikipedia.org/wiki/Dave_Winer), einem Weblog-Pionier entwickelt worden und wurde von seiner Firma UserLand vertrieben, die Versionen größer 5.0.1 waren kommerziell und mußten bezahlt werden.
+
+<%= imageref("frontierdesktop", {:border => "0", :width => "468", :height => "427", :alt => "Frontier unter MacOS X"}) %>
+
+Winer hatte und hat bis heute immer großartige Ideen, leider haperte es häufig an der Ausführung. So ignoriert er bis heute -- obwohl er ein Großneffe [Arno Schmidts](http://de.wikipedia.org/wiki/Arno_Schmidt) ist --, daß es auch andere Sprachen als Englisch gibt und diese womöglich einer besonderen Beachtung wegen ihrer Schriftzeichen (zum Beispiel Umlaute) benötigen. Ich hatte meine ersten Schritte im Web mit Frontier begonnen und auch mein Weblog, der [Schockwellenreiter](http://www.schockwellenreiter.de/) lief in de ersten Jahren mit dem auf Frontier basierenden *Content Management System* (CMS) [Manila](http://www.cognitiones.de/doku.php/manila) auf einem von Winers Servern. Später wechselte ich dann zu dem ebenfalls auf Frontier basierenden *Radio UserLand*, einem CMS und Weblog-Tool, das als *Webserver auf dem Desktop* arbeitete und statische Seiten auf den Server meiner Wahl herausrenderte.
+
+Frontier und Radio UserLand waren über Jahre so etwas wie mein *Uber Tool*, ich programmierte fast alle meine Web-Aktivitäten damit, zum Beispiel auch das [Virtual Laboratory for Physiology](http://vlp.mpiwg-berlin.mpg.de/index_html), eine Website zur Erforschung der Medizingeschichte des 19.&nbsp;Jahrhunderts (aber auch hier wechselte ich vor einigen Jahren zu Zope -- siehe unten).
+
+<%= imageref("outliningswr", {:border => "0", :width => "464", :height => "225", :alt => "Der Schockwellenreiter in Frontier"}) %>
+
+Als Frontier dann kommerziell und die Objekt Datenbank (ODB) ob ihrer Größe instabil wurde, wechselte ich zu [Zope](http://www.cognitiones.de/doku.php/zope), einem auf der Programmiersprache Python basierendem CMS, das große Ähnlichkeiten mit Frontier hatte. Doch einige Jahre später -- Dave Winer hatte sich aus gesundheitlichen Gründen von UserLand zurückgezogen -- wurde Frontier Open Source und ich stieg sofort wieder um und nutzte von 2005 bis 2009 das *Static Site Framework* um mein Blog zu erstellen. Leider gab es nicht genug Entwickler, um das [Open Source Frontier](http://www.frontierkernel.org/) nicht nur am Leben zu erhalten, sondern weiterzuentwickeln und die *Fork*, die Winer mit seinem [OPML Editor](http://www.cognitiones.de/doku.php/opml_editor) (ein nahzu komplettes Frontier) anbot, hatte alles, nur nicht das *Static Site Framework* (auf meine Veranlassung war es kurzfristig unter den *Tools* dabei, verschwand dann aber aus mir unbekannten Gründen wieder aus dem Angebot).
+
+Aber zuerst einmal war ich begeistert und schrieb auch ein [Tutorial](http://www.frontierweb.de/tutorial/part1.html) über *Frontiers Static Site Framework*, das ich für diese Einführung in RubyFrontier [überarbeitet habe](ersterauftritt).
+
+So läuft mein Blog seitdem mit WordPress, ich bin aber nicht wirklich glücklich darüber und denke immer wieder mal nach, ob ich nicht wieder ein statisches Blog schreibe -- evtl. tatsächlich mit RubyFrontier. (Eigentlich habe ich schon alles dafür konzipiert, nur es muß etliches programmiert werden -- speziell das Herausschreiben des RSS-Feeds -- und ich bin bisher einfach noch nicht dazu gekommen. Aber wenn dieses Buch fertig geschrieben ist, habe ich vielleicht wieder ein wenig mehr Zeit.)
+
+Wie dem auch sei, Winers Version von Frontier, der OPML Editor, [lebt und wird auch weiterentwickelt](http://editor.opml.org/helpmenu.html). Aber ihm fehlt einiges, speziell die Möglichkeit, statische Seiten herauszuschreiben. Und in diese Bresche sprang Matt Neuburg, einst ebenfalls ein großer Frontier-Fan, der auch ein [Buch darüber veröffentlicht hatte](http://www.apeth.net/matt/defaultfrontier.html) (das über Jahre so etwas wie meine Bibel war), mit RubyFrontier.
+
+## Warum RubyFrontier?
+
+### Warum überhaupt statische Seiten?
+
+<%= imageref("staticgenerator-chart", {:border => "0", :width => "480", :height => "120", :alt => "Vergleich statische vs. dynamische Seiten"}) %>
+
+Statische Seiten sind unheimlich schnell. Obiger Vergleich zeigt, daß statische Seiten bis zu 14 mal schneller als (selbst gecachte) dynamisch erzeugte Seiten vom Browser geladen werden.
+
+Statische Seiten sind sicher: Es gibt für Angreifer keine Möglichkeit, mit irgendwelchen Skripten ihren Webauftritt zu manipulieren. Denn in der Regel liegen die Quellen auf Ihrem Desktop. Und da muß ein Angreifer erst einmal herankommen. Okay, wenn Sie Ihren Laptop mit all Ihren Quellen im Zug liegen lassen -- wie es angeblich einigen britischen Geheimdienstlern passiert sein soll --, dann haben auch Sie mit Zitronen gehandelt, aber unter normalen Umständen sind Sie der einzige, der die Integrität Ihrer Quellen beschädigen kann. Das natürlich eine vernünftige Backup-Strategie die Sicherheit fördert, muß ich Ihnen sicher nicht erst erzählen, oder?
+
+Statische Seiten gehören Ihnen: Wenn Sie RubyFrontier (aber auch andere Template Toolkits wie das schon erwähnte Perl Template Toolkit oder Ninja2) nutzen, rendert die Software die Seiten auf Ihrem Rechner heraus. Und auch die Quelltexte liegen auf Ihrem Rechner. Falls also irgendein Provider beschließt, Sie zu zensieren oder auch aus finanziellen Gründen den Laden schließen zu wollen, suchen Sie sich einfach einen anderen und laden die Seiten da wieder hoch.
+
+Natürlich funktioniert ein Framework wie RubyFrontier zur Erstellung statischer Seiten nicht wie ein Webserver auf dem Desktop. Dabei hat diese Idee durchaus Charme und es gibt einige Anwendungen, die die Nützlichkeit dieses Konzeptes zeigen, zum Beispiel die Mathematik-Software [Sage](http://www.cognitiones.de/doku.php/sage). Ich habe sie auch nicht völlig aus den Augen verloren, setze da aber weniger auf den OPML Editor (obwohl auch das durchaus Charme hätte), sondern auf den einfach zu installierenden in Python geschriebenen Webserver [web2py](http://www.cognitiones.de/doku.php/web2py). Vermutlich wird eine Einführung in dieses Framewokr mein nächstes Buchprojekt.
+
+### RubyFrontier
+
+Es gibt viele Tools, um statische Seiten zu erzeugen. Die meisten sind *Template Engines*, die sowohl statische Seiten erzeugen, aber auch im Hintergrund für ein dynamisches *Web Framework* agieren können. Mein Favorit war lange Zeit das in der Skriptsprache Perl geschriebene [Perl Template Toolkit](http://www.cognitiones.de/doku.php/perl_template_toolkit), aber auch andere wie [Jekyll](http://www.cognitiones.de/doku.php/jekyll) (Ruby) oder Ninja2 (Python) hatten meine Sympathie. Bis mir dann auffiel, daß alle diese Werkzeuge einen »Profi«-Ansatz hatten, das heißt, daß es keinen einfachen Einstieg für Menschen gab, die nicht unbedingt auf ein abgeschlossenes Informatik-Studium zurückblicken konnten. Und das, obwohl fast alle das Gegenteil behaupteten. RubyFrontier wiederum ist nach Einschätzung seines Schöpfers zwar ein Werkzeug für Programmierer, doch wie ich Ihnen in den nächsten Abschnitten zeigen werde, ist der Einstieg auch für Nicht-Programmierer doch recht einfach.
+
+Ein wenig skripten muß man zwar auch hier und wenn man Ruby gut beherrscht, kann man sich nahezu alle Wünsche, die man an eine *Template-Engine* hat, mit RubyFrontier erfüllen. Aber der Einstieg ist -- dank der hervorragenden Integration in TextMate -- einfach und leicht nachvollziehbar.
+
+### RubyFrontiers Grenzen
+
+RubyFrontier ist sehr schnell -- bedeutend schneller als es Frontier je war --, aber es gibt Situationen, bei denen der Einsatz nicht mehr sinnvoll ist. Falls Sie zum Beispiel zehntausende von Katalog-Seiten herausschreiben müssen, dann sollten Sie auf andere Werkzeuge zurückgreifen. Der *Glossary*-Mechanismus von RubyFrontier ist sinnvoll und erleichtert Ihnen die Arbeit ungemein, aber er kostet auch Zeit, und zwar *viel* Zeit. Und bei zehntausenden von Einträgen kann das Herausschreiben der HTML-Seiten auch schon mal einen Tag und eine Nacht oder noch länger dauern. Glauben Sie mir, ich habe es mit einem Katalog des Nachlasses eines vor etwa 100 Jahren gestorbenen Wissenschaftlers probiert (circa 80.000 HTML-Seiten) und mir dann entnervt ein kleines, schmutziges Skript in Python geschrieben. Das konnte zwar nur die Webseiten des Katalogs mit den dazugehörigen Scans rausschreiben und sonst gar nichts, war aber dafür nach wenigen Minuten damit fertig. RubyFrontier benötigte für die gleiche Aufgabe etwa 36 Stunden.
+
+Aber für einen durschnittlichen Web-Auftritt selbst mit ein paar hundert Seiten ist RubyFrontier durchaus das geeignete Werkzeug.
+
+### Mac only
+
+Bis dato läuft RubyFrontier nur auf Apple-Rechnern unter MacOS X und auch nur mit TextMate. Das ist nicht zwingend, denn Ruby läuft eigentlich auf so ziemlich allem, was die Bezeichnung Betriebssystem verdient (also auch unter Windows und den diversen Linux-/Unix-Derivaten). Gelegentlich hat Matt verlauten lassen, daß er daran denke, diese Abhängigkeiten zu beseitigen, aber es scheint nicht wirklich eine hohe Priorität zu haben. Mein Favorit wäre ja der in Java geschriebene, plattformübergreifende Editor [jEdit](http://www.cognitiones.de/doku.php/jedit), für den es ein komfortables *Project Viewer*-Plugin gibt, mit dem ich alle meine [Perl Template Toolkit](http://www.cognitiones.de/doku.php/perl_template_toolkit)-Projekte verwalte.
+
+<%= imageref("projektviewer-in-jedit", {:border => "0", :width => "480", :height => "425", :alt => "jEdit mit Project-Viewer"}) %>
+
+Aber vielleicht setzt sich auch mal jemand anders daran und baut RubyFrontier plattformübergreifend aus. RubyFrontier ist schließlich *Open Source* und steht unter der äußerst liberalen MIT-Lizenz. Und es sind ganze elf Befehle, die anzupassen und mit dem Text-Editor zu verheiraten sind. Dem Absatz dieses Buches würde es jedenfalls bestimmt nicht schaden, wenn RubyFrontier auch unter Windows und Linux laufen würde.
+
+### Kein Outliner
+
+Einer der großen Stärken von Frontier war (und ist es beim OPML Editor noch heute), daß es mit Outlines, also strukturierten, eingerückten und ausklappbaren Texten umgehen und diese auch skripten konnte. Mein Weblogzum Beispiel war so organisiert, daß in der ersten Ebene die Überschriften eines Beitrags standen und in der zweiten Ebene und darunter der eigentliche Text. Und der Outline-Renderer (ein UserTalk-Skript) nutzte diese Struktur um dann nicht nur das eigentliche Weblog herauszuschreiben, sondern auch um den RSS-Feed zu produzieren.
+
+Matt Neuburg hat zwar die wichtigsten Outline-Kommandos aus Frontier nach RubyFrontier portiert, aber TextMate ist nun mal kein Outliner. Wer Outlines benötigt, muß diese mit einem externen Programm im OPML-Format erzeugen (dazu böte sich unter anderem natürlich Dave Winers OPML Editor als *Open Source*-Programm an, aber auch das kommerzielle [OmniOutliner](http://www.omnigroup.com/products/omnioutliner/) ab ca. 40 US-$ kann OPML-Dateien herausschreiben).
+
+<%= imageref("markdown-in-rubyfrontier", {:border => "0", :width => "480", :height => "386", :alt => "Markdown in RubyFrontier"}) %>
+
+Aber es gibt auch eine interne Alternative: RubyFrontier kann mit der Auszeichnungssprache [Markdown](http://www.cognitiones.de/doku.php/markdown) und dessen Superset [kramdown](http://www.cognitiones.de/doku.php/kramdown) umgehen, wobei für meinen Geschmack die Unterstützung von *kramdown* noch etwas gewöhnungsbedürftig ist. Außerdem ist Markdown so etwas wie ein plattformübergreifender Standard und wird von TextMate hervorragend unterstützt. Daher benutze ich bei fast allen meinen Seiten nun Markdown statt eines Outlines und habe so ein leicht lesbares Quellformat, das nicht nur von RubyFrontier in valides (X)HTML gewandelt wird, sondern das ich gegebenenfalls auch leicht in andere Formate (zum Beispiel nach LaTeX) umwandeln kann (das erzeugte LaTeX-File bedarf zwar noch einer gründlichen Nachbehandlung, aber ein Anfang ist damit gemacht). So kommt es, daß ich den Outliner nicht mehr wirklich vermisse.
+
+### Für Autoren
+
+Dave Winer hatte einmal geschrieben: *»The web is an writing environment.« -- »Das Netz ist eine Umgebung für Autoren.«* Und genau das ist auch RubyFrontier: Eine Arbeitsumgebung für Autoren. Und zwar für unabhängige Autoren, die bis zur endgültigen Publikation die volle Kontrolle über ihre Veröffentlichungen behalten wollen.

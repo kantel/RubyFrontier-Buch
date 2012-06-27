@@ -1,0 +1,59 @@
+body {
+	text-align: center; /* IE-Fix */
+	font-family: 'Trebuchet MS', Verdana, 'Lucida Grande', Arial, Helvetica, sans-serif;
+	/* font-size: 100.01%/1.0; */
+	font-size: 100%;
+	color: #111111;
+}
+
+pre {
+	border: 1px dashed #cccccc;
+	padding: 20px 10px;
+}
+
+code, pre {
+	background-color: #f9f9f9;
+	font-family: "Lucida Sans Typewriter", "Monaco", "Courier New", Courier, monospace;
+	font-size: 90%;
+}
+
+.wrapper {
+	width: 920px;
+	margin: 0 auto;
+	text-align: left;
+}
+
+.content {
+	overflow: hidden;
+}
+
+.content .maincontent {
+	width: 650px;
+	padding-right: 20px;
+	float: right;
+	display: inline;
+}
+
+.content .navbar {
+	width: 230px;
+	float:left;
+	display: inline;
+}
+
+.header {
+	border-bottom: 1px solid;
+}
+
+.header .mylogo {
+	float: left;
+	margin-right: 10px;
+}
+
+.header .mytitle {
+	float: left;
+}
+
+.footer {
+	font-size: 70%;
+	border-top: 1px solid;
+}

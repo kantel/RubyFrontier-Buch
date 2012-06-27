@@ -1,0 +1,165 @@
+--- 
+s3: &id005 
+  :linetext: RubyFrontier und S3
+  :path: !ruby/object:Pathname 
+    path: s3.html
+  :adr: !ruby/object:Pathname 
+    path: /Users/kantel/Dropbox/myRubyFrontierSites/rubyfrontierbook/s3.txt
+rfgui: &id001 
+  :linetext: RubyFrontier GUI
+  :path: !ruby/object:Pathname 
+    path: rfgui.html
+  :adr: !ruby/object:Pathname 
+    path: /Users/kantel/Dropbox/myRubyFrontierSites/rubyfrontierbook/rfgui.txt
+directiven: 
+  :linetext: Directiven
+  :path: !ruby/object:Pathname 
+    path: directiven.html
+  :adr: !ruby/object:Pathname 
+    path: /Users/kantel/Dropbox/myRubyFrontierSites/rubyfrontierbook/directiven.txt
+gassirunden: 
+  :linetext: Gassirunden
+  :path: !ruby/object:Pathname 
+    path: gassirunden.html
+  :adr: !ruby/object:Pathname 
+    path: /Users/kantel/Dropbox/myRubyFrontierSites/rubyfrontierbook/gassirunden.txt
+ersterauftritt: &id003 
+  :linetext: Eine erste Website
+  :path: !ruby/object:Pathname 
+    path: ersterauftritt.html
+  :adr: !ruby/object:Pathname 
+    path: /Users/kantel/Dropbox/myRubyFrontierSites/rubyfrontierbook/ersterauftritt.txt
+buch: &id004 
+  :linetext: "B\xC3\xBCcher schreiben"
+  :path: !ruby/object:Pathname 
+    path: buch.html
+  :adr: !ruby/object:Pathname 
+    path: /Users/kantel/Dropbox/myRubyFrontierSites/rubyfrontierbook/buch.txt
+desktop-wiki: &id010 
+  :linetext: Desktop-Wiki
+  :path: !ruby/object:Pathname 
+    path: wiki.html
+  :adr: !ruby/object:Pathname 
+    path: /Users/kantel/Dropbox/myRubyFrontierSites/rubyfrontierbook/wiki.txt
+rendering: &id002 
+  :linetext: Rendern
+  :path: !ruby/object:Pathname 
+    path: rendering.html
+  :adr: !ruby/object:Pathname 
+    path: /Users/kantel/Dropbox/myRubyFrontierSites/rubyfrontierbook/rendering.txt
+html5: &id008 
+  :linetext: (X)HTML5
+  :path: !ruby/object:Pathname 
+    path: html5.html
+  :adr: !ruby/object:Pathname 
+    path: /Users/kantel/Dropbox/myRubyFrontierSites/rubyfrontierbook/html5.txt
+github: &id009 
+  :linetext: RubyFrontier und GitHub
+  :path: !ruby/object:Pathname 
+    path: github.html
+  :adr: !ruby/object:Pathname 
+    path: /Users/kantel/Dropbox/myRubyFrontierSites/rubyfrontierbook/github.txt
+vorlagen: 
+  :linetext: Vorlagen
+  :path: !ruby/object:Pathname 
+    path: vorlagen.html
+  :adr: !ruby/object:Pathname 
+    path: /Users/kantel/Dropbox/myRubyFrontierSites/rubyfrontierbook/vorlagen.txt
+rubyfrontier gui: *id001
+rendern: *id002
+markdown: 
+  :linetext: Markdown
+  :path: !ruby/object:Pathname 
+    path: markdown.html
+  :adr: !ruby/object:Pathname 
+    path: /Users/kantel/Dropbox/myRubyFrontierSites/rubyfrontierbook/markdown.txt
+litlinks: &id012 
+  :linetext: Bibliographie
+  :path: !ruby/object:Pathname 
+    path: litlinks.html
+  :adr: !ruby/object:Pathname 
+    path: /Users/kantel/Dropbox/myRubyFrontierSites/rubyfrontierbook/litlinks.txt
+filter: 
+  :linetext: Filter
+  :path: !ruby/object:Pathname 
+    path: filter.html
+  :adr: !ruby/object:Pathname 
+    path: /Users/kantel/Dropbox/myRubyFrontierSites/rubyfrontierbook/filter.txt
+eine erste website: *id003
+einleitung: 
+  :linetext: Einleitung
+  :path: !ruby/object:Pathname 
+    path: einleitung.html
+  :adr: !ruby/object:Pathname 
+    path: /Users/kantel/Dropbox/myRubyFrontierSites/rubyfrontierbook/einleitung.txt
+mamp: 
+  :linetext: MAMP
+  :path: !ruby/object:Pathname 
+    path: mamp.html
+  :adr: !ruby/object:Pathname 
+    path: /Users/kantel/Dropbox/myRubyFrontierSites/rubyfrontierbook/mamp.txt
+referenzen: &id006 
+  :linetext: Querverweise
+  :path: !ruby/object:Pathname 
+    path: referenzen.html
+  :adr: !ruby/object:Pathname 
+    path: /Users/kantel/Dropbox/myRubyFrontierSites/rubyfrontierbook/referenzen.txt
+installation: 
+  :linetext: Installation
+  :path: !ruby/object:Pathname 
+    path: installation.html
+  :adr: !ruby/object:Pathname 
+    path: /Users/kantel/Dropbox/myRubyFrontierSites/rubyfrontierbook/installation.txt
+"b\xC3\xBCcher schreiben": *id004
+rubyfrontier und s3: *id005
+querverweise: *id006
+nachwort: 
+  :linetext: Nachwort
+  :path: !ruby/object:Pathname 
+    path: nachwort.html
+  :adr: !ruby/object:Pathname 
+    path: /Users/kantel/Dropbox/myRubyFrontierSites/rubyfrontierbook/nachwort.txt
+index: &id007 
+  :linetext: Startseite
+  :path: !ruby/object:Pathname 
+    path: index.html
+  :adr: !ruby/object:Pathname 
+    path: /Users/kantel/Dropbox/myRubyFrontierSites/rubyfrontierbook/index.txt
+"gassirunden: startseite": &id013 
+  :linetext: "Gassirunden: Startseite"
+  :path: !ruby/object:Pathname 
+    path: gassirunden02.html
+  :adr: !ruby/object:Pathname 
+    path: /Users/kantel/Dropbox/myRubyFrontierSites/rubyfrontierbook/gassirunden02.txt
+navigare: &id011 
+  :linetext: Navigation
+  :path: !ruby/object:Pathname 
+    path: navigare.html
+  :adr: !ruby/object:Pathname 
+    path: /Users/kantel/Dropbox/myRubyFrontierSites/rubyfrontierbook/navigare.txt
+startseite: *id007
+(x)html5: *id008
+rubyfrontier und github: *id009
+bildergalerie: 
+  :linetext: Bildergalerie
+  :path: !ruby/object:Pathname 
+    path: bildergalerie.html
+  :adr: !ruby/object:Pathname 
+    path: /Users/kantel/Dropbox/myRubyFrontierSites/rubyfrontierbook/bildergalerie.txt
+wiki: *id010
+navigation: *id011
+macros: 
+  :linetext: Macros
+  :path: !ruby/object:Pathname 
+    path: macros.html
+  :adr: !ruby/object:Pathname 
+    path: /Users/kantel/Dropbox/myRubyFrontierSites/rubyfrontierbook/macros.txt
+galerie: &id014 
+  :linetext: Bildersammlung
+  :path: !ruby/object:Pathname 
+    path: galerie.html
+  :adr: !ruby/object:Pathname 
+    path: /Users/kantel/Dropbox/myRubyFrontierSites/rubyfrontierbook/galerie.txt
+bibliographie: *id012
+gassirunden02: *id013
+bildersammlung: *id014

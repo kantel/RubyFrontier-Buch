@@ -1,0 +1,326 @@
+#title "Bücher schreiben"
+
+# RubyFrontier als Autorenwerkzeug
+
+In vielen Projekten, die ich ins Web gestellt hatte, ging es darum, große Sammlungen historischer Texte, Bilder und anderer Dokumente zu präsentieren und der (forschenden) Öffentlichkeit zugänglich zu machen. Prototypisch sei hier auf das [Virtual Laboratory](http://vlp.mpiwg-berlin.mpg.de/) (VLP) hingewiesen, eine Forschungsseite über die Medizingeschichte des 19. und frühen 20. Jahrhunderts. Diese Site machte auch eine typische historische Entwicklung durch: Erst wurde sie als statische Site konzipiert herausgeschrieben mit einer Mixtur aus [Frontier](http://cognitiones.kantel-chaos-team.de/webworking/frameworks/frontier.html) und etlichen handgestrickten Python-Skripten. Nach einiger Zeit wuchs sie im Umfang und das Herausschreiben dauerte oft eine ganze Nacht oder länger. So stieg ich auf [Zope](http://cognitiones.kantel-chaos-team.de/webworking/frameworks/zope.html) um, ein damals populäres, in Python geschriebenes Web Framework, das die einzelnen Seiten dynamisch herausschrieb und strukturell eine große Ähnlichkeit mit Frontier aufwies. Mit Zope läuft das VLP heute noch.
+
+## The Web is a Writing Environment
+
+<%= imageref("mosaicfrueheversion", {:border => "0", :width => "480", :height => "357", :alt => "Erster Mosaic-Browser"}) %>
+
+*Das sah übrigens schon Tim Berners-Lee so.*
+
+Doch die Zeit ging weiter und Zope ist schon lange nicht mehr *state of the art*. Neben der Tatsache, daß auch einige Zeit die Weiterentwicklung von Zope auf der Kippe stand, zeigte sich, daß bei großen Projekten mit vielen Seitenaufrufen sehr schnell Server-Engpässe auftraten, die es bei statischen Seiten nicht gegeben hätte. Das größte Problem trat jedoch auf, als mehr und mehr Wissenschaftler mit dem System arbeiten und in dem System publizieren wollten. Denn -- obwohl das VLP von uns mittlereile zu einem *Content Management System* aufgebohrt war, es war nicht wirklich ein <i>writing environment</i>. Da wurden von einem extra eingerichtetem Redaktionsteam die (meist als Word-Dokumente) eingesandten Beiträge, mühselig nach HTML konvertiert, die Links zu den Ressourcen gesetzt und dann in der [Essay-Sektion](http://vlp.mpiwg-berlin.mpg.de/essays/data) publiziert.
+
+Und so entstand der Wunsch nach einem Werkzeug, das es den Autoren leicht macht, für das Web zu publizieren und der Wunsch nach einer Arbeitsumgebung, die statische Seiten herausschreibt. Ich experimentierte lange Zeit mit dem [Perl Template Toolkit](http://cognitiones.kantel-chaos-team.de/webworking/staticsites/perltemplatetoolkit.html) (TT2), das ein wirklich hervorragendes Werkzeug ist -- für Informatiker. Einen Autoren mit womöglich noch geisteswissenschaftlichem Hintergrund schreckt es aber eher ab. Wobei ich nicht falsch verstanden werden möchte: Das *Perl Template Toolkit* ist ein mächtiges Werkzeug und wer in die Verlegenheit gerät, Websites mit zehntausenden von Seiten herausschreiben zu müssen, der sollte sich TT2 durchaus einmal anschauen.
+
+Ein zweites Beispiel: Als wir am Institut die [Edition Open Access](http://www.edition-open-access.de/) konzipierten (der Prototyp dieser Website wurde von mir übrigens mit RubyFrontier entwickelt), war uns dieses Problem bewußt. So schufen wir einen Workflow mit LaTeX als Basis, in die der Autor seine Texte schreiben sollte. Diese LaTeX-Texte wurden dann mit Hilfe diverser Werkzeuge und einiger selbstgeschriebener Python-Skripte nach HTML und EPUB konvertiert. Basis war jedoch das gedruckte Buch.
+
+<script charset="utf-8" type="text/javascript" src="http://ws.amazon.de/widgets/q?rt=tf_mfw&ServiceVersion=20070822&MarketPlace=DE&ID=V20070822/DE/derschockwell-21/8001/f87b52a6-70dc-410b-a90b-c0469b822366"> </script> <noscript><a HREF="http://ws.amazon.de/widgets/q?rt=tf_mfw&ServiceVersion=20070822&MarketPlace=DE&ID=V20070822%2FDE%2Fderschockwell-21%2F8001%2Ff87b52a6-70dc-410b-a90b-c0469b822366&Operation=NoScript">Amazon.de Widgets</a></noscript>
+
+Das war und ist für die *Edition Open Access* auch sinnvoll: Die wissenschaftliche Community hängt am Buch, das ist immer noch der Nachweis der Arbeit, der auch in Bibliotheken und Bibliographien *verewigt* wird. Aber die vielen zusätzlichen Möglichkeiten, die das Web bietet (Verlinkung, Einbindung multimedialer Inhalte oder Webservices, die zum Beispiel Übersetzungen der lateinischen Begriffe bieten usw.), die mußten alle nachträglich und mühsam in die Webseiten eingebaut werden.
+
+So kam ich auf die Idee, ein Werkzeug für Autoren zu konzipieren, das es ihnen erlaubt, ihre Texte möglichst einfach selber zu schreiben und ins Netz zu stellen. Und solch ein Werkzeug möchte ich nun mit Ihnen gemeinsam entwickeln. Es überrascht Sie sicher nicht, daß die Basis RubyFrontier ist und daß im Endeffekt so etwas herauskommen wird, wie diese Website.
+
+## Vorüberlegungen
+
+RubyFrontier trennt ja, wie viele andere Werkzeuge auch, strikt den Text, also den eigentlichen *Inhalt*, von der Präsentation. Alle Layout-Informationen sind vor dem Autor zu »verstecken«, er soll komfortabel seinen Text schreiben können, ohne sich um Layout-Dinge kümmern zu müssen. So kann der Text auch mit diversen anderen Layouts und auch anderen Werkzeugen bearbeitet werden, um zum Beispiel ein Ebook oder auch eine gedruckte Version zu erstellen.
+
+Daraus folgt aber auch, daß der Autor *nicht* mit den Fein- und Eigenheiten von HTML und seinen diversen Dialekten behelligt werden sollte. Auch andere XML-basierte Auszeichnungssprachen wie [DocBook XML](http://cognitiones.kantel-chaos-team.de/webworking/auszeichnungssprachen/docbookxml.html) fallen aus diesen Gründen aus. Doch RubyFrontier bietet mit [Markdown](http://cognitiones.kantel-chaos-team.de/webworking/auszeichnungssprachen/markdown.html) und der Markdown-Erweiterung [kramdown](http://cognitiones.kantel-chaos-team.de/webworking/auszeichnungssprachen/kramdown.html) eine ernstzunehmende und leicht zu erlerndene Alternative, die weder am Schreibfluß hindert noch die Lesbarkeit des Textes erschwert. Daher habe ich sie ausgewählt.
+
+Bei der (Web-) Seitengröße scheiden sich die Geister. Viele Werkzeuge schreiben jeden kleinsten (Unter-) Abschnitt als eigene HTML-Seite heraus. Das erhöht zwar die Klickrate, erschwert in meinen Augen aber die Lesbarkeit, da ich beim Lesen einen größeren Abschnitt auch schon einmal überfliegen möchte, um dann etwas weiter unten wieder intensiver nachzulesen. Daher habe ich mich entschieden, jedes Kapitel auf *einer* Webseite unterzubringen. Zwar muß man dann beim Lesen der Seite herunterscrollen, aber ich glaube, daß dies dennoch ein guter Kompromiß ist, der zudem auch das Ausdrucken der Seiten erleichtert (nennt mich altmodisch, aber Korrekturlesen mache ich immer noch am Liebsten auf einem Ausdruck).
+
+Über die Entscheidung ob Markdown *oder* kramdown nehme ich im nächsten Abschnitt noch einmal Stellung.
+
+Das Layout der Seite sollte extrem minimalistisch sein und eher an ein Blatt weißes Papier erinnern, auf das der Autor schreibt. Ich nehme an, daß während des Schreibvorgangs die Seiten immer wieder einmal herausgerendert werden, um sie zu lesen oder Links zu testen und Abbildungen zu überprüfen. Daher sollte nicht allzuviel vom eigentlichen Text ablenken.
+
+Die meisten Autoren denken, wenn Sie schreiben, *seriell* das heißt, ihr Text wird von ersten bis zum letzten Kapitel durchgelesen. Daher soll eine Navigation eingebaut werden, die ein Vor- oder Zurückblättern erlaubt. (Das ist aber -- besonders für Webpublikationen -- nicht zwingend. Im letzten [Beispiel dieses Buches](Gassirunden) werde ich Ihnen eine andere, in meinen Augen mehr Web-gerechte Herangehensweise vorstellen.)
+
+Eine der Forderungen Tim Berners-Lees, des Vaters des World Wide Web, ist die, daß sich »gute URLs niemals ändern«. Wer schon länger im Web unterwegs ist, weiß aber auch, daß dies die Forderung ist, gegen die am häufigsten verstoßen wird. Es gibt einfach viel zu wenig »gute URLs« im Web. Daher werden Sie lernen, wie Sie mit Hilfe des *Glossary*-Mechanismus von RubyFrontier ihre Links so implementieren können, daß sie wenigstens nur an *einer* Stelle Änderungen pflegen und nicht mühselig Seite über Seite überprüfen müssen. Außerdem erfahren Sie, wie Sie mit Hilfe dieses Mechanismus Querverweise implementieren können.
+
+Und schließlich soll das Ergebnis dieses Kapitels wiederverwertbar sein. Denn Sie wollen sicher nicht jedes Mal, wenn Sie ein neues Projekt beginnen, alles wieder von vorne beginnen. [Zum Schluß werden Sie also ein *Template* entwickelt haben](Vorlagen), eine Blaupause, die Sie immer wieder neu aufsetzen und für ein Projekt nutzen können.
+
+## Ein neues Projekt
+
+Legen Sie also los. Bitten Sie RubyFrontier ein neues Projekt anzulegen. Ich habe es `buchprojekt` genannt, doch steht es Ihnen natürlich frei, es so zu benennen, wie Sie wollen. Legen Sie es dort ab, wo Sie Ihre RubyFrontier-Projekte ablegen möchten und vergessen Sie nicht, dieses Projekt auch zu sichern.
+
+Dann nehmen Sie sich zuerst die `#ftpSite.yaml` vor:
+
+	--- 
+	:folder: /Applications/MAMP/htdocs/buchprojekt
+	:method: file
+	:isLocal: true
+	:apacheSite: /Applications/MAMP/htdocs/buchprojekt
+	:apacheURL: http://localhost:8888/buchprojekt/
+
+Mit der ersten Zeile legen Sie wie gewohnt fest, wo RubyFrontier die herausgeschriebenen Seiten ablegen soll, die beiden letzten Zeilen brauchen Sie nur, wenn Sie meiner Empfehlung gefolgt sind und [mit MAMP arbeiten](MAMP). Die zweite und dritte Zeile lassen Sie unverändert, die benötigt RubyFrontier und Sie sollten sie nie ändern -- außer Sie wissen wirklich genau, was Sie tun.
+
+Jetzt können Sie Ihr Projekt erst einmal komplett herausrendern. Das empfiehlt sich zu Anfang immer, denn RubyFrontier füllt nun sein *Autoglossary* zum ersten Mal.
+
+Im nächsten Schritt passen Sie bitte die Datei `#prefs.yaml` an:
+
+	--- 
+	:bgcolor: ffffff
+	:sitetitle: 'Mein RubyFrontier-Buchprojekt'
+	:linkstylesheets: [default]
+	:markdown: true
+
+Was Sie als `sitetitle` wählen, bleibt völlig Ihnen überlassen, aber Sie sehen schon, daß Sie nun ein Stylesheet mit dem Namen `default.css` anlegen müssen, um RubyFrontier ohne Fehlermeldung zur Mitarbeit bewegen zu können.
+
+Und Sie haben mit der letzten Zeile RubyFrontier mitgeteilt, daß Sie Ihr Buch mit Markdown als Auszeichnungssprache schreiben wollen.
+
+## Ein komplexeres Stylesheet
+
+Dazu gehen Sie in den Ordner #stylesheets ihres Projektes und legen diese Datei dort an. Und keine Panik: Auch wenn die Überschrift es ankündigt, sooo komplex ist das Stylesheet dann nun doch nicht:
+
+	body {
+		text-align: center; /* IE-Fix */
+		font-family: 'Trebuchet MS', Verdana, 'Lucida Grande',
+		Arial, Helvetica, sans-serif;
+		font-size: 100.01%/1.0;
+		color: #111111;
+	}
+
+	pre {
+		border: 1px dashed #cccccc;
+		padding: 20px 10px;
+	}
+
+	code, pre {
+		background-color: #f9f9f9;
+		font-family: "Lucida Sans Typewriter", "Monaco",
+		"Courier New", Courier, monospace;
+		font-size: 90%;
+	}
+
+	.wrapper {
+		width: 920px;
+		margin: 0 auto;
+		text-align: left;
+	}
+
+	.content {
+		overflow: hidden;
+	}
+
+	.content .maincontent {
+		width: 650px;
+		padding-right: 20px;
+		float: right;
+		display: inline;
+	}
+
+	.content .navbar {
+		width: 230px;
+		float:left;
+		display: inline;
+	}
+
+	.header {
+		border-bottom: 1px solid;
+	}
+
+	.header .mylogo {
+		float:left;
+		margin-right: 10px;
+	}
+
+	.header .mytitle {
+		float:left;
+	}
+
+	.footer {
+		font-size: 70%;
+		border-top: 1px solid;
+	}
+
+Ich habe wieder wegen der besseren Lesbarkeit ein paar zusätzliche Zeilenumbrüche bei der Aufzählug der Schriften vorgenommen, im eigentlichen Stylesheet lassen Sie diese Zeilenumbrüche bitte besser weg.
+
+Es ist eigentlich immer noch ein ziemlich minimalistisches Stylesheet. Sie erkennen sicher, daß es ein Zweispaltenlayout anlegt, mit einer 230 Pixel breiten, linken Navigationsspalte und einer 650 Pixel breiten Hauptspalte für den eigentlichen Inhalt. Spielen Sie ruhig damit, es ist sicher noch verbesserungsfähig. Denn ich bin nicht wirklich ein CSS-Guru.
+
+## Das Template
+
+Bevor Sie nun mit dem Template beginnen, kopieren Sie sich bitte diese beiden Bilder in den `#images`-Ordner Ihres Projektes,
+
+<%= imageref("cc80x15") %> &nbsp; <%= imageref("rubyfrontierbadge") %>
+
+damit RubyFrontier Sie auch finden kann. Sie können Sie auch umbenennen (dann müssen Sie es aber auch im Template ändern), aber per Default heißen Sie `cc80x15.png` und `rubyfrontierbadge.png`.
+
+Als nächstes können Sie die Datei `#pageheader.txt` anlegen. Sie ist nicht unbedingt notwendig, außer dem Zusatz, daß die Sprache deutsch ist, ist es der Standard-Pageheader, der in RubyFrontier als Default fest verdrahtet ist. Aber ich habe lieber einen *eigenen* Pageheader, über den ich die Kontrolle habe und den ich gegebenenfalls auch erweitern kann. Im Falle dieser Seite habe ich hier zum Beispiel auch noch das JavaScript für den Flattr-Button eingebaut. Und natürlich besteht der Titel aus dem Titel der Seite und dem Site-Titel:
+
+	<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+	<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="de" lang="de">
+	<head>
+	    <%%= metatags() %>
+	    <%%= linkstylesheets() %>
+	    <%%= linkjavascripts() %>
+	    <title><%%= sitetitle %>: <%%= title %></title>
+	</head>
+	<%%= bodytag() %>
+
+So, und nun endlich das Template. Es ist schon etwas komplexer, aber ich werde die einzelnen Stellen mit Ihnen Schritt für Schritt durchgehen:
+
+	<%%= pageheader() %>
+	<div class="wrapper">
+		<div class="header">
+			<div class="mylogo">
+				<a href="index.html">
+					<%%= imageref("rubyFrontierLogo", {:border => "0", 
+					:alt => "RubyFrontier Logo", :width => "59", :height => "64"}) %>
+				</a>
+			</div>
+			<div class="mytitle">
+				<h1><%%= sitetitle %></h1>
+			</div>
+			<br clear="all" />
+		</div>
+		<div class="content">
+			<div class="maincontent">
+				<!-- begin content -->
+				<p id="bodytext"></p>
+				<!-- end content -->
+			</div>
+			<div class="navbar">
+				<h4>Navigation</h4>
+				<!-- hier kommt die Navigation hin -->
+			</div>
+		</div>
+		<%%= nextprevlinks() %>
+		<div class="footer">
+			<p>(<a href="http://creativecommons.org/licenses/by-nc-sa/3.0/de/">cc</a>)
+			 2011-<%%= yearnow() %> -- Some Rights Reserverd -- Letze Änderung: 
+			<%%= clocknow() %></p>
+			<p>
+				<!-- RubyFrontier -->
+				<a href="http://www.apeth.com/RubyFrontierDocs/default.html">
+				<%%= imageref("rubyfrontierbadge", {:width => "80", :height => "15", 
+				:alt => "RubyFrontier Badge", :title => "Made with RubyFrontier", 
+				:border => "0"}) %></a>
+				<!-- Ende RubyFrontier -->
+				&nbsp;
+				<!-- CC-Button -->
+				<a href="http://creativecommons.org/licenses/by-nc-sa/3.0/de/">
+				<%%= imageref("cc80x15", {:width => "80", :height => "15", 
+				:alt => "CC Logo", :title => "CC BY NC SA", :border => "0"}) %></a>
+				<!-- Ende CC-Button -->
+			</p>
+		</div>
+	</div>
+	<%%= pagefooter() %>
+
+Auch hier habe ich wieder aus Gründen der Lesbarkeit ein paar zusätzliche Zeilenumbrüche vorgenommen.
+
+Mit diesen Änderungen können Sie die Seite `firstpage.txt` probeweise einmal von RubyFrontier herausschreiben lassen. Sie sollte dann so aussehen:
+
+<%= imageref("buchprojekt01", {:width => "480", :height => "367"}) %>
+
+Daß die Seite korrekt herausgeschrieben wird, obwohl sie keine einzige Markdown-Auszeichnung erhält, liegt daran, daß Markdown beliebigen HTML-Code enthalten darf, der ohne Änderung vom Markdown-Interpreter durchgereicht wird.
+
+Doch jetzt zum Template: Die ganze sichtbare Seite ist in einem *Wrapper* geklammert, der via Stylesheet dazu gebracht wurde, die Breite auf 920 PIxel festzulegen und zu zentrieren. Dann kommt der Header, der links das Logo einbindet und rechts daneben den *Sitetitle* anzeigt. Sie können natürlich ein Logo Ihrer Wahl nehmen, müssen natürlich dann den Namen der Datei anpassen oder im Template ändern. Im Prinzip geht jedes Bild, das etwa 60 bis 65 Pixel hoch ist. (Die Breite ist relativ egal und höchstens ein ästhetisches Problem.)
+
+Dann kommt der eigentliche Inhalt und die Navigation (wie Sie diese realisieren erfahren Sie weiter unten).
+
+Und schließlich noch der Footer, dem Sie stolz ein RubyFrontier-Badget verpaßt haben und dort ist auch die Stelle, an der Sie dem geneigten Leser mitteilen, daß Ihre Seiten unter einer *Creative Commons* Lizenz zur Verfügung stehen. Es bleibt natürlich Ihnen überlassen, weitere Buttons hinzuzufügen oder wegzulassen. Ich habe auf meinen Seiten -- also auch hier -- zusätzlich noch ein Statistik Tool und den *Flattr*-Button (eine *Micro-Payment*-Dienst) eingebaut. Auf Letzeren können Sie klicken, wenn Sie mir etwas Gutes tun wollen.
+
+## Navigation
+
+Doch nun zur Navigation. Damit Sie überhaupt navigieren können, müssen Sie natürlich erst einmal ein paar Seiten anlegen, zwischen denen Sie hin- und herspringen wollen. Löschen Sie daher erst einmal alle Seiten, die Matt Neuburg angelegt hat, also `firstpage`, `secondpage` und `thirdpage`. Sie benötigen Sie nicht mehr. Stattdessen legen Sie eine Seite `index.txt`, `kapitel01.txt` und `kapitel02.txt` an, die Sie mit ein wenig Blindtext füllen (ich benutze dafür der Einfachheit halber immer [diesen Blindtext-Generator](http://www.loremipsum.de/)).
+
+Sie werden dabei feststellen, daß die Seiten ohne Überschrift dargestellt werden -- falls Sie nicht so klug waren, und Ihr schon welche verpaßt hatten. Denn sicher haben Sie gemerkt, daß im Template vor dem *bodytext* **kein** Titel-Makro der Form `<%%= title %>` steht. Der Grund ist, daß ich die Erfahrung gemacht habe, daß die Kapitelüberschriften -- speziell in wissenschaftlichen Werken -- doch oft eine erhebliche Länge aufweisen, der Titel aber, da er in der Kopfleiste des Browser erscheint und auch in der noch zu erstellenden Navigation, meist kürzer gewünscht wird.
+
+Ich habe in meinem Beispiel die Titel *Startseite*, *Kapitel 1* (mit einer langen Kapitel-Überschrift) und *Kapitel 2* (mit einer kürzeren Kapitelüberschrift) gewählt.
+
+Wenn Sie nun einfach alle drei Seiten herausschreiben, werden Sie feststellen, daß -- wie durch ein Wunder -- die Navigation auf die vorherige und nächste Seite funktioniert.
+
+<%= imageref("buchprojekt02", {:width => "480", :height => "331"}) %>
+
+Natürlich ist es kein Wunder, sondern es liegt daran, daß RubyFrontier, solange Sie der Software nichts anderes sagen, die alphabetische Reihenfolge der Dateinamen für die Navigation annimmt. Hätten Sie die Kapitel-Seiten statt `kapitel01` etc. `chapter01` genannt, dann wäre Ihnen die schöne Reihenfolge völlig durcheinander geraten.
+
+Um RubyFrontier also die Reihenfolge mitzuteilen, benötigen Sie eine Direktive namens `#nextprevs`, für die Sie am Besten die Datei `#nextprevs.txt` anlegen. Und dort schreiben Sie einfach die Kapitel in der korrekten Reihenfolge untereinander hinein, also in diesem Fall
+
+	Startseite
+	Kapitel 1
+	Kapitel 2
+
+oder wie immer Sie die Titel der einzelnen Seiten gewählt haben. Sie können übrigens statt der Titel auch die Dateinamen (ohne die Endung `.txt`) dort hineinschreiben, RubyFrontier sucht sich das Richtige schon heraus. In diesem Fall sähe es dann so aus:
+
+	index
+	kapitel01
+	kapitel02
+
+Welche der beiden Versionen Sie nehmen, ist Geschmacksache. Ich persönlich bevorzuge die zweite Fassung, da ich während des Entstehungsprozesses eines Buches schon häufiger mal die Titel wechsle, aber eigentlich nur noch sehr selten die Dateinamen.
+
+So, und nun wollen Sie sicher die leere Navigationsspalte auffüllen. Dazu habe ich ein Ruby-Makro, das Matt Neuburg im Quelltext zur RubyFrontier-Dokumentation mitliefert, gnadenlos vereinfacht. Legen Sie also im Ordner `#tools` eine Datei `navbar.rb` an und schreiben Sie dort folgendes hinein:
+
+	def navbar()
+	  dirname = adrSiteRootTable
+	  embed_in_template(process(dirname))
+	end
+
+	def process(dir)
+	  arr = Array.new
+	  html.pagesInFolder(dir).each do |what|
+	    title, path = html.getTitleAndPaths(what)
+	    s = html.getLink(title, what)
+	    arr << "<li>" + s + "</li>\n"
+	  end
+	  arr
+	end
+
+	def embed_in_template(arr)
+	  return "" unless arr
+	  ss = <<END
+	  <ul class="nav">
+	  #{arr}
+	  </ul>
+	END
+	  ss
+	end
+
+Was macht nun dieses Makro? Es liest alle Seiten in einem Ordner heraus -- das Buchprojekt geht davon aus, daß Sie *keine* Unterordner benutzen -- und bastelt daraus eine Liste mit Links. Und jetzt kommt der Trick: Wenn eine `#nextprevs`-Direktive existiert, lädt das Makro diese und behält auch die Reihenfolge.
+
+Übrigens lohnt es sich durchaus, den Quelltext der Dokumentation ausführlich zu studieren (sie können ihn sich im Bundle-Menü unter *Show RubyFrontier Docs Source* in TextMate anzeigen lassen). Dort sind schon viele Lösungen vorhanden, von denen Sie sich inspirieren lassen können.
+
+Nun müssen Sie nur noch das Template öffnen und unter das Makro an der korrekten Stelle einfügen:
+
+	<div class="navbar">
+		<h4>Navigation</h4>
+		<%%= navbar() %>
+	</div>
+
+Wenn Sie nun wieder alle Seiten herausschreiben lassen, sehen Sie links die gewünschte Navigationsleiste. Wenn Sie wollen, können Sie diese natürlich mit ein paar CSS-Spielereien noch ein wenig aufhübschen, mir reicht sie so jedoch aus.
+
+Was mich aber noch störte, waren die englischen Wörter *Next* und *Prev* in der Vorwärts-/Rückwärts-Navigation links unten. Für die ist das (mitgelieferte) Makro `nextprevlinks()` verantwortlich, das im Original so aussieht:
+
+	def nextprevlinks()
+	  p, n = html.getNextPrev(adrObject)
+	  ntitle, npath = html.getTitleAndPaths(n) if n
+	  ptitle, ppath = html.getTitleAndPaths(p) if p
+	  rel_to_top = adrsiteroottable.relative_uri_from(adrobject)
+	  s = ""
+	  s << "Prev: " + html.getLink(ptitle, rel_to_top + ppath) if p
+	  s << " | " if p and n
+	  s << "Next: " + html.getLink(ntitle, rel_to_top + npath) if n
+	  "<p>#{s}</p>\n"
+	end
+
+Selbst Menschen, die in Ruby nicht so bewandert sind, erkennen sofort die Stellen, an denen Änderungen vorgenommen werden müssen, um die Navigation zu internationalisieren. Ich hatte beschlossen, statt der englischen Begriffe einfach je zwei Doppelpfeile zu setzen (`<< >>`). Dies ist -- glaube ich -- international verständlich. Mit meinen Änderungen sieht das Makro dann so aus:
+
+	def nextprevlinks()
+	  p, n = html.getNextPrev(adrObject)
+	  ntitle, npath = html.getTitleAndPaths(n) if n
+	  ptitle, ppath = html.getTitleAndPaths(p) if p
+	  rel_to_top = adrsiteroottable.relative_uri_from(adrobject)
+	  s = ""
+	  s << "<< " + html.getLink(ptitle, rel_to_top + ppath) if p
+	  s << " | " if p and n
+	  s << html.getLink(ntitle, rel_to_top + npath) + " >>" if n
+	  "<p>#{s}</p>\n"
+	end
+
+Jetzt rendern Sie noch einmal alle Seiten heraus. Sie sollten von der Struktur her nun nahezu identisch mit diesen Seiten sein:
+
+<%= imageref("buchprojekt03", {:width => "480", :height => "334"}) %>
+
+Im Prinzip könnten Sie nun loslegen und Ihr Meisterwerk schreiben. Es ist nun alles dafür vorhanden. Daher werde ich Ihnen als Nächstes zeigen, wie Sie Ihre Seiten mit Markdown als Auszeichnungssprache füllen oder ob Sie besser *kramdown* dafür nutzen.

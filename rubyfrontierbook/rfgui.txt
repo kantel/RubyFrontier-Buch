@@ -1,0 +1,49 @@
+#title "RubyFrontier GUI"
+
+# Die Benutzeroberfläche von RubyFrontier
+
+<%= imageref("rubyfrontier-im-bundles-menue", {:border => "0", :width => "480", :height => "297", :alt => "RubyFrontier im Bundle-Menü"}) %>
+
+RubyFrontier ist ja bekanntlich ein TextMate Bundle und so sind die RubyFrontier Befehle natürlich über das Menü *Bundle* zu erreichen. Fahren Sie mit der Maus in diesem Menü über den Eintrag *RubyFrontier*, so öffnet sich ein Untermenü mit etwas mehr als zwei Handvoll (genauer: elf) Befehlen. Es sind dies:
+
+* New Site
+* Preflight Site
+* Publish Page
+* Publish Folder
+* Publish Folder (No Preflight)
+* Publish Site
+* Publish Site (No Preflight)
+* Traverse Selected Link
+* Locate User.rb File
+* Build RubyFrontier Docs
+* Show RubyFrontier Docs Source
+
+Das gleiche Menü (nur in kleinerer Schriftgröße) erhalten Sie auch, wenn Sie auf das kleine Zahnrädchen in der Fußzeile des Fensters klicken (es ist die dritte Spalte von links):
+
+<%= imageref("rubyfrontier-in-textmate-fusszeile", {:border => "0", :width => "421", :height => "264", :alt => "RubyFrontier in der Fußzeile des Textfensters"}) %>
+
+Welche von beiden Möglichkeiten Sie bevorzugen, ist Geschmackssache. Bei mir ist die Fußzeile der kürzere Mausweg und daher benutze ich fast immer diese. Aber da es für die wichtigsten Menüs immer auch Tastaturkürzel gibt, benutze ich die Menüs so gut wie gar nicht, sondern rufe RubyFrontier immer über die Tastatur auf.
+
+Die Menüpunkte bedeuten im Einzelnen (auf die *Preflight*-Menüs komme ich später im Zusammenhang mit dem *Glossary*-Mechanismus von RubyFrontier zu sprechen):
+
+**New Site**: Diesen Befehl haben Sie schon am Anfang kennengelernt, damit legen Sie ein komplett neues RubyFrontier-Projekt mit all seinen Dateien und Ordnern an.
+
+**Publish Page** schreibt eine einzelne Seite heraus.
+
+**Publish Folder** schreibt alle Seiten eines Unterordners und der Ordner darunter heraus. Diesen Punkt hat Matt Neuburg auf meine Anregung in RubyFrontier eingebaut. Denn wie ich weiter oben schon einmal schrieb, hatte ich versucht, eine große Sammlung mithilfe von RubyFrontier zu publizieren. Und es kann die zum Rendern notwendige Zeit doch erheblich verkürzen, wenn man nur Teilbäume herausschreiben muß.
+
+**Publish Site** ist der Befehl, um *alle* Dateien eines Projektes herauszuschreiben.
+
+**Traverse Selected Link** versucht, einen selektierten (internen) Link zu interpretieren und die entsprechende Seite in TextMate zu öffnen. Dieser Befehl kann bei einem großen Projekt sehr hilfreich sein, wenn Sie zum Beispiel herausfinden wollen, was eigentlich noch mal auf der Seite stand, die sich hinter diesem Link verbirgt.
+
+**Locate User.rb File**: User.rb ist *die* Datei, in der Sie projektübergreifend Ruby-Makros für ihre Webseiten unterbringen. Im Regelfalle nutzen Sie sie nicht, wenn Sie mit RubyFrontier beginnen, aber irgendwann kommt der Punkt, wo Sie über eine Sammlung nützlicher Skripte verfügen, die Sie für alle Ihre Sites parat haben wollen.
+
+**Build RubyFrontier Docs** rendert Matt Neuburgs [RubyFrontier-Dokumentation](http://www.apeth.com/RubyFrontierDocs/) auf Ihrem Schreibtisch heraus und öffnet sie anschließend im Browser. Sollten Sie mindestens einmal aufrufen, damit Sie sie zur Verfügung haben, auch wenn Sie *offline* arbeiten.
+
+**Show RubyFrontier Docs Source** öffnet die RubyFrontier-Dokumentation als RubyFrontier-Projekt in TextMate. Das ist -- wenn Sie mit RubyFrontier ein wenig fortgeschritten sind -- eines der nützlichsten Hilfen überhaupt. Denn hier können Sie nachschauen, wie der Meister seine Probleme gelöst hat.
+
+Ja, und das letzte »GUI«-Element von RubyFrontier ist das Meldungsfenster von TextMate:
+
+<%= imageref("rubyfrontier-meldungsfenster", {:border => "0", :width => "480", :height => "387", :alt => "RubyFrontier-Medlungsfenster"}) %>
+
+Hier stehen -- wenn etwas schiefläuft -- auch die mehr oder weniger aussagekräftigen Informationen über den gefundenen Fehler. Es ist ein oft sehr hilfreiches, aber schnittstellentechnisch etwas benutzerunfreundlich gelöstes Feature. Denn man muß nach *jedem* Durchlauf dieses Fenster erst einmal wegklicken (oder sonstwie dafür sorgen, daß das eigentlich Textfenster, mit dem man arbeitet, den Fokus bekommt), bevor man weiterarbeiten kann. Aber das ist ein Feature von TextMate und kann nicht dem Programmierer von RubyFrontier angelastet werden.

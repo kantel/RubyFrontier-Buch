@@ -1,0 +1,13 @@
+#title "Startseite"
+
+# <%= title %>
+
+RubyFrontier -- Statische Webseiten mit allem Komfort.
+
+<%= imageref("rubyFrontierLogo") %>
+
+Hier entsteht ein RubyFrontier-Buch. Es folgt dem Motto *»publish early -- update often«* und ist daher noch weit vom *beta*-Stadium entfernt. Sobald es diesem entwachsen ist, wird es auch eine gedruckte und eine (oder mehrere) Ebook-Version(en) davon geben.
+
+Bis dahin lohnt es sich, regelmäßig auf diesen Seiten vorbeizuschauen ...
+
+Diese Website wird natürlich ebenfalls mit RubyFrontier erstellt und dokumentiert so gleichzeitig, wie man RubyFrontier vom ersten Entwurf über Website und Ebooks bis hin zur Print-Publikation als Autoren-Werkzeug verwenden kann.

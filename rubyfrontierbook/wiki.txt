@@ -1,0 +1,18 @@
+#title "Desktop-Wiki"
+
+# Eine Wiki-ähnliche Website als Werkzeug für Wissenssammlungen
+
+Aber natürlich ist ein Wiki ohne Suchfunktion ziemlich nutzlos. Und so dachte ich mir: Wer kann eigentlich am Besten suchen? Die Antwort ist natürlich klar und so habe ich in mein Testwiki eine Google-Suche eingebaut. Das ist ziemlich einfach und kann beispielsweise so aussehen:
+
+	<form method="get" action="http://www.google.com/search">
+	  <input type="hidden" name="as_sitesearch"
+	  value="cognitiones.kantel-chaos-team.de" />
+	  (Google-) Suche:<br />
+	  <input type="text" name="q" size="16" maxlength="255"
+	  value="" /><br />
+  	 <input type="submit" name="sa" value="Start" />
+	</form>
+
+Die Idee ist, die Google-Suche auf die Wiki-Domain einzuschränken, eine ähnliche Suche hatte ich auch schon in der statischen Version des Schockwellenreiters implementiert.
+
+Natürlich nützt das nichts, wenn die Seiten nicht auf Googles Index landen. Daher habe ich das mal getestet: Diese Seite zur GLS Bank hatte ich gestern abend geschrieben und hochgeladen und heute früh wird sie schon von Google gefunden. Das sollte für alle praktischen Belange ausreichen.

@@ -1,0 +1,209 @@
+#title "Navigation"
+
+# Navigare necesse est (Navigation tut Not)
+
+In diesem Abschnitt werden Sie einen ersten Einblick in die vielfältigen Möglichkeiten zur Website-internen Navigation, die RubyFrontier bietet, bekommen.
+
+## Neue Seiten aufziehen
+
+Bevor Sie aber navigieren können, brauchen Sie natürlich einige Seiten mehr in Ihrem Webauftritt. Und da nahezu jede Website heutzutage (in Deutschland) ein Impressum benötigt, fangen Sie mit diesem an. Legen Sie auf der gleichen Eben in Ihrem RubyFrontier-Projekt, in der Ihre *index.txt* liegt, eine neue Seite an und nennen diese *impressum.txt*. Außerdem laden Sie bitte das nebenstehende Bildchen eines Hundes herunter und legen dieses wie gewohnt in den *#images*-Ordner Ihres Projektes ab. Und dann schreiben Sie bitte folgenden Text (oder etwas ähnliches) in die neuangelegte *impressum.txt*-Datei:
+
+	#title "Impressum"
+
+	<h1><%%= title %></h1>
+	<p>
+	Die nebenstehenden Informationen enthalten die gesetzlich vorgesehene
+	Anbieterkennzeichnung.</p>
+
+	<h4>Adresse</h4>
+	<p>
+	HSV Flughund e.V.<br />
+	Am Rollfeld 27<br />
+	12345 Hundesoßen</p>
+
+	<h4>Kontakt-Telephon</h4>
+
+	<table border="1" cellpadding="6" cellspacing="0">
+		<tr>
+			<th align="left">1. Vorsitzender</th>
+			<td>Goofy Goldschatz</td>
+			<td>011-111111</td>
+		</tr>
+		<tr>
+			<th align="left">Welpengruppe</th>
+			<td>Biby Bärchen</td>
+			<td>022-222222</td>
+		</tr>
+		<tr>
+			<th align="left">Kassenwart</th>
+			<td>Pauly Panzer</td>
+			<td>0$$-$$$$$$</td>
+		</tr>
+	</table>
+	<p>
+	Zurück zur <a href="Startseite">Startseite</a>.</p>
+	<p>
+	<%%= imageref("hund01") %></p>
+
+Das ist nicht gerade ein gesetzeskonformes Impressum, aber als Beispiel reicht es. Und auch die Formatierung der Tabellen übernimmt heutzutage in der Regel wieder ein Stylesheet, aber wie schon so häufig wollte ich das Beispiel nicht unnötig aufblähen. Wenn Sie nun diese Seite herausrendern, erhalten Sie dieses Bild:
+
+<%= imageref("flughund07", {:border => "0", :width => "480", :height => "466", :alt => "Impressum HSV Flughund e.V."}) %>
+
+Es ist vermutlich genau das, was Sie erwartet haben: RubyFrontier hat das Template genommen und es mit dem Text der Impressums-Seite zusammengefügt. Nur da, wo Sie
+
+	Zurück zur <a href="Startseite">Startseite</a>.
+
+geschrieben haben, da erscheint tatsächlich ein Link. Und wenn Sie darauf klicken, kommen Sie tatsächlich zurück zur Startseite (vorausgesetzt, Sie haben sie auch herausgeschrieben). Dabei ist das, nach allem was Sie und ich über HTML wissen, keine korrekte Linkangabe. Was ist hier geschehen?
+
+RubyFrontier verfügt, wie schon Frontier zuvor, über einen Wiki-ähnlichen Mechanismus zur Linksubstitution. Für jede Seite, die Sie in Ihrem RubyFrontier-Projekten anlegen, trägt es in der *#autoglossary.yaml* den Namen der Datei, den Titel und den Pfad (die URL) zu dieser Datei ein. Wenn der Renderings-Mechanismus von RubyForniter nun auf eine URL stößt, die *nicht* mit *http://* beginnt, schaut er in dieser Datei nach, ob er einen passenden Eintrag dafür findet. Wenn ja, ersetzt er dieses durch den passenden Link, wenn nein, setzt er einen Link auf die (in der Regel nicht vorhandene) Seite *errorRefGlossaryFailedHere*. So können Sie mit einer einfachen Suche nach *errorRefGlossaryFailedHere* in der frisch generierten HTML-Seite nach Fehlern suchen.
+
+Sie können anstelle des Titels der Seite auch den Namen der Datei (ohne Postfix), also in diesem Falle auch
+
+	Zurück zur <a href="index">Startseite</a>.
+
+eingeben, das funktioniert genau so. Aber nur, wenn tatsächlich auch in allen Unterordnern der Name kein zweites Mal vorkommt, sonst gibt es unter Umständen unerwünschte Seiteneffekte, denn RubyFrontier nimmt den Eintrag, den es zuerst in der *autoglossary.yaml* findet, und das gefundene Linkziel ist vielleicht nicht unbedingt das, auf das Sie verlinken wollten. Daher hatte ich im letzten Abschnitt empfohlen, das auch die Dateinamen innerhalb eines Projektes eindeutig sein sollten. Aber auf jeden Fall sind Sie auf der sicheren Seite, wenn Sie den Titel der Seite als Link verwenden, der *muß* eindeutig sein, sonst steigt RubyFrontier mit einem Fehler aus.
+
+Natürlich müssen Linkname und Link nicht übereinstimmen. Sie könnten auch
+
+	Zurück zur <a href="Startseite">Heimatseite</a>
+
+schreiben, aber das haben Sie dann hoffentlich nur ironisch gemeint.
+
+## Markdown: Es muß nicht immer HTML sein
+
+Bei den beiden von Ihnen bsiher angelegten Seiten bestand der Inhalt (bis auf ein paar Direktven und Makros) aus purem HTML. Nun stellen Sie sich vor, Sie haben eine Seite, die häufig geändert werden muß, weil sie zum Beispiel aktuelle Termine enthält. Dies in HTML zu schreiben, kann ganz schön umständlich sein, wie schnell hat man da mal einen Tag vergessen und schon haut es einem die Seite kaputt.
+
+Es gibt dazu jedoch in RubyFrontier (mindestens) eine Alternative, die schon mehrfach erwähnte Auszeichnungssprache [Markdown](Markdown). Sie will kein Ersatz für HTML sein, sondern etwas, das den Schreibenden unterstützt, schnell zu schreiben, ohne sich viel um die Formatierungen kümmern zu müssen. Schauen Sie sich das einfach an einem Beispiel an, mehr zu Markdown gibt es in einem [separaten Kapitel](Markdown).
+
+Dazu legen Sie eine weitere Seite in der gleichen Ebene wie die *index.txt* und die *impressum.txt* an und nennen Sie diese *termine.txt*. Dort schreiben Sie bitte folgenden Text hinein:
+
+	#title "Termine"
+	#markdown "True"
+
+	# <%%= title %>
+
+	#### 12. Februar 2012
+
+	Agility-Winterturnier in der Reithalle an der Pferdestraße in Altenhunden.
+	Beginn 9:00 Uhr, die Meldestelle öffnet um 8:00 Uhr.
+
+	#### 21. Februar 2012
+
+	Gemeinsames Obedience-Training mit den Sportsfreunden vom HSV Doppelhunden
+	auf unserem Platz. Beginn 10:00 Uhr. **Bitte die Hunde nicht vergessen!**
+
+	Um 9:00 Uhr gibt es ein gemeinsames Frühstück. Wer daran teilnehmen möchte,
+	melde sich bitte wegen der Einkaufsplanung bei *Biby*.
+
+	#### 29. Februar 2012
+
+	Mitgliederversammlung. Beginn 19:00 Uhr im Vereinsheim. Bitte
+	Mitgliedsausweise mitbringen.
+
+	----
+
+	zurück zur [Startseite](Startseite)
+
+Auch wenn Sie jetzt von mir denken *»Der Kerl ist wahnsinnig, was soll denn das?«*, rendern sie die Seite doch einfach heraus. Sie sollte so aussehen:
+
+<%= imageref("flughund08", {:border => "0", :width => "480", :height => "418", :alt => "Termine HSV Flughund e.V."}) %>
+
+Schauen Sie sich das Ergebnis in Ruhe an. Die erste Zeile legt wie gewohnt den Titel fest. Dann folgt eine weitere Direktive, die RubyFrontier mitteilt, daß diese Seite mit *Markdown* erstellt wurde. Danach werden Sie freudig festellten, daß Direktiven (und auch Makros) mit Markdown ebenfalls funktionieren und genau so wie in HTML-Seiten geschrieben werden. Ein Doppelkreuz (*#*) am Anfang einer Zeile kennzeichnet eine h1-Überschrift, zwei somit eine h2-Überschrift und wo weiter ...
+
+Absätze werden durch zweimaliges Drücken der *Return*-Taste erzeugt, **Fetter** Text ist mit zwei Sternchen umsäumt, *kursiver* Text mit einem Stern. Und vier Striche in einer Reihe erzeugen eine waagrechte Linie.
+
+Links werden in Markdown so notiert
+
+	[Linktext](URL)
+
+und Sie haben sicher mit Freuden schon festgestellt, daß die Glossary-Substitution
+
+	[Startseite](Startseite)
+
+von RubyFrontier auch hier funktioniert. (Das ist überhaupt der Grund, warum ich die ersten Schritte mit Markdown hier in dem Abschnitt über Navigation aufgenommen habe.)
+
+Markdown bietet noch viele Möglichkeiten und auch Alternativen zur Auszeichnung. Die im obigen Text benutzten sind die, die am häufigsten und fast ausschließlich von mir verwendet werden. Markdown kann noch ein wenig mehr und das, was es nicht kann, können Sie erreichen, indem Sie einfach HTML-Tags an diesen Stellen schreiben.
+
+## Unsere letzte Seite
+
+Bevor Sie sich aber endgültig der Navigation zuwenden, legen Sie bitte noch eine letzte Seite an, die Sie *nachrichten.txt* nennen.
+
+<%= imageref("sieger", {:border => "0", :width => "480", :height => "360", :alt => "So sehen Sieger aus!"}) %>
+
+Wenn sie genau so aussehen soll, wie dieses Tutorial laden Sie bitte erst einmal das obige Bild herunter (es heißt *sieger.jpg*) und packen es wie gewohnt in den *#images*-Ordner Ihres Projektes.
+
+Dann schreiben Sie bitte folgenden Text in diese Seite:
+
+	#title "Nachrichten"
+	#markdown "True"
+
+	# Nachrichten aus dem Vereinsleben
+
+	## Zebu und der Bollerbeagle auf dem Siegertreppchen
+
+	<%%= imageref("sieger", {:border => "0", :width => "480", :height => "360",
+	:alt => "So sehen Sieger aus!"}) %>
+
+	Auf dem ersten Agility-Turnier dieses Jahres bei den Sportsfreunden in
+	Altenhunden räumten der Bollerbeagle mit Frau Chen und Zebu mit Herr Chen
+	gewaltig ab und gewannen sowohl den A-Lauf wie auch den Jumping. Zebu
+	wurde außerdem Tagessieger und bekam zur Belohnung eine große Tüte Hundefutter.
+	Wir gratulieren!
+
+	## Bilder von der Weihnachtsfeier
+
+	Die bestellten Bilder von der Weihnachtsfeier sind eingetroffen. Sie können
+	gegen Bezahlung bei Biby während der Trainingszeiten im Vereinsheim abgeholt
+	werden.
+
+Wenn Ihnen der Text zu dämlich ist, können Sie natürlich hineinschreiben, was Sie wollen. Wichtig ist nur, daß die ersten beiden Zeilen mit den Direktiven unangetastet bleiben.
+
+Wie Sie sehen, habe ich auch hier wieder *Markdown* als Auszeichnungssprache verwendet. Es macht einem vieles einfacher.
+
+Die Seite besitzt zwei Überschriften 2. Ordnung. Wenn Sie sich noch an das Stylesheet erinnern, haben Sie dafür noch keinen Stil angelegt. Das holen Sie daher bitte jetzt nach und schreiben in die *default.css* an passender Stelle (wo, ist eigentlich egal, ich habe es direkt hinter die *h1*-Definition geschrieben):
+
+	h2 {
+		font-size: 16px;
+	}
+
+Wenn Sie die Seite jetzt herausschreiben, sollte sie so aussehen:
+
+<%= imageref("flughund09", {:border => "0", :width => "480", :height => "551", :alt => "Termine HSV Flughund e.V."}) %>
+
+## Aber jetzt: Navigation!
+
+Sie haben sicher gut aufgepaßt und so ist Ihnen aufgefallen, daß nun genau die Seiten, die ich anfangs in die Dummy-Navigation des Templates geschrieben habe, erstellt wurden. Und die möchte ich nun gemeinsam mit Ihnen mit den entsprechenden Links versehen.
+
+Um dies zu erreichen, gibt es einen sehr einfachen Weg: Sie schreiben einfach die Links in das Template. Öffnen Sie es in TextMate und ändern die Zeilen
+
+	<div id="navigation">
+		<p>Startseite | Nachrichten | Termine | Impressum</p>
+	</div>
+
+in
+
+	<div id="navigation">
+		<p><a href="Startseite">Startseite</a> | <a href="Nachrichten">
+		Nachrichten</a> | <a href="Termine">Termine</a> | <a href="Impressum">
+		Impressum</a></p>
+	</div>
+
+*(Wie schon in einigen Beispielen zuvor wurden die Zeilenumbrüche nur der besseren Lesbarkeit wegen hinzugefügt.)*
+
+Wenn Sie jetzt mit *Publish Site* alle Seiten herausrendern, werden Sie merken, daß RubyFrontier sehr schlau ist und mitdenkt: In der lindgrünen Linkleiste sind alle Seiten mit Links versehen, nur die gerade aktuelle, auf der Sie sich befinden, nicht. Das heißt, die Seite linkt nicht auf sich selber. Wer so etwas schon einmal von Hand basteln mußte, wird der Software sicher sehr dankbar sein. Das ist ein weiterer Vorteil des *Glossary*-Mechanismus, der genau dies für Sie erledigt hat.
+
+Als letzten Akt wollte ich der Navigation noch etwas Raum zum Atmen geben und habe daher an das Ende der *default.css* noch diese Zeilen angefügt:
+
+	#navigation p {
+		padding-left: 10px;
+		padding-top: 5px;
+		padding-bottom: 5px;
+	}
+
+Wenn Sie jetzt noch einmal mit *Publish Site* alle Seiten herausschreiben, sehen Sie das endgültige Ergebnis Ihrer Bemühungen:
+
+<%= imageref("flughund10", {:border => "0", :width => "480", :height => "341", :alt => "HSV Flughund e.V. -- der endgültige Webauftritt"}) %>
+
+Gratuliere! Sie haben Ihre erste vollständige Website mithilfe von RubyFrontier erstellt. Es ist eine einfache Website, aber wenn Sie sich etliche Webauftritte von Kleinunternehmen, Selbstständigen oder eben auch Vereinen anschauen, dann ist es genau das, was gewünscht wird. Dabei haben Sie bisher nur an der Oberfläche von RubyFrontier gekratzt. Daß Sie trotzdem schon so weit gekommen sind, spricht für RubyFrontier. In den nächsten Kapiteln werden wir sukkzessive weiter in die Tiefe gehen und etliches von den erweiterten Möglichkeiten RubyFrontiers kennenlernen.
+
+Aber natürlich sollen Sie auch hier nicht stehenbleiben. Spielen Sie mit Ihrer erstellten Site herum, experimentieren Sie mit den Farben (sicher werden Sie zu dem Ergebnis kommen, daß ein weißer Hintergrund vielleicht doch schöner ist) und dem anderen Gelernten, fügen Sie weitere Seiten hinzu etc. Und wenn Sie dabei das Gefühl entwickeln *»RubyFrontier macht Spaß!«*, dann sind Sie auf jeden Fall bereit für die nächsten Kapitel.

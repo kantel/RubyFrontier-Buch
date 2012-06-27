@@ -1,0 +1,35 @@
+#title "(X)HTML5"
+
+# Exkurs: (X)HTML5
+
+Es ist natürlich möglich, statt des voreingestellten XHTML 1.0 auch das neuere HTML5 mit RubyFrontier zu benutzen. Dazu muß nur der *Pageheader* entsprechend angepaßt werden:
+
+	<!DOCTYPE html>
+	<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="de" lang="de">
+	<head>
+		<%%= metatags() %>
+		<meta name="generator" content="RubyFrontier" />
+		<%%= linkstylesheets() %>
+		<%%= linkjavascripts() %>
+		<title><%%= sitetitle %>: <%%= title %></title>
+	</head>
+	<%%= bodytag() %>
+
+Das ist der Pageheader für HTML5 im XHTML-Stil. Das ist das XML-konforme HTML5, mit dem Sie auch einfach andere XML-Elemente in die Seiten einbinden können, zum Beipiel SVG-Daten. Wenn Sie das »normale« HTML5 bevorzugen, dann ersetzen Sie einfach die zweite Zeile durch:
+
+	<html lang="de">
+
+Genaugenommen müßten Sie auch das `<%%= metatags() %>`-Makro durch
+
+	<meta http-equiv="content-type" content="application/xhtml+xml" />
+	<meta charset="UTF-8" />
+
+ersetzen, da das Makro den `content-type` als `text/html` herausgibt. Und dann müßten Sie Ihren Server auch noch anweisen, daß er diese Dateien auch als `application/xhtml+xml` serviert (MAMP zum Beispiel sieht das per Default für alle Dateien mit der Endung `.xhtml` vor). Dabei werden sie allerdings sehr schnell in *Teufels Küche* geraten. Bei dem expliziten MIME-Type `application/xhtml+xml` gehen nämlich alle Browser sehr streng mit Ihnen ins Gericht und meckern zum Beispiel nicht deklarierte *Entities* wie `&nbsp;` an (die müssen Sie in XHTML5 tatsächlich selber deklarieren) und brechen an dieser Stelle die Darstellung Ihrer Seite ab.
+
+Dagegen habe ich die Erfahrung gemacht, daß moderne, aktuelle Browser wie Firefox oder Safari es Ihnen nicht übel nehmen, wenn Sie Ihre (X)HTML5-Seite als text/html ausliefern. Sie stellen direkt in die Seite eingebundene SVG-Bilder trotzdem korrekt dar.
+
+Trotzdem empfehle ich Ihnen, HTML5 oder XHTML5 nur dann zu nutzen, wenn Sie wirklich genau wissen, was Sie tun. Ältere Browser, insbesondere der Internet-Explorer, kommen damit nicht sehr gut zurecht und auch sonst bestehen zwischen den verschiedenen Brwosern noch kleiner bis größere Inkompatibilitäten, die Ihnen das Leben zur Hölle machen können. Daher sind Sie vermutlich auf lange Zeit noch sehr gut bedient, wenn Sie sich des bewährten XHTML 1.0 bedienen.
+
+Allerdings ist HTML5 die Zukunft. Ich habe mir deshalb (natürlich auch mit RubyFrontier)  eine Testsite angelegt, die komplett in HTML5 geschrieben ist und ausprobiert, was damit alles geht. Schließlich möchte ich für die Zukunft gerüstet sein. Aber meine (meisten) Produktionsseiten schreibe auch ich nach wie vor noch mit XHTML 1.0 heraus.
+
+Anders sieht die Situation allerdings aus, wenn Sie ein HTML5- oder JavaScript-Framework wie *jQuery* oder *Bootstrap* verwenden. Dort nimmt Ihnen das Framework die Browsererkennung und viele andere Qualen ab. Im letzten Beispiel werde ich Ihnen daher ein umfangreiche Website vorstellen, die mit *Bootstrap* (und somit auch mit HTML5) entwickelt wurde. Diese Site wird meine erste in Produktion gehende Site werden, die auf HTML5 basiert.

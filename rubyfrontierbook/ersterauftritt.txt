@@ -1,0 +1,310 @@
+#title "Eine erste Website"
+
+# Eine erste Website mit RubyFrontier
+
+Nachdem Sie nun die Grundlagen der Webseiten-Erstellung mit RubyFrontier kennengelernt haben, werden wir nun in *medias res* gehen und eine erste »echte« Website erstellen. Dazu stellen Sie sich bitte vor, Sie sind Mitglied im Hundesportverein *Flughund e.V.* und der Vorstand hat Sie beauftragt, eine *Homepage* für Ihren Verein zu erstellen. Vermutlich war Ihr erster Gedanke dann, ein vollständiges *Content Management System* (CMS), wie z.B. [Drupal](http://www.cognitiones.de/doku.php/drupal), [Joomla!](http://de.wikipedia.org/wiki/Joomla) oder das sehr populäre [WordPress](http://de.wikipedia.org/wiki/WordPress) einzusetzen, in dem dann alle Vereinsmitglieder mitschreiben und Inhalte einstellen können. Aber glauben Sie mir: Sie tun es nicht. Ich habe jahrelang die Webseiten (m)eines Hundesportvereins gepflegt. Sie werden Emails mit -- im schlimmsten Falle -- Word-Dateien bekommen, die eventuell sogar noch liebevoll gestaltet sind und diese sollen Sie dann genau so ins Web stellen.
+
+Und das ist *nicht* Hundesportverein-typisch. In Ihrem Fußball- oder Eishockeyverein, in Ihrer Bürgerinitiative oder wofür Sie immer eine Website erstellen wollen oder sollen, wird es nicht anders sein.
+
+Ein CMS ist in solchen Fällen nicht nur ein totaler *Overkill*, sondern bedeutet für Sie auch noch mehr Arbeit: Sie müssen Updates einspielen, die Datenbank pflegen und Sicherheitshinweise beachten. Und daher können Sie -- wenn sowieso alles nur über Ihren Rechner läuft -- auch genau so gut, wenn nicht besser, RubyFrontier dafür benutzen: Keine Updates, keine Datenbank und keine Sicherheitsprobleme. Und billiger wird es im Regelfalle auch noch, da Sie für statische Seiten die günstigste Hosting-Möglichkeit auswählen können. (Das letzte Argument wird mit Sicherheit den Kassenwart Ihres Vereins überzeugen.)
+
+Sie werden daher jetzt sukzessive die anfangs erstellten Seiten zu einem kleinen Webauftritt aufbauen. Dazu schreiben Sie erst einmal etwas in die Startseite (*index.txt*) hinein.
+
+    #title: "HSV Flughund e.V.: Startseite"
+
+    <h1>Willkommen auf den Webseiten des Hundesportvereins Flughund e.V.</h1>
+    <p>
+    Der HSV Flughund e.V. ist eine Organisation von Hundesportlern und
+    Hundeliebhabern. Wir betreiben insbesondere die Hundesportarten Agility,
+    Obedience und den Turnierhundesport. Auch die Ausbildung von
+    menschenfreundlichen Familienhunden und verkehrssicheren Begleithunden
+    wird angestrebt. Jede der Gesundheit der Hunde und ihrer Hundeführer
+    dienende Aktivität wird unterstützt. Darüberhinaus leistet der Verein
+    Aufklärungsarbeit in der Öffentlichkeit zur artgerechten Hundehaltung
+    und -erziehung. Der HSV Flughund e.V. setzt sich aktiv für Tierschutz,
+    Umweltschutz und Jugendarbeit ein.</p>
+
+Schlagen Sie mich bitte nicht wegen des Textes. Er ist zum großen Teil der Satzung eines real existierenden Hundesportvereins entnommen. Aber darauf kommt es ja auch nicht an. Rendern Sie den Text heraus und Sie sollten eine Webseite erhalten, die ungefähr so aussieht:
+
+<%= imageref("flughund01", {:border => "0", :width => "480", :height => "342", :alt => "Screenshot 1: HSV Flughund e.V."}) %>
+
+Das ist zwar schon etwas, aber noch nicht wirklich weltbewegend. Mich -- und vielleicht auch Sie -- stört die blaßgelbe Farbe des Hintergrunds. Um diese zu ändern, öffnen Sie doch einfach die Datei *#prefs.yaml*. Dort steht nur folgender Eintrag:
+
+    --- 
+	:bgcolor: FFFFEE
+
+YAML ist eine vereinfachte Auszeichnungssprache, die sowohl von Ruby leicht zu parsen als auch von Menschen zu lesen ist und daher hat Matt Neuburg sie ausgewählt, um einige Voreinstellungen für Ihre Webseiten ablegen zu können. Ändern Sie also einfach die Hintergrundfarbe *bgcolor* nach weiß:
+
+	---
+	:bgcolor: ffffff
+
+Die Farbdarstellung ist eine Kodierung der Hexwerte, wie sie in HTML üblich ist. Das dabei normalerweise nötige führende Doppelkreuz kann/muß entfallen, statt `#ffffff` schreiben Sie also einfach `ffffff`. (Und wie Sie gesehen haben, bevorzuge ich die Kleinschreibung der Hexwerte, das ist allerdings völlig egal, der Browser interpretiert das schon richtig.)
+
+Wenn Sie jetzt die Startseite erneut herausschreiben lassen, hat sie eine weiße Hintergrundfarbe.
+
+Die *prefs.yaml* ist der Ort, in dem Sie viele weitere Voreinstellungen ablegen können. Ich werde im Laufe dieser Einführung noch häufiger darauf zurückkommen.
+
+## Ein neuer Pageheader
+
+Was Sie vermutlich stört, ist das der Titel der Startseite *HSV Flughund e.V.: Startseite* heißt. Ich habe das so angelegt, weil ich möchte, daß in der Kopfleiste des Browserfenster, in dem immer der komplette Seitentitel steht, auch der Name des Vereins auftaucht. Denn dieser Seitentitel ist für die meisten Suchmaschinen, speziell für [Google](http://www.google.com/) sehr relevant. Aber es macht die Titelei doch sehr unhandlich. RubyFrontier holt sich den Pageheader irgendwo aus den Tiefen seines Quellcodes, aber es gibt natürlich Möglihckeiten, hier einzugreifen.
+
+Die einfachste Möglichkeit, einen eigenen Pageheader zu bekommen, ist es, eine Datei namens *#pageheader.txt* im Wurzelverzeichnis anzulegen, also dort, wo zum Beispiel auch die *#prefs.yaml* oder die *#ftpSite.yaml* zu finden ist. Sie sollte so aussehen:
+
+    <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+    <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="de" lang="de">
+    <head>
+        <%%= metatags() %>
+        <%%= linkstylesheets() %>
+        <%%= linkjavascripts() %>
+        <title><%%= sitetitle %>: <%%= title %></title>
+    </head>
+    <%%= bodytag() %>
+
+Bis auf zwei Ausnahmen entspricht dieser Pageheader exakt dem Pageheader, der von RubyFrontier per Default herausgeschrieben ist. Die erste Ausnahme steckt in der dritten Zeile, hier habe ich dem HTML-Tag noch mitgeteilt, daß diese Seite in deutscher Sprache geschrieben ist. Dies wird häufig vergessen, ist aber ein wichtiger Anhaltspunkt für Suchmaschinen:
+
+    <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="de" lang="de">
+
+Und dann habe ich in den `<title>`-Tag noch den Aufruf `<%%= sitetitle %>` eingefügt. Das ist eine selbsterstellte *Direktive* und Sie müssen RubyFrontier nun noch bekanntmachen, daß diese Direktive einen Wert besitzt. Die geeignetste Stelle ist dafür wieder die Datei *#prefs.yaml* Also fügen Sie dort folgende Zeile ein:
+
+    :sitetitle: 'HSV Flughund e.V.'
+
+Nun können Sie den *#title* in der *index.txt* auf *"Startseite"* verkürzen. Wenn Sie nun die Seite wieder herausschreiben, werden Sie feststellen, daß -- wie erwartet -- der *HSV Flughund e.V.* dennoch in der Titelleiste des Brwosers erscheint. Und das wird er auch in allen Seiten, die Sie noch erstellen werden.
+
+Spätestens dann, wenn Sie viel mit *JavaScript* arbeiten, werden Sie froh sein, daß RubyFrontier Ihnen diverse Möglichkeiten bietet, einen eigenen Pageheader zu erzeugen. Ich werde später noch darauf zurückkommen.
+
+Was bedeuten nun die anderen Zeilen im Pageheader? `<%%= metatags() %>` schreibt diese beiden Zeilen heraus:
+
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="generator" content="RubyFrontier" />
+
+Die erste Zeile sollten Sie nur ändern, wenn Sie wirklich wissen, was Sie tun (ihre Seite zum Beispiel komplett auf chinesisch ist). Die zweite Zeile gibt RubyFrontier Kredit. Das ist nicht nur eine Spielerei -- vielleicht will Matt Neuburg mal wissen, wieviele Seiten mit seiner Software es im Netz gibt -- und sollte daher, wenn es keine Gründe gibt, die dagegen sprechen, auch nicht geändert werden.
+
+Die nächsten beiden Zeilen machen momentan noch gar nichts, da Sie in ihrer Site bisher wegerr etwas mit JavaScript noch mit *Cascading Style Sheets (CSS)* angestellt haben. Zumindest das letztere wird sich aber gleich ändern.
+
+Der letzte Unbekannte ist noch der `<%%= bodytag() %>`-Aufruf. Er schreibt per Default nur `<body>` heraus, kann aber noch andere Parameter, wie zum Beispiel die Text- oder die Linkfarbe, übernehmen. Dies ist jedoch veraltet, da man dies heutzutage im Regelfalle mit *Stylesheets* erledigt und sollte daher nur angewendet werden, wenn es Gründe dafür gibt. Ein Grund wäre zum Beispiel, daß man auf jeden Fall ein bestimmtes Aussehen erreichen will, auch wenn die Stylesheets nicht geladen oder interpretiert werden.
+
+## Text mit Stil
+
+Wenn Sie den *#stylesheets*-Ordner öffnen, werden Sie feststellen, daß es dort schon zwei CSS-Dateien gibt (*s1.css* und *s2.css*). Sie sind aus didaktischen Gründen dort, Sie benötigen sie aber nicht, daher können Sie sie einfach wegwerfen. Legen Sie stattdessen in diesem Ordner eine Datei namens *default.css* an (sie könnte auch irgendwie anders heißen, es ist einfach der Name, den ich für die Default-Stylesheet-Datei bevorzuge). Und dort schreiben Sie folgendes hinein:
+
+	body {
+		font-family: Verdana, sans-serif;
+		font-size: 12px;
+	}
+
+	h1 {
+		font-size: 18px;
+	}
+
+	.small {
+		font-size: 10px;
+	}
+
+Es ist ein minimalistisches Stylesheet, das ich Ihnen hier anbiete. Aber einmal ist dies kein Lehrbuch über CSS und zum anderen will ich Ihnen erst einmal auch nur das Prinzip erläutern. Wenn Sie jetzt die Seite neu herausschreiben, werden Sie feststellen, daß nichts Neues passiert. RubyFrontier weiß nämlich noch nicht, welches Stylesheet es nutzen soll, dies müssen Sie der Software erst noch mitteilen. Und die naheliegendste Stelle, wo dies geschehen kann, ist, was Sie sicher schon geahnt haben, wieder die Datei *#prefs.yaml*. Fügen Sie ihr einfach noch eine weitere Zeile hinzu:
+
+	:linkstylesheets: [default]
+
+Außerdem sollten Sie im Template noch etwas ändern. Der Tag
+
+	<p style="font-size:small;">
+
+sollte in
+
+	<p class="small">
+
+umgewandelt werden, da Sie den Stil dafür ja nun auch in ihrem Stylesheet festgelegt haben.
+
+<%= imageref("flughund02", {:border => "0", :width => "480", :height => "327", :alt => "Screenshot 2: HSV Flughund e.V. mit Stil"}) %>
+
+Okay, die Schrift ist vielleicht ein wenig arg klein geraten, aber ich wollte ja auch, daß Sie einen Unterschied zur Seite ohne Stylesheet sehen. Sie sind ausdrücklich eingeladen, ein wenig mit den Parametern zu spielen, damit Sie ein Gefühl dafür bekommen, wie sich diese auf das Aussehen der Seite auswirken.
+
+Stylesheets können ja bekanntlich auf zweierlei Arten eingebunden werden: Einmal kann man ein Stylesheet direkt in den `<head>` einer HTML-Seite schreiben und einmal kann man es mit Link auf eine externe CSS-Datei dazulinken. Beide Methoden haben ihre Vor- und Nachteile: Seiten mit eingebundenen Stylesheets laden in der Regel schneller, da sie keine weitere Datei nachladen müssen. Dies ist bei der heutigen Geschwindigkeit des Internets jedoch nur noch bei sehr stark frequentierten Seiten ein Problem, sicher jedoch nicht bei der Seite Ihres Hundesportvereins.
+
+Bei Seiten mit Links auf externe Stylesheets braucht man dafür auch nur an dieser einen Stelle etwas ändern, wenn es etwas zu ändern gibt. Da das Stylesheet bei jedem Aufruf einer Seite nachgeladen wird, sind die Änderungen -- von irgendwelchem *Cache*-Verhalten des Browsers mal abgesehen -- sofort sichtbar.
+
+Zwar müssen Sie bei RubyFrontier auch nur an einer Stelle ein engebettetes Stylesheet ändern, damit die Änderungen aber wirksam werden, müssen Sie *alle* Seiten neu herausschreiben. Und das kann bei einem größeren Webauftritt schon etwas dauern. Daher empfehle ich, nach Möglichkeit auf das Einbetten von Stylesheets zu verzichten. Aber -- wie ich später noch zeigen werde -- es kann durchaus Situationen geben, wo das Einbetten eines Stylesheets die sinnvollere Lösung ist.
+
+## Wir wollen Bilder!
+
+<%= imageref("hund02", {:border => "0", :width => "64", :height => "64", :alt => "Sheltie", :align => "right", :hspace => "8", :vspace => "4"}) %> Eine Website ohne Bilder ist wie ein ... Fisch ohne Fahrrad. Mindestens! Und natürlich bietet auch RubyFrontier die Möglichkeit, Bilder komfortabel einzubinden. Laden Sie sich dazu erst einmal das nebenstehende Bild eines kleinen Sheltie herunter. Es heißt *hund02.jpeg* und der natürliche Ort, in dem RubyFrontier Bilder abspeichert, ist der *#images*-Ordner. Dort sollte bisher nur die Datei *RubyFrontierLogo.png* liegen und dort legen Sie nun auch das Hundebildchen hinein.
+
+Dann geben Sie in der Startseite unter dem ersten Paragraph-Tag (`<p>`) folgendes Makro ein:
+	
+	<%%= imageref("hund02", {:border => "0", :width => "64", :height => "64",
+	:alt => "Sheltie", :align => "left", :hspace => "8", :vspace => "4"}) %>
+
+Das Makro verlang als erstes den Namen der Datei ohne Endung, unterstützt werden JPEG-, GIF- und PNG-Bilder, alle anderen Formate führen zu Fehlermeldungen. Danach folgt eine Liste der Attribute, auf die Angabe von Höhe und Weite können Sie verzichten, wenn das Bild -- wie hier -- in der Originalgröße abgebildet werden soll, RubyFrontier rechnet diese für Sie aus. Ich habe Sie hier nur beispielhaft aufgenommen, damit Sie wissen, wie Sie ein Bild verkleinern oder vergrößern können.
+
+Alle Parameter außer dem Dateinamen sind übrigens optional, aber manchmal, wie im Falle der Linksbündigkeit, auch notwendig. Wenn der *alt*-Parameter fehlt, bastelt sich RubyFrontier einen aus dem Dateinamen zusammen, da er der einzige Parameter ist, der bei HTML vorgeschrieben ist. Und RubyFrontier gibt sich große Mühe, valides XHTML zu erzeugen. Die Reihenfolge der Parameter ist übrigens beliebig, sie besteht aus einer kommagetrennten Liste mit den einzelnen Listenpaaren:
+
+    :attribut => "Attributwert"
+
+Menschen wie ich, die Ruby nicht mit der Muttermilch eingesogen haben, vergessen übrigens häufig den Doppelpunkt vor dem `:attribut`. Das führt zu häßlichen Fehlermeldungen, die man als Anfänger nicht immer richtig interpretiert. Daher achten Sie bitte darauf, diese (und auch die Kommata) nicht zu vergessen.
+
+## Ein Wort noch zu den (internen) URLs
+
+Eine von RubyFrontiers Zielen ist es, eine Website so portabel wie möglich zu halten. Daher sind alle internen URLs -- auch die zu den Bildern --, die von RubyFrontier generiert werden, relative URLs. Dies sollte uns jedoch nicht weiter beunruhigen, denn RubyFrontier erledigt dies gut. Wichtigstes Hilfsmittel dazu ist die Datei *#autoglossary.yaml*, die von RubyFrontier automatisch erzeugt wird. Diese Datei sollten Sie daher nach Möglichkeit nicht anfassen. Sie gehört RubyFrontier und nur RubyFrontier.
+
+Sie helfen RubyFrontier auch, wenn Sie alle Dateinamen eindeutig halten. RubyFrontier kommt zwar auch mit einer zweiten *index.txt* in einem Unterordner zurecht, gibt aber eine Warnung aus, die den Prozeß des Herausschreibens bei großen Sites mit vielen Unterordnern und vielen *index.txt*-Dateien durchaus signifikant verlangsamen kann. Also vermeiden Sie dieses nach Möglichkeit.
+
+## Und jetzt noch ein wenig Template-Bastelei
+
+Das bisherige Template ist eher minimalistisch als der Weisheit letzter Schluß. Das liegt natürlich auch daran, daß ich Ihnen die Möglichkeiten von RubyFrontier vorführen möchte und kein Buch über HTML und CSS schreibe. Daher soll natürlich auch das Template und das Stylesheet übersichtlich bleiben. Trotzdem: So können Sie mit dem Webauftritt Ihres Hundesportvereins noch keinen Blumentop gewinnen. Daher werden Sie jetzt noch ein wenig daran herumbasteln, weniger, um schon ein endgültiges Layout festzulegen als mehr, um ein Gefühl für die Template-Erstellung in RubyFrontier zu bekommen.
+
+Fügen Sie in Ihr Template also erst einmal folgende Zeilen zwischen dem Pageheader-Makro und dem *bodytext*-Tag ein:
+
+	<div id="header">
+		<h1>HSV Flughund e.V.</h1>
+		<h2>Spaß, Spiel und Sport für Mensch und Hund</h2>
+	</div>
+	<div id="navigation">
+		<p>Startseite | Nachrichten | Termine | Impressum</p>
+	</div>
+
+Wenn Sie jetzt die einzige, bisher angelegte Seite erneut herausrendern, sollte sie so aussehen:
+
+<%= imageref("flughund03", {:border => "0", :width => "480", :height => "313", :alt => "Screenshot 3: HSV Flughund e.V."}) %>
+
+Das ist immer noch nicht wirklich weltbewegend, aber Sie ahnen sicher schon, wohin die Reise gehen soll.
+
+Die Navigation ist übrigens ein *Dummy* oder *Mockup*, wie es so schön auf Neudeutsch heißt. Sie werden sie in einem späteren Abschnitt durch eine funktionierende Navigation ersetzen, momentan dient sie aber erst einmal als Platzhalter.
+
+Sie ahnen sicher schon, daß die wesentlichen Änderungen, um ein *schönes* Design zu bekommen, in der CSS-Datei geschehen müssen. Diese ändern Sie daher wie folgt:
+
+	body {
+		font-family: Verdana, sans-serif;
+		font-size: 12px;
+		background-color: #ffffcc;
+	}
+	h1 {
+		font-size: 18px;
+	}
+	.small {
+		font-size: 10px;
+	}
+	#header h1 {
+		font-size: 32px;
+	}
+	#header h2 {
+		font-size: 16px;
+	}
+	#navigation {
+		background-color: #99cc99;
+	}
+Die ganze Seite bekommt nun wieder einen gelben Hintergrund (`#ffffcc`), die Überschriften im Header bekommen eine eigene Größe und die Navigationsleiste eine lindgrüne (`#99cc99`) Hintergrundfarbe verpaßt. Nach einem erneuten Herausschreiben sollte Ihre Seite daher nun so aussehen:
+
+<%= imageref("flughund04", {:border => "0", :width => "480", :height => "334", :alt => "Screenshot 4: HSV Flughund e.V."}) %>
+
+Und bitte vergessen Sie nicht, in der *prefs.yaml* die Zeile
+
+	:bgcolor: ffffff
+
+entweder komplett zu streichen oder auch hier den Wert *ffffcc* einzusetzen. (Ich bin fürs streichen. Die Angabe der Hintergrundfarbe und anderer Werte im *body*-Tag ist zwar sehr bequem und während der Entwicklungsphase auch manchmal nützlich, aber eigentlich überholt. Farben sollten nur noch in den Stylesheets festgelegt werden. Wie Sie weiter unten sehen werden, kann die *prefs.yaml* dabei aber dann doch wieder eine nützliche Rolle spielen.)
+
+Ich erwarte übrigens nicht, daß Ihnen die Farben gefallen. Im Gegenteil: Sie sind wieder aufgefordert, selber zu experimentieren und andere Farben, Schriften und Größen auszuprobieren.
+
+Abschließend möchte ich, daß Sie die Seite doch noch ein wenig aufhübschen. Fast jede Website, die heutzutage etwas auf sich hält, besitzt ein Hintergrundbild in der Kopfzeile, das etwas Stimmung verbreitet und auf die Thematik der Seite hinweist. Dazu bringen Sie erst einmal via Stylesheet die Seiten auf eine feste Breite von 920 Pixeln. Danach sieht die *default.css* wie folgt aus:
+
+	body {
+		text-align: center; /* IE-Fix */
+		font-family: Verdana, sans-serif;
+		font-size: 12px;
+		background-color: #ffffcc;
+	}
+	h1 {
+		font-size: 18px;
+	}
+	.wrapper {
+		width: 920px;
+		margin: 0 auto;
+		text-align: left; /* IE-Fix */
+	}
+	.small {
+		font-size: 10px;
+	}
+	#header h1 {
+		font-size: 32px;
+	}
+	#header h2 {
+		font-size: 16px;
+	}
+	#navigation {
+		background-color: #99cc99;
+	}
+
+Die beiden Ihnen vielleicht unverständlichen Zeilen mit den Kommentaren *IE-Fix* dahinter sind eine Umgehung eines Fehlers des *Internet Explorers*, der leider in vielen Fällen CSS nicht so interpretiert, wie die Schöpfer es gewollt hatten. Ansonsten haben Sie der Klasse *wrapper* die Breite von 920-Pixeln zugewiesen und mit *auto* erreicht, daß diese 920 Pixel immer in der Mitte des Brwoserfensters dargestellt wird.
+
+Damit dieses Stylesheet funktioniert, schließen Sie im Template der Seite den gesamten Inhalt in einen *Wrapper* ein:
+
+	<%%= pageheader() %>
+	<div class="wrapper">
+	<div id="header">
+		<h1>HSV Flughund e.V.</h1>
+		<h2>Spaß, Spiel und Sport für Mensch und Hund</h2>
+	</div>
+	<div id="navigation">
+		<p>Startseite | Nachrichten | Termine | Impressum</p>
+	</div>
+	<p id="bodytext"></p>
+	<hr />
+	<p class="small">Diese Seite wurde mit RubyFrontier erstellt.
+	Letzte Änderung: <%%= clocknow() %></p>
+	</div>
+	<%%= pagefooter() %>
+
+Wenn Sie alles richtig abgetippt haben, sollte nach einem erneuten Herausrendern die Seite eine feste Breite besitzen und immer und die Abstände rechts und links sollten immer gleich breit sein -- egal, wieweit Sie das Browserfenster aufziehen.
+
+<%= imageref("flughund-header", {:border => "0", :width => "480", :height => "162", :alt => "Header Image HSV Flughund e.V."}) %>
+
+Das ist das Header-Bild, das ich für Sie ausgesucht habe. Laden Sie es von der Webseite herunter, benennen Sie es in *header.png* um und legen Sie es in den *#images*-Ordner Ihres RubyFrontier-Projektes. Es ist im Original 920 Pixel weit und 310 Pixel hoch. Sie können natürlich auch ein anderes Bild wählen, Sie sollten es nur auf die gleichen Abmessungen zuschneiden.
+
+Da RubyFrontier seit der Version 0.9.9.6 Makros (aber keine Direktiven!) auch in CSS- und JavaScript-Dateien erlaubt, sah mein erster, naiver Versuch so aus:
+
+	#header {
+		height: 310px;
+		background-image: url(<%%= imageref("header") %>);
+		background-repeat: none;
+	}
+
+Sie können es ja selber ausprobieren. RubyFrontier schreibt Ihnen die Seite anstandslos und ohne Fehlermeldung heraus, nur das gewünschte Headerbild, das sehen Sie nicht. Wenn Sie sich den Quellcode des herausgeschriebenen Stylesheets anschauen, sehen Sie, daß RubyFrontier das Makro korrekt ausgewertet hat, aber auch, daß der relative Pfad nicht vom Stylesheet, sondern von der *index.txt* aus berechnet wurde. Das Verhalten ist ja eigentlich auch korrekt, wir haben ja die *index.txt* herausgeschrieben. Matt Neuburg stellt in seiner [Frontier-Dokumentation](http://www.apeth.com/RubyFrontierDocs/defaultfolder/techfolder/howsapagefolder/images.html) unter anderem folgende Lösung vor:
+
+In das Stylesheet fügen Sie folgendes Makro ein:
+
+	<%% def writeAndGetRelativeURI(im)
+	       getImageData(im)[:path].relative_uri_from(adrPageTable[:sheetLoc])
+	end %>
+
+Sie sehen, dieses Makro hat kein Gleichheitszeichen nach dem `<%%`, das bedeutet, es wird zwar ausgeführt, schreibt aber nichts in das Stylesheet hinein, das somit valide bleibt.
+
+Jetzt noch eine kleine Änderung im Style-Sheet ...
+
+	#header {
+		height: 310px;
+		background-image: url(<%%= writeAndGetRelativeURI("header") %>);
+		background-repeat: none;
+	}
+
+und schon sehen Sie nach einem erneuten Herausschreiben das Header-Bild auf der Seite:
+
+<%= imageref("flughund05", {:border => "0", :width => "480", :height => "318", :alt => "Header Image HSV Flughund e.V."}) %>
+
+Okay, die Position des Vereinsnamens und des Untertitels sind noch verbesserungswürdig, doch da dies eine Einführung in RubyFrontier und nicht in CSS ist, schlage ich unkommentiert ein paar (einfache) Änderungen im Stylesheet vor, die dies verschönert. Aber hier sind auch Sie wieder aufgefordert, selber zu experimentieren und Ihre CSS-Kenntnisse aufzufrischen (ich bin nämlich nicht gerade der große CSS-Guru, eher im Gegenteil).
+
+	#header h1 {
+		font-size: 32px;
+		padding-left: 20px;
+		padding-top: 200px;
+		color: #ffffcc;
+	}
+	#header h2 {
+		font-size: 16px;
+		padding-left: 20px;
+		color: #ffffcc;
+	}
+
+Ein linker Rand von 20 Pixeln und ein Abstand von 200 Pixel zum oberen Rand machen das Ganze doch ein wenig ansehnlicher. Außerdem habe ich den Überschriften die Farbe des Hintergrundes zugewiesen, so daß es aussieht, als wären sie ausgestanzt.
+
+<%= imageref("flughund06", {:border => "0", :width => "480", :height => "318", :alt => "Header Image HSV Flughund e.V."}) %>
+
+Die Website Ihres fiktiven Hundesportvereins nimmt nun langsam Gestalt an: Zwar haben Sie immer noch erst eine Seite fertiggestellt, aber Sie wissen jetzt, was ein *Template* ist und wie es Ihnen hilft, bei der Seitengestaltung Form und Inhalt zu trennen. Außerdem wissen Sie nun, wo Voreinstellungen festgelegt werden und wie RubyFrontier mit Bildern und Stylesheets umgeht. Um nächsten Abschnitt werden Sie sich mit der [Navigation](Navigation) befassen und dabei weitere Vorzüge von RubyFrontier kennenlernen.

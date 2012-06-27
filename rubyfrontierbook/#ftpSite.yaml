@@ -1,0 +1,6 @@
+--- 
+:folder: /Applications/MAMP/htdocs/rubyfrontierbook
+:method: file
+:isLocal: true
+:apacheSite: /Applications/MAMP/htdocs/rubyfrontierbook
+:apacheURL: http://localhost:8888/rubyfrontierbook/
